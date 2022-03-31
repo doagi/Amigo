@@ -7,9 +7,9 @@ using namespace std;
 vector<Employee> employees;
 
 
-int Add(string employeeNum, string name, string cl, string phoneNum, string birthday, string certi)
+int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
 {
-    Employee newEmployee = Employee(employeeNum, name, cl, phoneNum, birthday, certi);
+    Employee newEmployee = Employee(employee_num, name, cl, phoneNum, birthday, certi);
     employees.push_back(newEmployee);
 
     return employees.size();

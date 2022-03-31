@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "../../Amigo/AmigoPJT/cmd.cpp"
 
-TEST(TestCase, ADD_Test) {
+TEST(AmigoADDTest, ADD_Test) {
 
     // ADD
     EXPECT_EQ(1, Add("15123099", "VXIHXOTH JHOP", "CL3", "010 - 3112 - 2609", "19771211", "ADV"));
