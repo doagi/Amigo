@@ -21,10 +21,27 @@
     <ClCompile Include="command\mod.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="command.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="txt_parser.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="input_20_20.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cmd_parser.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="command\mod.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClCompile Include="common.h">
+      <Filter>헤더 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
