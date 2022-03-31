@@ -1,26 +1,9 @@
-#include <iostream>
-#include <vector>
-#include <string>
+#include "search1.h"
 
-using namespace std;
-
-struct Employee
+vector<Employee> SearchByYear(string target)
 {
-    string employee_num;
-    string first_name;
-    string last_name;
-    string cl;
-    string phone_num;
-    string birthday;
-    string certi;
-};
-
-vector<struct Employee> employees;
-
-vector<struct Employee> SearchByYear(string target)
-{
-    vector<struct Employee> result;
-    for (struct Employee an_employee : employees)
+    vector<Employee> result;
+    for (Employee an_employee : employees)
     {
         if (an_employee.birthday.substr(0,4) == target)
         {
@@ -30,10 +13,10 @@ vector<struct Employee> SearchByYear(string target)
     return result;
 }
 
-vector<struct Employee> SearchByMonth(string target)
+vector<Employee> SearchByMonth(string target)
 {
-    vector<struct Employee> result;
-    for (struct Employee an_employee : employees)
+    vector<Employee> result;
+    for (Employee an_employee : employees)
     {
         if (an_employee.birthday.substr (4, 2) == target)
         {
@@ -42,10 +25,10 @@ vector<struct Employee> SearchByMonth(string target)
     }
     return result;
 }
-vector<struct Employee> SearchByDate(string target)
+vector<Employee> SearchByDate(string target)
 {
-    vector<struct Employee> result;
-    for (struct Employee an_employee : employees)
+    vector<Employee> result;
+    for (Employee an_employee : employees)
     {
         if (an_employee.birthday.substr (6, 2) == target)
         {
@@ -57,9 +40,9 @@ vector<struct Employee> SearchByDate(string target)
 
 int SearchByBirthday(string option, string target)
 {
-    vector<struct Employee> result;
+    vector<Employee> result;
 
-    switch(option[0])
+    switch(option[1])
     {
     case 'y':
         result = SearchByYear(target);
