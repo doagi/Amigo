@@ -139,6 +139,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="command.cpp" />
+    <ClCompile Include="txt_parser.cpp" />
+    <ClCompile Include="common.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="searchByName.cpp" />
     <ClCompile Include="searchByPhoneNumber.cpp" />
@@ -150,6 +153,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="input_20_20.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cmd_parser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

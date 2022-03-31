@@ -14,3 +14,24 @@ struct Employee
     string birthday;
     string certi;
 };
+
+struct Command
+{
+    enum
+    {
+        param_start = 0,
+        cmd_type = param_start,
+        op1,
+        op2,
+        op3,
+        value1,
+        value2,
+        value3,
+        value4,
+        value5,
+        value6,
+        param_end,
+        param_count = param_end - param_start
+    };
+    string param[param_count];
+};
