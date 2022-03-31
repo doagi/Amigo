@@ -1,11 +1,11 @@
 #include "searchByPhoneNumber.h"
 
-string searchByMiddlePhoneNumber() {
-	string result;
+int searchByMiddlePhoneNumber(int target) {
+	int result = 0;
 	return result;
 }
 
-string searchByLastPhoneNumber() {
-	string result;
+int searchByLastPhoneNumber(int target) {
+	int result = 0;
 	return result;
 }

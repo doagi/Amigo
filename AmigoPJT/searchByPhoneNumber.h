@@ -3,5 +3,5 @@
 
 using std::string;
 
-string searchByMiddlePhoneNumber();
-string searchByLastPhoneNumber();
+int searchByMiddlePhoneNumber(int target);
+int searchByLastPhoneNumber(int target);

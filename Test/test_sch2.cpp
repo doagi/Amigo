@@ -4,17 +4,17 @@
 
 
 TEST(AmigoSearchTest, optionF_Name) {
-	EXPECT_STREQ("test", searchByFirstName().c_str());
+	EXPECT_EQ(6, searchByFirstName("TWU"));
 }
 
 TEST(AmigoSearchTest, optionL_Name) {
-	EXPECT_STREQ("test", searchByLastName().c_str());
+	EXPECT_EQ(2, searchByLastName("HBO"));
 }
 
 TEST(AmigoSearchTest, optionM_Phone) {
-	EXPECT_STREQ("test", searchByMiddlePhoneNumber().c_str());
+	EXPECT_EQ(3, searchByMiddlePhoneNumber(4528));
 }
 
 TEST(AmigoSearchTest, optionL_Phone) {
-	EXPECT_STREQ("test", searchByLastPhoneNumber().c_str());
+	EXPECT_EQ(7, searchByLastPhoneNumber(5047));
 }

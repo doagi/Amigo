@@ -1,11 +1,11 @@
 #include "searchByName.h"
 
-string searchByFirstName() {
-	string result;
+int searchByFirstName(string target) {
+	int result = 0;
 	return result;
 }
 
-string searchByLastName() {
-	string result;
+int searchByLastName(string target) {
+	int result = 0;
 	return result;
 }

@@ -3,5 +3,5 @@
 
 using std::string;
 
-string searchByFirstName();
-string searchByLastName();
+int searchByFirstName(string target);
+int searchByLastName(string target);
