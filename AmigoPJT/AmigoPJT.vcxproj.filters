@@ -18,13 +18,13 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="cmd.cpp">
+    <ClCompile Include="command.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="common.h">
       <Filter>헤더 파일</Filter>
     </ClCompile>
-    <ClCompile Include="cmd_parser.cpp">
+    <ClCompile Include="txt_parser.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

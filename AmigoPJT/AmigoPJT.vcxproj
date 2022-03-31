@@ -139,8 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cmd.cpp" />
-    <ClCompile Include="cmd_parser.cpp" />
+    <ClCompile Include="command.cpp" />
+    <ClCompile Include="txt_parser.cpp" />
     <ClCompile Include="common.h" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
