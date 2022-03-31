@@ -20,11 +20,6 @@ int Mod(int op1, int op2, int op3, string targetColumn, string targetValue, stri
     return 0;
 }
 
-int Del(int op1, int op2, int op3, string column, string value)
-{
-    return 0;
-}
-
 int Sch(int op1, int op2, int op3, string column, string value)
 {
     return 0;
