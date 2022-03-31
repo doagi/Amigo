@@ -1,22 +1,17 @@
 #include <iostream>
 #include <fstream>
 
+#include "common.h"
+#include "cmd_parser.h"
+
+
 using namespace std;
 
 int main() 
 {
-	std::string Path = "input_20_20.txt";
+	string Path = "input_20_20.txt";
 
-	std::ifstream readFile(Path);
-	if (readFile.is_open())
-	{
-		char line[200];
-		while (!readFile.eof())
-		{
-			readFile.getline(line, sizeof(line));
-			std::cout << line << std::endl;
-		}
-		readFile.close();
-	}
+	ParserFromTxt(Path);
+
 	return 0;
 }

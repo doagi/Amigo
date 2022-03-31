@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "../../Amigo/AmigoPJT/cmd.cpp"
+#include "../../Amigo/AmigoPJT/cmd_parser.cpp"
+
 
 TEST(AmigoADDTest, ADD_Test) {
 
@@ -10,22 +12,8 @@ TEST(AmigoADDTest, ADD_Test) {
     EXPECT_EQ(4, Add("88114052", "NQ LVARW", "CL4", "010 - 4528 - 3059", "19911021", "PRO"));
 }
 
-TEST(TestCase, DEL_Test) {    
-    // ADD
+TEST(AmigoParserTest, Parser_Test) {
 
-    // DEL
-
-    // DEL 잘 됐는지 확인
-}
-
-TEST(TestCase, SCH_Test) {    
-    // ADD
-
-    // SCH 잘 됐는지 확인
-}
-
-TEST(TestCase, MOD_Test) {
-    // ADD
-
-    // MOD 잘 됐는지 확인
+    vector<Command> vect_result = ParserFromTxt("../../Amigo/AmigoPJT/input_20_20.txt");
+    EXPECT_EQ(40, vect_result.size());
 }
