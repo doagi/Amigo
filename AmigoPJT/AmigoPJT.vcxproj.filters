@@ -18,6 +18,12 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="searchByPhoneNumber.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="searchByName.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="command\mod.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -34,6 +40,15 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="searchByName.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="searchByPhoneNumber.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="cmd_parser.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -43,5 +58,8 @@
     <ClCompile Include="common.h">
       <Filter>헤더 파일</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

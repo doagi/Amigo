@@ -15,8 +15,6 @@ struct Employee
     string certi;
 };
 
-
-
 struct Command
 {
     enum
@@ -37,4 +35,3 @@ struct Command
     };
     string param[param_count];
 };
-
