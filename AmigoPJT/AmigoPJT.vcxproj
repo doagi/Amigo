@@ -141,14 +141,18 @@
   <ItemGroup>
     <ClCompile Include="command\mod.cpp" />
     <ClCompile Include="command.cpp" />
-    <ClCompile Include="txt_parser.cpp" />
-    <ClCompile Include="common.h" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="search1.cpp" />
     <ClCompile Include="searchByName.cpp" />
     <ClCompile Include="searchByPhoneNumber.cpp" />
+    <ClCompile Include="txt_parser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="command\mod.h" />
+    <ClInclude Include="cmd_parser.h" />
+    <ClInclude Include="command.h" />
     <ClInclude Include="common.h" />
+    <ClInclude Include="search1.h" />
     <ClInclude Include="searchByName.h" />
     <ClInclude Include="searchByPhoneNumber.h" />
   </ItemGroup>
@@ -157,10 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="input_20_20.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="cmd_parser.h" />
-    <ClInclude Include="command\mod.h" />
+    <Text Include="output_20_20.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
