@@ -24,6 +24,40 @@ vector<unsigned int> Sch(string op1, string op2, string column, string value, un
     {
         return SearchByBirthday(op2, value, employees);
     }
+    else if(column == "name")
+    {
+        if(op2 == "-f")
+        {
+            return searchByFirstName(value, employees);
+        }
+        else if(op2 == "-l")
+        {
+            return searchByLastName(value, employees);
+        }
+        else
+        {
+            return searchByName(value, employees);
+        }
+    }
+    else if(column == "phoneNum")
+    {
+        if (op2 == "-m")
+        {
+            return searchByMiddlePhoneNumber(stoi(value), employees);
+        }
+        else if (op2 == "-l")
+        {
+            return searchByLastPhoneNumber(stoi(value), employees);
+        }
+        else
+        {
+            return searchByPhoneNumber(value, employees);
+        }
+    }
+    else if(column == "employeeNum")
+    {
+    
+    }
 
     return result;
 

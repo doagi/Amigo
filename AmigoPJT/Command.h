@@ -3,6 +3,8 @@
 #include <unordered_map>
 #include "common.h"
 #include "search1.h"
+#include "searchByName.h"
+#include "searchByPhoneNumber.h"
 
 using namespace std;
 
