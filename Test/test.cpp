@@ -109,55 +109,195 @@ namespace DelTest
 
 namespace ModTest
 {
-    /**
-    * Sample)
-    * Command1: ADD, , , ,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO
-    * Command2: MOD, -p, , , name, FB NTAWR, birthday, 20050520
-    * Record  : MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 19861203, PRO
-    */
-
-    TEST(AmigoModTest, Found_0_Record_0_Modify_Nothing)
+    class AmigoModTest : public ::testing::Test
     {
-        vector<EmployeeData> found_data;
+    protected:
+        void SetUp()
+        {
+            found_5_data.reserve(5);
+            found_5_data.emplace_back(EmployeeData{ "17112609", "FB NTAWR", "CL4", "010-5645-6122", "19861203", "PRO" });
+            found_5_data.emplace_back(EmployeeData{ "02117175", "SBILHUT LDEXRI", "CL4", "010-2814-1699", "19950704", "ADV" });
+            found_5_data.emplace_back(EmployeeData{ "08123556", "WN XV", "CL1", "010-7986-5047", "20100614", "PRO" });
+            found_5_data.emplace_back(EmployeeData{ "85125741", "FBAH RTIJ", "CL1", "010-8900-1478", "19780228", "ADV" });
+            found_5_data.emplace_back(EmployeeData{ "11109136", "QKAHCEX LTODDO", "CL4", "010-2627-8566", "19640130", "PRO" });
+            found_1_data.emplace_back(found_5_data[0]);
+        }
 
-        vector<string> result = Mod(found_data, ConditonData{ Column::BIRTHDAY, "20050520" });
+        void TearDown()
+        {
+            found_1_data.clear();
+            found_5_data.clear();
+        }
+
+        vector<EmployeeData> found_0_data;
+        vector<EmployeeData> found_1_data;
+        vector<EmployeeData> found_5_data;
+    };
+
+    TEST_F(AmigoModTest, Found_0_Record_0_Modify_Nothing)
+    {
+        vector<string> result = Mod(found_0_data, ConditonData{ Column::BIRTHDAY, "20050520" });
 
         EXPECT_EQ(0, result.size());
     }
 
-    TEST(AmigoModTest, Found_1_Throw_Exception_Unknown_Column)
+    TEST_F(AmigoModTest, Found_1_Throw_Exception_Unknown_Column)
     {
-        vector<EmployeeData> found_data;
-        found_data.emplace_back(EmployeeData{ "17112609", "FB NTAWR", "CL4", "010-5645-6122", "19861203", "PRO" });
-
         EXPECT_THROW(
-            {
-                vector<string> result = Mod(found_data, ConditonData{ Column::SIZE, "20050520" });
-            }, invalid_argument);
+        {
+            vector<string> result = Mod(found_1_data, ConditonData{ Column::SIZE, "20050520" });
+        }, invalid_argument);
     }
 
-    TEST(AmigoModTest, Found_1_Throw_Exception_Modify_EmployeeNum)
+    TEST_F(AmigoModTest, Found_1_Throw_Exception_Modify_EmployeeNum)
     {
-        vector<EmployeeData> found_data;
-        found_data.emplace_back(EmployeeData{ "17112609", "FB NTAWR", "CL4", "010-5645-6122", "19861203", "PRO" });
-
         EXPECT_THROW(
-            {
-                vector<string> result = Mod(found_data, ConditonData{ Column::EMPLOYEENUM, "88114052" });
-            }, invalid_argument);
+        {
+            vector<string> result = Mod(found_1_data, ConditonData{ Column::EMPLOYEENUM, "88114052" });
+        }, invalid_argument);
     }
 
-    TEST(AmigoModTest, Found_1_Record_1_Modify_Birthday)
+    TEST_F(AmigoModTest, Found_1_Record_1_Modify_Birthday)
     {
-        vector<EmployeeData> found_data;
-        found_data.emplace_back(EmployeeData{ "17112609", "FB NTAWR", "CL4", "010-5645-6122", "19861203", "PRO" });
+        vector<string> result = Mod(found_1_data, ConditonData{ Column::BIRTHDAY, "20050520" });
 
-        vector<string> result = Mod(found_data, ConditonData{ Column::BIRTHDAY, "20050520" });
-
-        string expect_result = "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 19861203, PRO";
+        const string expect_result = "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 19861203, PRO";
 
         EXPECT_EQ(1, result.size());
         EXPECT_STREQ(expect_result.c_str(), result[0].c_str());
+    }
+
+    TEST_F(AmigoModTest, Found_1_Record_1_Modify_Birthday_Updated)
+    {
+        // 1st try and then updated
+        Mod(found_1_data, ConditonData{ Column::BIRTHDAY, "20050520" });
+
+        vector<string> result = Mod(found_1_data, ConditonData{ Column::BIRTHDAY, "20050520" });
+
+        const string expect_result = "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 20050520, PRO";
+
+        EXPECT_EQ(1, result.size());
+        EXPECT_STREQ(expect_result.c_str(), result[0].c_str());
+    }
+
+    TEST_F(AmigoModTest, Found_5_Record_5_Modify_Name_Updated)
+    {
+        // 1st try and then updated
+        Mod(found_5_data, ConditonData{ Column::NAME, "Anonymous" });
+
+        vector<string> result = Mod(found_5_data, ConditonData{ Column::NAME, "Anonymous" });
+
+        const string expect_result[] =
+        {
+            "MOD, 17112609, Anonymous, CL4, 010-5645-6122, 19861203, PRO",
+            "MOD, 02117175, Anonymous, CL4, 010-2814-1699, 19950704, ADV",
+            "MOD, 08123556, Anonymous, CL1, 010-7986-5047, 20100614, PRO",
+            "MOD, 85125741, Anonymous, CL1, 010-8900-1478, 19780228, ADV",
+            "MOD, 11109136, Anonymous, CL4, 010-2627-8566, 19640130, PRO"
+        };
+
+        EXPECT_EQ(5, result.size());
+
+        for (int i = 0; i < 5; i++)
+        {
+            EXPECT_STREQ(expect_result[i].c_str(), result[i].c_str());
+        }
+    }
+
+    TEST_F(AmigoModTest, Found_5_Record_5_Modify_CL_Updated)
+    {
+        // 1st try and then updated
+        Mod(found_5_data, ConditonData{ Column::CL, "CL3" });
+
+        vector<string> result = Mod(found_5_data, ConditonData{ Column::CL, "CL3" });
+
+        const string expect_result[] =
+        {
+            "MOD, 17112609, FB NTAWR, CL3, 010-5645-6122, 19861203, PRO",
+            "MOD, 02117175, SBILHUT LDEXRI, CL3, 010-2814-1699, 19950704, ADV",
+            "MOD, 08123556, WN XV, CL3, 010-7986-5047, 20100614, PRO",
+            "MOD, 85125741, FBAH RTIJ, CL3, 010-8900-1478, 19780228, ADV",
+            "MOD, 11109136, QKAHCEX LTODDO, CL3, 010-2627-8566, 19640130, PRO"
+        };
+
+        EXPECT_EQ(5, result.size());
+
+        for (int i = 0; i < 5; i++)
+        {
+            EXPECT_STREQ(expect_result[i].c_str(), result[i].c_str());
+        }
+    }
+
+    TEST_F(AmigoModTest, Found_5_Record_5_Modify_PhoneNum_Updated)
+    {
+        // 1st try and then updated
+        Mod(found_5_data, ConditonData{ Column::PHONENUM, "010-1234-0000" });
+
+        vector<string> result = Mod(found_5_data, ConditonData{ Column::PHONENUM, "010-1234-0000" });
+
+        const string expect_result[] =
+        {
+            "MOD, 17112609, FB NTAWR, CL4, 010-1234-0000, 19861203, PRO",
+            "MOD, 02117175, SBILHUT LDEXRI, CL4, 010-1234-0000, 19950704, ADV",
+            "MOD, 08123556, WN XV, CL1, 010-1234-0000, 20100614, PRO",
+            "MOD, 85125741, FBAH RTIJ, CL1, 010-1234-0000, 19780228, ADV",
+            "MOD, 11109136, QKAHCEX LTODDO, CL4, 010-1234-0000, 19640130, PRO"
+        };
+
+        EXPECT_EQ(5, result.size());
+
+        for (int i = 0; i < 5; i++)
+        {
+            EXPECT_STREQ(expect_result[i].c_str(), result[i].c_str());
+        }
+    }
+
+    TEST_F(AmigoModTest, Found_5_Record_5_Modify_Birthday_Updated)
+    {
+        // 1st try and then updated
+        Mod(found_5_data, ConditonData{ Column::BIRTHDAY, "20050520" });
+
+        vector<string> result = Mod(found_5_data, ConditonData{ Column::BIRTHDAY, "20050520" });
+
+        const string expect_result[] =
+        {
+            "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 20050520, PRO",
+            "MOD, 02117175, SBILHUT LDEXRI, CL4, 010-2814-1699, 20050520, ADV",
+            "MOD, 08123556, WN XV, CL1, 010-7986-5047, 20050520, PRO",
+            "MOD, 85125741, FBAH RTIJ, CL1, 010-8900-1478, 20050520, ADV",
+            "MOD, 11109136, QKAHCEX LTODDO, CL4, 010-2627-8566, 20050520, PRO"
+        };
+
+        EXPECT_EQ(5, result.size());
+
+        for (int i = 0; i < 5; i++)
+        {
+            EXPECT_STREQ(expect_result[i].c_str(), result[i].c_str());
+        }
+    }
+
+    TEST_F(AmigoModTest, Found_5_Record_5_Modify_Certi_Updated)
+    {
+        // 1st try and then updated
+        Mod(found_5_data, ConditonData{ Column::CERTI, "EX" });
+
+        vector<string> result = Mod(found_5_data, ConditonData{ Column::CERTI, "EX" });
+
+        const string expect_result[] =
+        {
+            "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 19861203, EX",
+            "MOD, 02117175, SBILHUT LDEXRI, CL4, 010-2814-1699, 19950704, EX",
+            "MOD, 08123556, WN XV, CL1, 010-7986-5047, 20100614, EX",
+            "MOD, 85125741, FBAH RTIJ, CL1, 010-8900-1478, 19780228, EX",
+            "MOD, 11109136, QKAHCEX LTODDO, CL4, 010-2627-8566, 19640130, EX"
+        };
+
+        EXPECT_EQ(5, result.size());
+
+        for (int i = 0; i < 5; i++)
+        {
+            EXPECT_STREQ(expect_result[i].c_str(), result[i].c_str());
+        }
     }
 }
 
