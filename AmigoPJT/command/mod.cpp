@@ -30,26 +30,22 @@ void ModifyColumnData(Employee2& employee, const ModificationInfo& mod_info)
     switch (mod_info.column)
     {
     case Column::EMPLOYEENUM:
-        employee.str_employee_num = mod_info.value;
-        // ToDo : set data.employee_num as numeric
+        employee.SetEmployeeNumber(mod_info.value);
         return;
     case Column::NAME:
-        employee.full_name = mod_info.value;
-        // ToDo : set data.first_name, data.last_name
+        employee.SetName(mod_info.value);
         return;
     case Column::CL:
-        employee.cl = mod_info.value;
+        employee.SetCareeLevel(mod_info.value);
         return;
     case Column::PHONENUM:
-        employee.full_phone_number = mod_info.value;
-        // ToDo : set data.middle_phone_num, data.last_phone_num as numeric
+        employee.SetPhoneNumber(mod_info.value);
         return;
     case Column::BIRTHDAY:
-        employee.full_birthday = mod_info.value;
-        // ToDo : data.year_birthday, data.month_birthday, data.day_birthday as numeric
+        employee.SetBirthDay(mod_info.value);
         return;
     case Column::CERTI:
-        employee.certi = mod_info.value;
+        employee.SetCerti(mod_info.value);
         return;
     }
 

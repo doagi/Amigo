@@ -1,10 +1,38 @@
 #pragma once
+
 #include <iostream>
-#include <vector>
+#include <sstream>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 using namespace std;
+
+static vector<string> split(const string& input, char delimiter)
+{
+    vector<string> result;
+    result.reserve(3);
+    stringstream ss(input);
+    string temp;
+    while (getline(ss, temp, delimiter))
+    {
+        result.push_back(temp);
+    }
+    return result;
+}
+
+static vector<unsigned int> split_date(const string& input)
+{
+    vector<unsigned int> result;
+    if (input.size() == 8)
+    {
+        result.reserve(3);
+        result.emplace_back(stoi(input.substr(0, 4)));
+        result.emplace_back(stoi(input.substr(4, 2)));
+        result.emplace_back(stoi(input.substr(6, 2)));
+    }
+    return result;
+}
 
 struct Employee
 {
@@ -23,50 +51,79 @@ struct Employee2
     Employee2() {}
     Employee2(string employee_num_, string name_, string cl_, string phone_num_, string birthday_, string certi_)
     {
+        SetEmployeeNumber(employee_num_);
+        SetName(name_);
+        SetCareeLevel(cl_);
+        SetPhoneNumber(phone_num_);
+        SetBirthDay(birthday_);
+        SetCerti(certi_);
+    }
+
+    void SetEmployeeNumber(const string& employee_num_)
+    {
         str_employee_num = employee_num_;
-        full_name = name_;
-        full_phone_number = phone_num_;
-        full_birthday = birthday_;
-        cl = cl_;
-        certi = certi_;
 
-        int year_in_employee_num = stoi(employee_num_.substr(0, 2));
-        string first_year;
+        int YY = stoi(str_employee_num.substr(0, 2));
 
-        // make employee_num
-        if (69 <= year_in_employee_num
-            && 99 >= year_in_employee_num)
+        if (69 <= YY && YY <= 99)
         {
             employee_num = stoi("19" + str_employee_num);
         }
-        else if (00 <= year_in_employee_num
-            && 68 >= year_in_employee_num)
+        else if (00 <= YY && YY <= 68)
         {
             employee_num = stoi("20" + str_employee_num);
         }
-        else
-        {
-            // exception
-        }
-
-
-        // make first / last name
-        int pos_space = name_.find(" ");
-        first_name = name_.substr(0, pos_space);
-        last_name = name_.substr(pos_space + 1, name_.length());
-
-        // make phone num
-        middle_phone_num = stoi(full_phone_number.substr(4, 4));
-        last_phone_num = stoi(full_phone_number.substr(9, 4));
-
-        // make birthday
-        year_birthday = stoi(full_birthday.substr(0, 4));
-        month_birthday = stoi(full_birthday.substr(4, 2));
-        day_birthday = stoi(full_birthday.substr(6, 2));
     }
 
-    unsigned int employee_num;           // 앞 2자리 년도 포함
-    string str_employee_num;    // 앞 2자리 년도 불포함.
+    void SetName(const string& name)
+    {
+        full_name = name;
+
+        auto split_name = split(full_name, ' ');
+        if (split_name.size() == 2)
+        {
+            first_name = split_name[0];
+            last_name = split_name[1];
+        }
+    }
+
+    void SetCareeLevel(const string& cl_)
+    {
+        cl = cl_;
+    }
+
+    void SetPhoneNumber(const string& phone_num)
+    {
+        full_phone_number = phone_num;
+
+        auto split_phone_number = split(full_phone_number, '-');
+        if (split_phone_number.size() == 3)
+        {
+            middle_phone_num = stoi(split_phone_number[1]);
+            last_phone_num = stoi(split_phone_number[2]);
+        }
+    }
+
+    void SetBirthDay(const string& birthday)
+    {
+        full_birthday = birthday;
+
+        auto split_birthday = split_date(full_birthday);
+        if (split_birthday.size() == 3)
+        {
+            year_birthday = split_birthday[0];
+            month_birthday = split_birthday[1];
+            day_birthday = split_birthday[2];
+        }
+    }
+
+    void SetCerti(const string& certi_)
+    {
+        certi = certi_;
+    }
+
+    unsigned int employee_num;  // 앞 2자리 년도 포함
+    string str_employee_num;    // 앞 2자리 년도 불포함
     string full_name;
     string full_phone_number;
     string full_birthday;
