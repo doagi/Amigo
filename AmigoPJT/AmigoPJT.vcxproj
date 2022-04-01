@@ -141,7 +141,6 @@
   <ItemGroup>
     <ClCompile Include="command\mod.cpp" />
     <ClCompile Include="command.cpp" />
-    <ClCompile Include="DelCommand.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="search1.cpp" />
     <ClCompile Include="searchByName.cpp" />
