@@ -1,6 +1,6 @@
 #include "search1.h"
 
-vector<unsigned int> SearchByYear(string target, unordered_map<unsigned int, Employee> employees)
+vector<unsigned int> SearchByYear(string target, unordered_map<unsigned int, Employee2> employees)
 {
     vector<unsigned int> result;
     for (const auto& an_employee : employees)
@@ -13,7 +13,7 @@ vector<unsigned int> SearchByYear(string target, unordered_map<unsigned int, Emp
     return result;
 }
 
-vector<unsigned int> SearchByMonth(string target, unordered_map<unsigned int, Employee> employees)
+vector<unsigned int> SearchByMonth(string target, unordered_map<unsigned int, Employee2> employees)
 {
     vector<unsigned int> result;
 
@@ -26,7 +26,7 @@ vector<unsigned int> SearchByMonth(string target, unordered_map<unsigned int, Em
     }
     return result;
 }
-vector<unsigned int> SearchByDate(string target, unordered_map<unsigned int, Employee> employees)
+vector<unsigned int> SearchByDate(string target, unordered_map<unsigned int, Employee2> employees)
 {
     vector<unsigned int> result;
     for (const auto& an_employee : employees)
@@ -39,7 +39,7 @@ vector<unsigned int> SearchByDate(string target, unordered_map<unsigned int, Emp
     return result;
 }
 
-vector<unsigned int> SearchByFullBirthday(string target, unordered_map<unsigned int, Employee> employees)
+vector<unsigned int> SearchByFullBirthday(string target, unordered_map<unsigned int, Employee2> employees)
 {
     vector<unsigned int> result;
     for (const auto& an_employee : employees)
@@ -52,7 +52,7 @@ vector<unsigned int> SearchByFullBirthday(string target, unordered_map<unsigned 
     return result;
 }
 
-vector<unsigned int> SearchByBirthday(string op2, string target, unordered_map<unsigned int, Employee> employees)
+vector<unsigned int> SearchByBirthday(string op2, string target, unordered_map<unsigned int, Employee2> employees)
 {
     if (op2 == "-y")
     {

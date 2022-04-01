@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <unordered_map>
 
 #include "common.h"
 #include "cmd_parser.h"
@@ -9,7 +8,7 @@
 
 using namespace std;
 
-unordered_map<unsigned int, Employee> employees;
+//unordered_map<unsigned int, Employee> employees;
 vector<Command> commands;
 unordered_map<unsigned int, Employee2> map_employees;
 
@@ -21,7 +20,7 @@ int main(int argc, char** argv)
 
 	commands = ParserFromTxt(Path);
 
-	CommandRun(commands, employees);
+	CommandRun(commands);
 
 	return 0;
 }
