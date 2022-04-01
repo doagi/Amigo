@@ -21,7 +21,6 @@ int Mod(const vector<unsigned int>& founds, string column, string value);
 
 string GenerateCommandRecord(const std::string& command, const bool& detail_print, const vector<unsigned int>& targets);
 string GenerateDetailRecord(const std::string& command, const vector<unsigned int>& result);
-string GenerateSimpleRecord(const std::string& command, const size_t count);
 
 void CommandRun(vector<Command> commands);
 

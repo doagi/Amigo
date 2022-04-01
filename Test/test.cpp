@@ -266,7 +266,7 @@ namespace ModTest
     {
         vector<string> result = Mod(mod_test_db, found_1_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
 
-        const string expect_result = "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 19861203, PRO";
+        const string expect_result = "MOD,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO";
 
         EXPECT_EQ(1, result.size());
         EXPECT_STREQ(expect_result.c_str(), result[0].c_str());
@@ -279,7 +279,7 @@ namespace ModTest
 
         vector<string> result = Mod(mod_test_db, found_1_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
 
-        const string expect_result = "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 20050520, PRO";
+        const string expect_result = "MOD,17112609,FB NTAWR,CL4,010-5645-6122,20050520,PRO";
 
         EXPECT_EQ(1, result.size());
         EXPECT_STREQ(expect_result.c_str(), result[0].c_str());
@@ -294,11 +294,11 @@ namespace ModTest
 
         const string expect_result[]
         {
-            "MOD, 17112609, Anonymous, CL4, 010-5645-6122, 19861203, PRO",
-            "MOD, 02117175, Anonymous, CL4, 010-2814-1699, 19950704, ADV",
-            "MOD, 08123556, Anonymous, CL1, 010-7986-5047, 20100614, PRO",
-            "MOD, 85125741, Anonymous, CL1, 010-8900-1478, 19780228, ADV",
-            "MOD, 11109136, Anonymous, CL4, 010-2627-8566, 19640130, PRO"
+            "MOD,17112609,Anonymous,CL4,010-5645-6122,19861203,PRO",
+            "MOD,02117175,Anonymous,CL4,010-2814-1699,19950704,ADV",
+            "MOD,08123556,Anonymous,CL1,010-7986-5047,20100614,PRO",
+            "MOD,85125741,Anonymous,CL1,010-8900-1478,19780228,ADV",
+            "MOD,11109136,Anonymous,CL4,010-2627-8566,19640130,PRO"
         };
 
         EXPECT_EQ(5, result.size());
@@ -318,11 +318,11 @@ namespace ModTest
 
         const string expect_result[]
         {
-            "MOD, 17112609, FB NTAWR, CL3, 010-5645-6122, 19861203, PRO",
-            "MOD, 02117175, SBILHUT LDEXRI, CL3, 010-2814-1699, 19950704, ADV",
-            "MOD, 08123556, WN XV, CL3, 010-7986-5047, 20100614, PRO",
-            "MOD, 85125741, FBAH RTIJ, CL3, 010-8900-1478, 19780228, ADV",
-            "MOD, 11109136, QKAHCEX LTODDO, CL3, 010-2627-8566, 19640130, PRO"
+            "MOD,17112609,FB NTAWR,CL3,010-5645-6122,19861203,PRO",
+            "MOD,02117175,SBILHUT LDEXRI,CL3,010-2814-1699,19950704,ADV",
+            "MOD,08123556,WN XV,CL3,010-7986-5047,20100614,PRO",
+            "MOD,85125741,FBAH RTIJ,CL3,010-8900-1478,19780228,ADV",
+            "MOD,11109136,QKAHCEX LTODDO,CL3,010-2627-8566,19640130,PRO"
         };
 
         EXPECT_EQ(5, result.size());
@@ -342,11 +342,11 @@ namespace ModTest
 
         const string expect_result[]
         {
-            "MOD, 17112609, FB NTAWR, CL4, 010-1234-0000, 19861203, PRO",
-            "MOD, 02117175, SBILHUT LDEXRI, CL4, 010-1234-0000, 19950704, ADV",
-            "MOD, 08123556, WN XV, CL1, 010-1234-0000, 20100614, PRO",
-            "MOD, 85125741, FBAH RTIJ, CL1, 010-1234-0000, 19780228, ADV",
-            "MOD, 11109136, QKAHCEX LTODDO, CL4, 010-1234-0000, 19640130, PRO"
+            "MOD,17112609,FB NTAWR,CL4,010-1234-0000,19861203,PRO",
+            "MOD,02117175,SBILHUT LDEXRI,CL4,010-1234-0000,19950704,ADV",
+            "MOD,08123556,WN XV,CL1,010-1234-0000,20100614,PRO",
+            "MOD,85125741,FBAH RTIJ,CL1,010-1234-0000,19780228,ADV",
+            "MOD,11109136,QKAHCEX LTODDO,CL4,010-1234-0000,19640130,PRO"
         };
 
         EXPECT_EQ(5, result.size());
@@ -366,11 +366,11 @@ namespace ModTest
 
         const string expect_result[]
         {
-            "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 20050520, PRO",
-            "MOD, 02117175, SBILHUT LDEXRI, CL4, 010-2814-1699, 20050520, ADV",
-            "MOD, 08123556, WN XV, CL1, 010-7986-5047, 20050520, PRO",
-            "MOD, 85125741, FBAH RTIJ, CL1, 010-8900-1478, 20050520, ADV",
-            "MOD, 11109136, QKAHCEX LTODDO, CL4, 010-2627-8566, 20050520, PRO"
+            "MOD,17112609,FB NTAWR,CL4,010-5645-6122,20050520,PRO",
+            "MOD,02117175,SBILHUT LDEXRI,CL4,010-2814-1699,20050520,ADV",
+            "MOD,08123556,WN XV,CL1,010-7986-5047,20050520,PRO",
+            "MOD,85125741,FBAH RTIJ,CL1,010-8900-1478,20050520,ADV",
+            "MOD,11109136,QKAHCEX LTODDO,CL4,010-2627-8566,20050520,PRO"
         };
 
         EXPECT_EQ(5, result.size());
@@ -390,11 +390,11 @@ namespace ModTest
 
         const string expect_result[]
         {
-            "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 19861203, EX",
-            "MOD, 02117175, SBILHUT LDEXRI, CL4, 010-2814-1699, 19950704, EX",
-            "MOD, 08123556, WN XV, CL1, 010-7986-5047, 20100614, EX",
-            "MOD, 85125741, FBAH RTIJ, CL1, 010-8900-1478, 19780228, EX",
-            "MOD, 11109136, QKAHCEX LTODDO, CL4, 010-2627-8566, 19640130, EX"
+            "MOD,17112609,FB NTAWR,CL4,010-5645-6122,19861203,EX",
+            "MOD,02117175,SBILHUT LDEXRI,CL4,010-2814-1699,19950704,EX",
+            "MOD,08123556,WN XV,CL1,010-7986-5047,20100614,EX",
+            "MOD,85125741,FBAH RTIJ,CL1,010-8900-1478,19780228,EX",
+            "MOD,11109136,QKAHCEX LTODDO,CL4,010-2627-8566,19640130,EX"
         };
 
         EXPECT_EQ(5, result.size());

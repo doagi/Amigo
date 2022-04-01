@@ -84,44 +84,46 @@ int Mod(const vector<unsigned int>& founds, string column, string value)
     return result.size();
 }
 
-string GenerateCommandRecord(const std::string& command, const bool& detail_print, const vector<unsigned int>& targets)
+string GenerateCommandRecord(const std::string& command, const bool& is_print_list, const vector<unsigned int>& targets)
 {
-    if (detail_print)
+    if (targets.size() < 1)
     {
-        return GenerateDetailRecord(command, targets);
+        return command + ",NONE";
     }
 
-    return GenerateSimpleRecord(command, targets.size());
+    if (!is_print_list)
+    {
+        return command + "," + to_string(targets.size());
+    }
+
+    return GenerateDetailRecord(command, targets);
 }
 
 string GenerateDetailRecord(const std::string& command, const vector<unsigned int>& targets)
 {
     string result = "";
     map<unsigned int, Employee2> sorted_results;
-    int num_data = 0;
+    const int kMaxPrintNum = 5;
 
-    if (targets.size() > 0)
+    for (const auto& num : targets)
     {
-        for (const auto& num : targets)
-        {
-            sorted_results.insert(pair<unsigned int, Employee2> (num, map_employees[num]));
-        }
-        for (auto it = sorted_results.begin(); ((it != sorted_results.end()) && (num_data < 5)); it++, num_data++)
-        {
-            result += GenerateRecord(command, it->second) + "\n";
-        }
+        sorted_results.insert(pair<unsigned int, Employee2>(num, map_employees[num]));
     }
-    else
+
+    int num_data = 0;
+    int max_iter = kMaxPrintNum;
+    if (max_iter > sorted_results.size())
     {
-        result = command + ",NONE";
+        max_iter = sorted_results.size();
+    }
+
+    for (auto it = sorted_results.begin(); ((it != sorted_results.end()) && (num_data < kMaxPrintNum)); it++, num_data++)
+    {
+        result += GenerateRecord(command, it->second);
+        result += (num_data < (max_iter - 1)) ? "\n" : "";
     }
 
     return result;
-}
-
-string GenerateSimpleRecord(const std::string& command, const size_t count)
-{
-    return command + "," + to_string(count);
 }
 
 void CommandRun(vector<Command> commands)
