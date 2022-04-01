@@ -33,6 +33,57 @@ namespace IntergrationTest
     }
 }
 
+namespace CommandTest
+{
+    TEST(AmigoCommandTest, Unsupported_Command)
+    {
+        vector<string> raw_command
+        {
+            "SWAP","op1","op2","op3","employeeNum", "name", "cl", "phoneNum", "birthday", "certi"
+        };
+
+        int i = 0;
+        Command command;
+        for (const string param : raw_command)
+        {
+            command.param[i++] = param;
+        }
+
+        vector<Command> commands{ command };
+
+        EXPECT_THROW(CommandRun(commands), runtime_error);
+    }
+
+    TEST(AmigoCommandTest, Supported_All_Command)
+    {
+        vector<vector<string>> raw_commands
+        {
+            { "ADD", "", "", "", "15123099", "VXIHXOTH JHOP", "CL3", "010-3112-2609", "19771211", "ADV" },
+            { "ADD", "", "", "", "17112609", "FB NTAWR", "CL4", "010-5645-6122", "19861203", "PRO" },
+            { "ADD", "", "", "", "18115040", "TTETHU HBO", "CL3", "010-4581-2050", "20080718", "ADV" },
+            { "SCH", "-p", "-d", "", "birthday", "04" },
+            { "MOD", "-p", "", "", "name", "FB NTAWR", "birthday", "20050520" },
+            { "DEL", "", "", "", "employeeNum", "18115040" }
+        };
+
+        vector<Command> commands;
+        commands.reserve(raw_commands.size());
+
+        for (const auto& raw_command : raw_commands)
+        {
+            int i = 0;
+            Command command;
+            for (const string param : raw_command)
+            {
+                command.param[i++] = param;
+            }
+            commands.emplace_back(command);
+        }
+
+        EXPECT_NO_THROW(CommandRun(commands));
+    }
+}
+
 namespace AddTest 
 {
     TEST(AmigoADDTest, ADD_Test) {

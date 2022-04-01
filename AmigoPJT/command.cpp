@@ -1,4 +1,6 @@
+#include <map>
 #include "command.h"
+#include "common.h"
 
 int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
 {    
@@ -8,61 +10,126 @@ int Add(string employee_num, string name, string cl, string phoneNum, string bir
     return map_employees.size();
 }
 
-int Mod(string op1, string op2, string targetColumn, string targetValue, string srcColumn, string srcValue)
+vector<unsigned int> Sch(string op2, string column, string value)
 {
-    return 0;
-}
+    // ToDo(최은경,조형성) : 구현 후 vector<unsigned int> 로 return
 
-int Del(string op1, string op2, string column, string value) {
-	return 0;
-}
+    vector<unsigned int> result;
 
-int Sch(string op1, string op2, string column, string value)
-{
     if(column == "birthday")
     {
         //return SearchByBirthday(op2, value);
     }
+
+    return result;
+}
+
+int Del(string op2, string column, string value) {
+    // ToDo(한수용) : 구현
+
     return 0;
 }
 
+int Mod(const vector<unsigned int>& founds, string column, string value)
+{
+    static map<string, Column> column_map
+    {
+        {"employeeNum", Column::EMPLOYEENUM},
+        {"name",        Column::NAME},
+        {"cl",          Column::CL},
+        {"phoneNum",    Column::PHONENUM},
+        {"birthday",    Column::BIRTHDAY},
+        {"certi",       Column::CERTI}
+    };
+
+    auto result = Mod(map_employees, founds, ModificationInfo{ column_map[column], value });
+
+    return result.size();
+}
+
+string GenerateCommandRecord(const std::string& command, const bool& detail_print, const vector<unsigned int>& targets)
+{
+    if (detail_print)
+    {
+        return GenerateDetailRecord(command, targets);
+    }
+
+    return GenerateSimpleRecord(command, targets.size());
+}
+
+string GenerateDetailRecord(const std::string& command, const vector<unsigned int>& targets)
+{
+    string result = "";
+
+    if (targets.size() > 0)
+    {
+        for (const auto& num : targets)
+        {
+            result += GenerateRecord(command, map_employees[num]) + "\n";
+        }
+    }
+    else
+    {
+        result = command + ",NONE";
+    }
+
+    return result;
+}
+
+string GenerateSimpleRecord(const std::string& command, const size_t count)
+{
+    return command + "," + to_string(count);
+}
 
 void CommandRun(vector<Command> commands)
 {
     int result;
+    vector<unsigned int> founds;
+    vector<string> output_records;
 
     for (auto& a_command : commands)
     {
-        if (a_command.param[0] == "ADD")
+        string command = a_command.param[0];
+        string option1 = a_command.param[1];
+        string option2 = a_command.param[2];
+
+        if (command == "ADD")
         {
-            result = Add(a_command.param[4], a_command.param[5], a_command.param[6], a_command.param[7], a_command.param[8], a_command.param[9]);
+            result = Add(a_command.param[4], a_command.param[5], a_command.param[6],
+                a_command.param[7], a_command.param[8], a_command.param[9]);
         }
-        else if (a_command.param[0] == "SCH")
+        else if (command == "SCH")
         {
-            result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
+            founds = Sch(option2, a_command.param[4], a_command.param[5]);
 
+            output_records.emplace_back(GenerateCommandRecord(command, (option1 == "-p"), founds));
         }
-        else if (a_command.param[0] == "DEL")
+        else if (command == "DEL")
         {
-            result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
+            founds = Sch(option2, a_command.param[4], a_command.param[5]);
 
-            //Del(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
+            output_records.emplace_back(GenerateCommandRecord(command, (option1 == "-p"), founds));
 
+            Del(option2, a_command.param[4], a_command.param[5]);
         }
-        else if (a_command.param[0] == "MOD")
+        else if (command == "MOD")
         {
-            result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
+            founds = Sch(option2, a_command.param[4], a_command.param[5]);
 
+            output_records.emplace_back(GenerateCommandRecord(command, (option1 == "-p"), founds));
+
+            Mod(founds, a_command.param[6], a_command.param[7]);
         }
         else
         {
-            //exception case
+            throw runtime_error("Unsupported Command : " + command);
         }
-        //일단 갯수만 출력하도록 함
-        if (a_command.param[0] != "ADD")
-        {
-            cout << a_command.param[0] << ", " << result << endl;
-        }
+    }
+
+    //ToDo(최인수) : 파일로 저장
+    for (const string& record : output_records)
+    {
+        cout << record << endl;
     }
 }
 
