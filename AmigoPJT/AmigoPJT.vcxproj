@@ -144,6 +144,7 @@
     <ClCompile Include="txt_parser.cpp" />
     <ClCompile Include="common.h" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="search1.cpp" />
     <ClCompile Include="searchByName.cpp" />
     <ClCompile Include="searchByPhoneNumber.cpp" />
   </ItemGroup>
@@ -160,6 +161,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cmd_parser.h" />
+    <ClInclude Include="command.h" />
+    <ClInclude Include="search1.h" />
     <ClInclude Include="command\mod.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
