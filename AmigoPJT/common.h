@@ -52,7 +52,7 @@ struct Employee2
         // make first / last name
         int pos_space = name_.find(" ");
         first_name = name_.substr(0, pos_space);
-        last_name = name_.substr(pos_space, name_.length());
+        last_name = name_.substr(pos_space + 1, name_.length());
 
         // make phone num
         middle_phone_num = stoi(full_phone_number.substr(4, 4));
@@ -64,7 +64,7 @@ struct Employee2
         day_birthday = stoi(full_birthday.substr(6, 2));
     }
 
-    int employee_num;           // 앞 2자리 년도 포함
+    unsigned int employee_num;           // 앞 2자리 년도 포함
     string str_employee_num;    // 앞 2자리 년도 불포함.
     string full_name;
     string full_phone_number;

@@ -2,10 +2,13 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <unordered_map>
 #include "common.h"
 
 using std::string;
 using std::vector;
+using std::unordered_map;
 
-int searchByMiddlePhoneNumber(int target, vector<Employee> data);
-int searchByLastPhoneNumber(int target, vector<Employee> data);
+vector<unsigned int> searchByPhoneNumber(string target, unordered_map<unsigned int, Employee2> data);
+vector<unsigned int> searchByMiddlePhoneNumber(unsigned int target, unordered_map<unsigned int, Employee2> data);
+vector<unsigned int> searchByLastPhoneNumber(unsigned int target, unordered_map<unsigned int, Employee2> data);

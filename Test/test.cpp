@@ -8,6 +8,8 @@
 #include "../AmigoPJT/searchByPhoneNumber.cpp"
 
 #include <unordered_map>
+#include <iostream>
+#include <utility>
 
 vector<Employee> employees;
 unordered_map<unsigned int, Employee2> map_employees;
@@ -15,6 +17,35 @@ unordered_map<unsigned int, Employee2> map_employees;
 void Init()
 {
     map_employees.clear();
+}
+
+void makeDataforSearch()
+{
+    map_employees.clear();
+    Employee2 example_data00{ "15123099", "VXIHXOTH JHOP" , "CL3", "010-3112-2609", "19771211", "ADV" };
+    Employee2 example_data01{ "17112609", "FB NTAWR"      , "CL4", "010-5645-6122", "19861203", "PRO" };
+    Employee2 example_data02{ "18115040", "TTETHU HBO"    , "CL3", "010-4581-2050", "20080718", "ADV" };
+    Employee2 example_data03{ "88114052", "NQ LVARW"      , "CL4", "010-4528-3059", "19911021", "PRO" };
+    Employee2 example_data04{ "19129568", "SRERLALH HMEF" , "CL2", "010-3091-9521", "19640910", "PRO" };
+    Employee2 example_data05{ "17111236", "VSID TVO"      , "CL1", "010-3669-1077", "20120718", "PRO" };
+    Employee2 example_data06{ "18117906", "TWU QSOLT"     , "CL4", "010-6672-7186", "20030413", "PRO" };
+    Employee2 example_data07{ "08123556", "WN XV"         , "CL1", "010-7986-5047", "20100614", "PRO" };
+    Employee2 example_data08{ "02117175", "SBILHUT LDEXRI", "CL4", "010-2814-1699", "19950704", "ADV" };
+    Employee2 example_data09{ "03113260", "HH LTUPF"      , "CL2", "010-5798-5383", "19791018", "PRO" };
+    Employee2 example_data10{ "14130827", "RPO JK"        , "CL4", "010-4528-1698", "20090201", "ADV" };
+    Employee2 example_data11{ "01122329", "TWU WD"        , "CL4", "010-7174-5680", "20071117", "PRO" };
+    map_employees.insert(std::pair<unsigned int, Employee2>( (unsigned int)2015123099, example_data00));
+    map_employees.insert(std::pair<unsigned int, Employee2>( (unsigned int)2017112609, example_data01));
+    map_employees.insert(std::pair<unsigned int, Employee2>( (unsigned int)2018115040, example_data02));
+    map_employees.insert(std::pair<unsigned int, Employee2>( (unsigned int)1988114052, example_data03));
+    map_employees.insert(std::pair<unsigned int, Employee2>( (unsigned int)2019129568, example_data04));
+    map_employees.insert(std::pair<unsigned int, Employee2>( (unsigned int)2017111236, example_data05));
+    map_employees.insert(std::pair<unsigned int, Employee2>( (unsigned int)2018117906, example_data06));
+    map_employees.insert(std::pair<unsigned int, Employee2>( (unsigned int)2008123556, example_data07));
+    map_employees.insert(std::pair<unsigned int, Employee2>( (unsigned int)2002117175, example_data08));
+    map_employees.insert(std::pair<unsigned int, Employee2>( (unsigned int)2003113260, example_data09));
+    map_employees.insert(std::pair<unsigned int, Employee2>( (unsigned int)2014130827, example_data10));
+    map_employees.insert(std::pair<unsigned int, Employee2>( (unsigned int)2001122329, example_data11));
 }
 
 namespace IntergrationTest
@@ -355,39 +386,74 @@ namespace SeachTest
         EXPECT_EQ(SearchByBirthday("d", "03"), 1);
     }
 
+    
+    
+    TEST(AmigoSearchTest, Name)
+    {
+        makeDataforSearch();
+        vector<unsigned int> answer = { map_employees[2015123099].employee_num };
+        vector<unsigned int> ret = searchByName("VXIHXOTH JHOP", map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
+        {
+            EXPECT_EQ(answer[i], ret[i]);
+        }
 
-    vector<Employee> testdata = {
-        {"15123099", "VXIHXOTH JHOP" , "CL3", "010-3112-2609", "19771211", "ADV"},
-        {"17112609", "FB NTAWR"      , "CL4", "010-5645-6122", "19861203", "PRO"},
-        {"18115040", "TTETHU HBO"    , "CL3", "010-4581-2050", "20080718", "ADV"},
-        {"88114052", "NQ LVARW"      , "CL4", "010-4528-3059", "19911021", "PRO"},
-        {"19129568", "SRERLALH HMEF" , "CL2", "010-3091-9521", "19640910", "PRO"},
-        {"17111236", "VSID TVO"      , "CL1", "010-3669-1077", "20120718", "PRO"},
-        {"18117906", "TWU QSOLT"     , "CL4", "010-6672-7186", "20030413", "PRO"},
-        {"08123556", "WN XV"         , "CL1", "010-7986-5047", "20100614", "PRO"},
-        {"02117175", "SBILHUT LDEXRI", "CL4", "010-2814-1699", "19950704", "ADV"},
-        {"03113260", "HH LTUPF"      , "CL2", "010-5798-5383", "19791018", "PRO"},
-        {"14130827", "RPO JK"        , "CL4", "010-3231-1698", "20090201", "ADV"},
-        {"01122329", "DN WD"         , "CL4", "010-7174-5680", "20071117", "PRO"}
-    };
+    }
 
     TEST(AmigoSearchTest, optionF_Name) {
-        EXPECT_EQ(6, searchByFirstName("TWU", testdata));
+        makeDataforSearch();
+        vector<unsigned int> answer = { map_employees[2018117906].employee_num, map_employees[2001122329].employee_num };
+        vector<unsigned int> ret = searchByFirstName("TWU", map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
+        {
+            EXPECT_EQ(answer[i], ret[i]);
+        }
     }
 
     TEST(AmigoSearchTest, optionL_Name) {
-        EXPECT_EQ(2, searchByLastName("HBO", testdata));
+        makeDataforSearch();
+        vector<unsigned int> answer = { map_employees[2018115040].employee_num };
+        vector<unsigned int> ret = searchByLastName("HBO", map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
+        {
+            EXPECT_EQ(answer[i], ret[i]);
+        }
+    }
+
+    TEST(AmigoSearchTest, PhoneNumber)
+    {
+        makeDataforSearch();
+        vector<unsigned int> answer = { map_employees[2017112609].employee_num };
+        vector<unsigned int> ret = searchByPhoneNumber("010-5645-6122", map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
+        {
+            EXPECT_EQ(answer[i], ret[i]);
+        }
     }
 
     TEST(AmigoSearchTest, optionM_Phone) {
-        EXPECT_EQ(3, searchByMiddlePhoneNumber(4528, testdata));
+        makeDataforSearch();
+        vector<unsigned int> answer = { map_employees[1988114052].employee_num, map_employees[2014130827].employee_num };
+        vector<unsigned int> ret = searchByMiddlePhoneNumber(4528, map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
+        {
+            EXPECT_EQ(answer[i], ret[i]);
+        }
     }
 
     TEST(AmigoSearchTest, optionL_Phone) {
-        EXPECT_EQ(7, searchByLastPhoneNumber(5047, testdata));
+        makeDataforSearch();
+        vector<unsigned int> answer = { map_employees[2008123556].employee_num };
+        vector<unsigned int> ret = searchByLastPhoneNumber(5047, map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
+        {
+            EXPECT_EQ(answer[i], ret[i]);
+        }
     }
 }
-
-
-
-
