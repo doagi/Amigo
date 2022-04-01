@@ -10,20 +10,20 @@ int Add(string employee_num, string name, string cl, string phoneNum, string bir
     return map_employees.size();
 }
 
-vector<unsigned int> Sch(string op1, string op2, string column, string value, unordered_map<unsigned int, Employee2> employees)
+vector<unsigned int> Sch(string op1, string op2, string column, string value)
 {
     vector<unsigned int> employees;
-    if(column == "birthday")
+    if (column == "birthday")
     {
         employees = SearchByBirthday(op2, value, map_employees);
     }
-    else if(column == "name")
+    else if (column == "name")
     {
-        if(op2 == "-f")
+        if (op2 == "-f")
         {
             employees = searchByFirstName(value, map_employees);
         }
-        else if(op2 == "-l")
+        else if (op2 == "-l")
         {
             employees = searchByLastName(value, map_employees);
         }
@@ -32,7 +32,7 @@ vector<unsigned int> Sch(string op1, string op2, string column, string value, un
             employees = searchByName(value, map_employees);
         }
     }
-    else if(column == "phoneNum")
+    else if (column == "phoneNum")
     {
         if (op2 == "-m")
         {
@@ -47,20 +47,20 @@ vector<unsigned int> Sch(string op1, string op2, string column, string value, un
             employees = searchByPhoneNumber(value, map_employees);
         }
     }
-    else if(column == "employeeNum")
+    else if (column == "employeeNum")
     {
-
+        employees = searchByEmployeeNumber(value, map_employees);
     }
-    else if(column == "certi")
+    else if (column == "certi")
     {
-    
+        employees = searchByCerti(value, map_employees);
     }
     else if (column == "cl")
     {
-
+        employees = searchByCl(value, map_employees);
     }
     return employees;
-
+}
 int Del(string op2, string column, string value) {
     // ToDo(한수용) : 구현
 

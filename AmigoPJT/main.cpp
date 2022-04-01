@@ -24,7 +24,6 @@ int main(int argc, char** argv)
 #endif
 	//TODO : main 함수의 argv[1]로 받아오도록 수정 필요
 	string Path = "input_20_20.txt"; 
-	int result;
 
 	commands = ParserFromTxt(Path);
 
