@@ -49,8 +49,7 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="searchByCerti.cpp">
-    <ClCompile Include="client.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="client.cpp">
       <Filter>소스 파일</Filter>
@@ -69,6 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cmd_parser.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="client.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="command.h">
@@ -90,7 +92,7 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="searchEtc.h">
-    <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="inputStream.h">
       <Filter>헤더 파일</Filter>
