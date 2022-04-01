@@ -139,8 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="client.cpp" />
+    <ClCompile Include="client.h" />
     <ClCompile Include="command\mod.cpp" />
     <ClCompile Include="command.cpp" />
+    <ClCompile Include="InputStream.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="search1.cpp" />
     <ClCompile Include="searchByName.cpp" />
@@ -155,6 +158,7 @@
     <ClInclude Include="cmd_parser.h" />
     <ClInclude Include="command.h" />
     <ClInclude Include="common.h" />
+    <ClInclude Include="inputStream.h" />
     <ClInclude Include="search1.h" />
     <ClInclude Include="searchByName.h" />
     <ClInclude Include="searchByPhoneNumber.h" />

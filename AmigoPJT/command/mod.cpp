@@ -3,7 +3,7 @@
 using namespace std;
 
 vector<string> Mod(unordered_map<unsigned int, Employee2>& map_employees,
-    vector<unsigned int>& found_data, const ModificationInfo& mod_info)
+    const vector<unsigned int>& found_data, const ModificationInfo& mod_info)
 {
     if (mod_info.column == Column::EMPLOYEENUM)
     {
@@ -22,18 +22,6 @@ vector<string> Mod(unordered_map<unsigned int, Employee2>& map_employees,
         ModifyColumnData(employee, mod_info);
     }
 
-    return result;
-}
-
-string GenerateRecord(const std::string& cmd, Employee2& employee)
-{
-    string result = cmd + ", ";
-    result += employee.str_employee_num + ", ";
-    result += employee.full_name + ", ";
-    result += employee.cl + ", ";
-    result += employee.full_phone_number + ", ";
-    result += employee.full_birthday + ", ";
-    result += employee.certi;
     return result;
 }
 

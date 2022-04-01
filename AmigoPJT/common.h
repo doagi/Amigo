@@ -99,6 +99,20 @@ struct Command
         param_end,
         param_count = param_end - param_start
     };
+
+    Command()
+    {
+        for (auto entry : param)
+        {
+            entry = "";
+        }
+    }
+
+    bool IsValid()
+    {
+        return param[0] != "";
+    }
+
     string param[param_count];
 };
 
@@ -118,3 +132,15 @@ struct ModificationInfo
     Column column;
     string value;
 };
+
+static string GenerateRecord(const std::string& cmd, Employee2& employee)
+{
+    string result = cmd + ", ";
+    result += employee.str_employee_num + ", ";
+    result += employee.full_name + ", ";
+    result += employee.cl + ", ";
+    result += employee.full_phone_number + ", ";
+    result += employee.full_birthday + ", ";
+    result += employee.certi;
+    return result;
+}
