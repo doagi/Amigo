@@ -14,12 +14,7 @@ int Mod(string op1, string op2, string targetColumn, string targetValue, string 
     return 0;
 }
 
-int Del(string op1, string op2, string column, string value)
-{
-    return 0;
-}
-
-int Sch(string op1, string op2, string column, string value)
+int Sch(int op1, int op2, int op3, string column, string value)
 {
     if(column == "birthday")
     {
@@ -59,7 +54,7 @@ void CommandRun(vector<Command> commands)
 		{
 			//exception case
 		}
-		//ÀÏ´Ü °¹¼ö¸¸ Ãâ·ÂÇÏµµ·Ï ÇÔ
+		//ì¼ë‹¨ ê°¯ìˆ˜ë§Œ ì¶œë ¥í•˜ë„ë¡ í•¨
 		if (a_command.param[0] != "ADD")
 		{
 			cout << a_command.param[0] << ", " << result << endl;

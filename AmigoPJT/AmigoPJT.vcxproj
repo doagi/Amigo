@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="command\mod.cpp" />
     <ClCompile Include="command.cpp" />
+    <ClCompile Include="DelCommand.cpp" />
     <ClCompile Include="txt_parser.cpp" />
     <ClCompile Include="common.h" />
     <ClCompile Include="main.cpp" />
