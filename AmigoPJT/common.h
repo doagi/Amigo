@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -14,8 +15,6 @@ struct Employee
     string birthday;
     string certi;
 };
-
-
 
 struct Command
 {
@@ -37,4 +36,3 @@ struct Command
     };
     string param[param_count];
 };
-
