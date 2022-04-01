@@ -6,6 +6,7 @@
 #include "command/mod.h"
 #include "searchByName.h"
 #include "searchByPhoneNumber.h"
+#include "searchEtc.h"
 
 using namespace std;
 
