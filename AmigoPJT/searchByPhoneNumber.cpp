@@ -1,34 +1,34 @@
 #include "searchByPhoneNumber.h"
 
-vector<int> searchByPhoneNumber(string target, unordered_map<int, Employee2> data)
+vector<unsigned int> searchByPhoneNumber(string target, unordered_map<unsigned int, Employee2> data)
 {
-	vector<int> result;
-	for (size_t i = 0; i < data.size(); i++)
+	vector<unsigned int> result;
+	for (auto aData : data)
 	{
-		if (data[i].full_phone_number != target) continue;
-		result.emplace_back(i);
+		if (aData.second.full_phone_number != target) continue;
+		result.emplace_back(aData.first);
 	}
 	return result;
 }
 
-vector<int> searchByMiddlePhoneNumber(int target, unordered_map<int, Employee2> data)
+vector<unsigned int> searchByMiddlePhoneNumber(unsigned int target, unordered_map<unsigned int, Employee2> data)
 {
-	vector<int> result;
-	for (size_t i = 0; i < data.size(); i++) 
+	vector<unsigned int> result;
+	for (auto aData : data)
 	{
-		if (data[i].middle_phone_num != target) continue;
-		result.emplace_back(i);
+		if (aData.second.middle_phone_num != target) continue;
+		result.emplace_back(aData.first);
 	}
 	return result;
 }
 
-vector<int> searchByLastPhoneNumber(int target, unordered_map<int, Employee2> data)
+vector<unsigned int> searchByLastPhoneNumber(unsigned int target, unordered_map<unsigned int, Employee2> data)
 {
-	vector<int> result;
-	for (size_t i = 0; i < data.size(); i++) 
+	vector<unsigned int> result;
+	for (auto aData : data) 
 	{
-		if (data[i].last_phone_num != target) continue;
-		result.emplace_back(i);
+		if (aData.second.last_phone_num != target) continue;
+		result.emplace_back(aData.first);
 	}
 	return result;
 }

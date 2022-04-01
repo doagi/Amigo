@@ -1,11 +1,11 @@
 #include "command.h"
 
 int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
-{
-    Employee newEmployee = Employee(employee_num, name, cl, phoneNum, birthday, certi);
-    employees.push_back(newEmployee);
+{    
+    Employee2 newEmployee = Employee2(employee_num, name, cl, phoneNum, birthday, certi);
+    map_employees[newEmployee.employee_num] = newEmployee;
 
-    return employees.size();
+    return map_employees.size();
 }
 
 int Mod(string op1, string op2, string targetColumn, string targetValue, string srcColumn, string srcValue)

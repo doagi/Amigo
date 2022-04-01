@@ -9,6 +9,6 @@ using std::string;
 using std::vector;
 using std::unordered_map;
 
-vector<int> searchByPhoneNumber(int target, unordered_map<int, Employee2> data);
-vector<int> searchByMiddlePhoneNumber(int target, unordered_map<int, Employee2> data);
-vector<int> searchByLastPhoneNumber(int target, unordered_map<int, Employee2> data);
+vector<unsigned int> searchByPhoneNumber(unsigned int target, unordered_map<unsigned int, Employee2> data);
+vector<unsigned int> searchByMiddlePhoneNumber(unsigned int target, unordered_map<unsigned int, Employee2> data);
+vector<unsigned int> searchByLastPhoneNumber(unsigned int target, unordered_map<unsigned int, Employee2> data);

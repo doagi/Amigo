@@ -1,9 +1,13 @@
 #pragma once
 #include <iostream>
+#include <unordered_map>
 #include "common.h"
 #include "search1.h"
 
 using namespace std;
+
+extern vector<Employee> employees;
+extern unordered_map<unsigned int, Employee2> map_employees;
 
 
 int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi);

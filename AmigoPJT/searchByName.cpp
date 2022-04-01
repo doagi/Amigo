@@ -1,34 +1,34 @@
 #include "searchByName.h"
 
-vector<int> searchByName(string target, unordered_map<int, Employee2> data)
+vector<unsigned int> searchByName(string target, unordered_map<unsigned int, Employee2> data)
 {
-	vector<int> result;
-	for (size_t i = 0; i < data.size(); i++)
+	vector<unsigned int> result;
+	for (auto aData : data)
 	{
-		if (data[i].full_name != target) continue;
-		result.emplace_back(i); // TODO : return 형식 논의하여 Sort 구현하기
+		if (aData.second.full_name != target) continue;
+		result.emplace_back(aData.first); // TODO : return 형식 논의하여 Sort 구현하기
 	}
 	return result;
 }
 
-vector<int> searchByFirstName(string target, unordered_map<int, Employee2> data)
+vector<unsigned int> searchByFirstName(string target, unordered_map<unsigned int, Employee2> data)
 {
-	vector<int> result;
-	for (size_t i = 0; i < data.size(); i++) 
+	vector<unsigned int> result;
+	for (auto aData : data)
 	{
-		if (data[i].first_name != target) continue;
-		result.emplace_back(i);
+		if (aData.second.first_name != target) continue;
+		result.emplace_back(aData.first);
 	}
 	return result;
 }
 
-vector<int> searchByLastName(string target, unordered_map<int, Employee2> data)
+vector<unsigned int> searchByLastName(string target, unordered_map<unsigned int, Employee2> data)
 {
-	vector<int> result;
-	for (size_t i = 0; i < data.size(); i++) 
+	vector<unsigned int> result;
+	for (auto aData : data)
 	{
-		if (data[i].last_name != target) continue;
-		result.emplace_back(i);
+		if (aData.second.last_name != target) continue;
+		result.emplace_back(aData.first);
 	}
 	return result;
 }
