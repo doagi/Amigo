@@ -48,6 +48,12 @@ struct Employee2
             // exception
         }
 
+
+        // make first / last name
+        int pos_space = name_.find(" ");
+        first_name = name_.substr(0, pos_space);
+        last_name = name_.substr(pos_space, name_.length());
+
         // make phone num
         middle_phone_num = stoi(full_phone_number.substr(4, 4));
         last_phone_num = stoi(full_phone_number.substr(9, 4));
@@ -93,4 +99,21 @@ struct Command
         param_count = param_end - param_start
     };
     string param[param_count];
+};
+
+enum class Column : unsigned int
+{
+    EMPLOYEENUM,
+    NAME,
+    CL,
+    PHONENUM,
+    BIRTHDAY,
+    CERTI,
+    SIZE
+};
+
+struct ModificationInfo
+{
+    Column column;
+    string value;
 };

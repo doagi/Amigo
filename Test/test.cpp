@@ -148,12 +148,26 @@ namespace ModTest
     protected:
         void SetUp()
         {
+            string raw_data[][6]
+            {
+                { "17112609", "FB NTAWR",       "CL4", "010-5645-6122", "19861203", "PRO" },
+                { "02117175", "SBILHUT LDEXRI", "CL4", "010-2814-1699", "19950704", "ADV" },
+                { "08123556", "WN XV",          "CL1", "010-7986-5047", "20100614", "PRO" },
+                { "85125741", "FBAH RTIJ",      "CL1", "010-8900-1478", "19780228", "ADV" },
+                { "11109136", "QKAHCEX LTODDO", "CL4", "010-2627-8566", "19640130", "PRO" }
+            };
+
+            mod_test_db.reserve(5);
             found_5_data.reserve(5);
-            found_5_data.emplace_back(EmployeeData{ "17112609", "FB NTAWR", "CL4", "010-5645-6122", "19861203", "PRO" });
-            found_5_data.emplace_back(EmployeeData{ "02117175", "SBILHUT LDEXRI", "CL4", "010-2814-1699", "19950704", "ADV" });
-            found_5_data.emplace_back(EmployeeData{ "08123556", "WN XV", "CL1", "010-7986-5047", "20100614", "PRO" });
-            found_5_data.emplace_back(EmployeeData{ "85125741", "FBAH RTIJ", "CL1", "010-8900-1478", "19780228", "ADV" });
-            found_5_data.emplace_back(EmployeeData{ "11109136", "QKAHCEX LTODDO", "CL4", "010-2627-8566", "19640130", "PRO" });
+
+            for (int i = 0; i < 5; i++)
+            {
+                Employee2 employee = Employee2(raw_data[i][0], raw_data[i][1], raw_data[i][2],
+                    raw_data[i][3], raw_data[i][4], raw_data[i][5]);
+                mod_test_db[employee.employee_num] = employee;
+                found_5_data.emplace_back(employee.employee_num);
+            }
+
             found_1_data.emplace_back(found_5_data[0]);
         }
 
@@ -161,16 +175,19 @@ namespace ModTest
         {
             found_1_data.clear();
             found_5_data.clear();
+            mod_test_db.clear();
         }
 
-        vector<EmployeeData> found_0_data;
-        vector<EmployeeData> found_1_data;
-        vector<EmployeeData> found_5_data;
+        vector<unsigned int> found_0_data;
+        vector<unsigned int> found_1_data;
+        vector<unsigned int> found_5_data;
+
+        unordered_map<unsigned int, Employee2> mod_test_db;
     };
 
     TEST_F(AmigoModTest, Found_0_Record_0_Modify_Nothing)
     {
-        vector<string> result = Mod(found_0_data, ConditonData{ Column::BIRTHDAY, "20050520" });
+        vector<string> result = Mod(mod_test_db, found_0_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
 
         EXPECT_EQ(0, result.size());
     }
@@ -179,7 +196,7 @@ namespace ModTest
     {
         EXPECT_THROW(
         {
-            vector<string> result = Mod(found_1_data, ConditonData{ Column::SIZE, "20050520" });
+            vector<string> result = Mod(mod_test_db, found_1_data, ModificationInfo{ Column::SIZE, "20050520" });
         }, invalid_argument);
     }
 
@@ -187,13 +204,13 @@ namespace ModTest
     {
         EXPECT_THROW(
         {
-            vector<string> result = Mod(found_1_data, ConditonData{ Column::EMPLOYEENUM, "88114052" });
+            vector<string> result = Mod(mod_test_db, found_1_data, ModificationInfo{ Column::EMPLOYEENUM, "88114052" });
         }, invalid_argument);
     }
 
     TEST_F(AmigoModTest, Found_1_Record_1_Modify_Birthday)
     {
-        vector<string> result = Mod(found_1_data, ConditonData{ Column::BIRTHDAY, "20050520" });
+        vector<string> result = Mod(mod_test_db, found_1_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
 
         const string expect_result = "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 19861203, PRO";
 
@@ -204,9 +221,9 @@ namespace ModTest
     TEST_F(AmigoModTest, Found_1_Record_1_Modify_Birthday_Updated)
     {
         // 1st try and then updated
-        Mod(found_1_data, ConditonData{ Column::BIRTHDAY, "20050520" });
+        Mod(mod_test_db, found_1_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
 
-        vector<string> result = Mod(found_1_data, ConditonData{ Column::BIRTHDAY, "20050520" });
+        vector<string> result = Mod(mod_test_db, found_1_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
 
         const string expect_result = "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 20050520, PRO";
 
@@ -217,11 +234,11 @@ namespace ModTest
     TEST_F(AmigoModTest, Found_5_Record_5_Modify_Name_Updated)
     {
         // 1st try and then updated
-        Mod(found_5_data, ConditonData{ Column::NAME, "Anonymous" });
+        Mod(mod_test_db, found_5_data, ModificationInfo{ Column::NAME, "Anonymous" });
 
-        vector<string> result = Mod(found_5_data, ConditonData{ Column::NAME, "Anonymous" });
+        vector<string> result = Mod(mod_test_db, found_5_data, ModificationInfo{ Column::NAME, "Anonymous" });
 
-        const string expect_result[] =
+        const string expect_result[]
         {
             "MOD, 17112609, Anonymous, CL4, 010-5645-6122, 19861203, PRO",
             "MOD, 02117175, Anonymous, CL4, 010-2814-1699, 19950704, ADV",
@@ -241,11 +258,11 @@ namespace ModTest
     TEST_F(AmigoModTest, Found_5_Record_5_Modify_CL_Updated)
     {
         // 1st try and then updated
-        Mod(found_5_data, ConditonData{ Column::CL, "CL3" });
+        Mod(mod_test_db, found_5_data, ModificationInfo{ Column::CL, "CL3" });
 
-        vector<string> result = Mod(found_5_data, ConditonData{ Column::CL, "CL3" });
+        vector<string> result = Mod(mod_test_db, found_5_data, ModificationInfo{ Column::CL, "CL3" });
 
-        const string expect_result[] =
+        const string expect_result[]
         {
             "MOD, 17112609, FB NTAWR, CL3, 010-5645-6122, 19861203, PRO",
             "MOD, 02117175, SBILHUT LDEXRI, CL3, 010-2814-1699, 19950704, ADV",
@@ -265,11 +282,11 @@ namespace ModTest
     TEST_F(AmigoModTest, Found_5_Record_5_Modify_PhoneNum_Updated)
     {
         // 1st try and then updated
-        Mod(found_5_data, ConditonData{ Column::PHONENUM, "010-1234-0000" });
+        Mod(mod_test_db, found_5_data, ModificationInfo{ Column::PHONENUM, "010-1234-0000" });
 
-        vector<string> result = Mod(found_5_data, ConditonData{ Column::PHONENUM, "010-1234-0000" });
+        vector<string> result = Mod(mod_test_db, found_5_data, ModificationInfo{ Column::PHONENUM, "010-1234-0000" });
 
-        const string expect_result[] =
+        const string expect_result[]
         {
             "MOD, 17112609, FB NTAWR, CL4, 010-1234-0000, 19861203, PRO",
             "MOD, 02117175, SBILHUT LDEXRI, CL4, 010-1234-0000, 19950704, ADV",
@@ -289,11 +306,11 @@ namespace ModTest
     TEST_F(AmigoModTest, Found_5_Record_5_Modify_Birthday_Updated)
     {
         // 1st try and then updated
-        Mod(found_5_data, ConditonData{ Column::BIRTHDAY, "20050520" });
+        Mod(mod_test_db, found_5_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
 
-        vector<string> result = Mod(found_5_data, ConditonData{ Column::BIRTHDAY, "20050520" });
+        vector<string> result = Mod(mod_test_db, found_5_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
 
-        const string expect_result[] =
+        const string expect_result[]
         {
             "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 20050520, PRO",
             "MOD, 02117175, SBILHUT LDEXRI, CL4, 010-2814-1699, 20050520, ADV",
@@ -313,11 +330,11 @@ namespace ModTest
     TEST_F(AmigoModTest, Found_5_Record_5_Modify_Certi_Updated)
     {
         // 1st try and then updated
-        Mod(found_5_data, ConditonData{ Column::CERTI, "EX" });
+        Mod(mod_test_db, found_5_data, ModificationInfo{ Column::CERTI, "EX" });
 
-        vector<string> result = Mod(found_5_data, ConditonData{ Column::CERTI, "EX" });
+        vector<string> result = Mod(mod_test_db, found_5_data, ModificationInfo{ Column::CERTI, "EX" });
 
-        const string expect_result[] =
+        const string expect_result[]
         {
             "MOD, 17112609, FB NTAWR, CL4, 010-5645-6122, 19861203, EX",
             "MOD, 02117175, SBILHUT LDEXRI, CL4, 010-2814-1699, 19950704, EX",
