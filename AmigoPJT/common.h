@@ -135,12 +135,12 @@ struct ModificationInfo
 
 static string GenerateRecord(const std::string& cmd, Employee2& employee)
 {
-    string result = cmd + ", ";
-    result += employee.str_employee_num + ", ";
-    result += employee.full_name + ", ";
-    result += employee.cl + ", ";
-    result += employee.full_phone_number + ", ";
-    result += employee.full_birthday + ", ";
+    string result = cmd + ",";
+    result += employee.str_employee_num + ",";
+    result += employee.full_name + ",";
+    result += employee.cl + ",";
+    result += employee.full_phone_number + ",";
+    result += employee.full_birthday + ",";
     result += employee.certi;
     return result;
 }
