@@ -2,42 +2,16 @@
 
 #include <iostream>
 #include <string>
+#include <unordered_map>
 #include <vector>
+
+#include "../common.h"
 
 using namespace std;
 
-// ToDo: Will remove or move to common
-struct EmployeeData
-{
-    string employeeNum;
-    string name;
-    string cl;
-    string phoneNum;
-    string birthday;
-    string certi;
-};
+vector<string> Mod(unordered_map<unsigned int, Employee2>& map_employees,
+    vector<unsigned int>& found_data, const ModificationInfo& condition);
 
-// ToDo: Will remove or move to common
-enum class Column : unsigned int
-{
-    EMPLOYEENUM,
-    NAME,
-    CL,
-    PHONENUM,
-    BIRTHDAY,
-    CERTI,
-    SIZE
-};
+string GenerateRecord(const std::string& cmd, Employee2& data);
 
-// ToDo: Will remove or move to common
-struct ConditonData
-{
-    Column column;
-    string value;
-};
-
-vector<string> Mod(vector<EmployeeData>& found_data, const ConditonData& condition);
-
-string GenerateRecord(const std::string& cmd, EmployeeData& data);
-
-void ModifyColumnData(const ConditonData& condition, EmployeeData& data);
+void ModifyColumnData(Employee2& employee, const ModificationInfo& mod_info);
