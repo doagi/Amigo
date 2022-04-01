@@ -94,3 +94,20 @@ struct Command
     };
     string param[param_count];
 };
+
+enum class Column : unsigned int
+{
+    EMPLOYEENUM,
+    NAME,
+    CL,
+    PHONENUM,
+    BIRTHDAY,
+    CERTI,
+    SIZE
+};
+
+struct ModificationInfo
+{
+    Column column;
+    string value;
+};
