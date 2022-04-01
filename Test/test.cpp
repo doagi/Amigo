@@ -196,7 +196,7 @@ namespace SeachTest
     }
 
 
-    std::map<int, Employee2> testdata = {
+    std::unordered_map<int, Employee2> testdata = {
         { 2015123099, {2015123099, "15123099", "VXIHXOTH JHOP" , "010-3112-2609", "19771211", "CL3", "VXIHXOTH", "JHOP"  , 3112, 2609, 1977, 12, 11, "ADV"}},
         { 2017112609, {2017112609, "17112609", "FB NTAWR"      , "010-5645-6122", "19861203", "CL4", "FB"      , "NTAWR" , 5645, 6122, 1986, 12,  3, "PRO"}},
         { 2018115040, {2018115040, "18115040", "TTETHU HBO"    , "010-4581-2050", "20080718", "CL3", "TTETHU"  , "HBO"   , 4581, 2050, 2008,  7, 18, "ADV"}},

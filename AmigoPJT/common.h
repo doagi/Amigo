@@ -16,6 +16,24 @@ struct Employee
     string certi;
 };
 
+struct Employee2
+{
+    int employee_num;           // 앞 2자리 년도 포함
+    string str_employee_num;    // 앞 2자리 년도 불포함.
+    string full_name;
+    string full_phone_number;
+    string full_birthday;
+    string cl;
+    string first_name;
+    string last_name;
+    int middle_phone_num;
+    int last_phone_num;
+    int year_birthday;
+    int month_birthday;
+    int day_birthday;
+    string certi;
+};
+
 struct Command
 {
     enum
