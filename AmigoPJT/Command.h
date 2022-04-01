@@ -12,10 +12,10 @@ extern unordered_map<unsigned int, Employee2> map_employees;
 
 int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi);
 int Mod(string op1, string op2, string targetColumn, string targetValue, string srcColumn, string srcValue);
-int Sch(string op1, string op2, string column, string value);
+vector<unsigned int> Sch(string op1, string op2, string column, string value, unordered_map<unsigned int, Employee> employees);
 int Del(string op1, string op2, string column, string value);
 
-void CommandRun(vector<Command> commands);
+void CommandRun(vector<Command> commands, unordered_map<unsigned int, Employee> employees);
 
 // from DelCommand.cpp
 bool employeeNum(string a, Employee b);

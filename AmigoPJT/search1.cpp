@@ -1,62 +1,73 @@
 #include "search1.h"
 
-vector<Employee> SearchByYear(string target)
+vector<unsigned int> SearchByYear(string target, unordered_map<unsigned int, Employee> employees)
 {
-    vector<Employee> result;
-    for (Employee an_employee : employees)
+    vector<unsigned int> result;
+    for (const auto& an_employee : employees)
     {
-        if (an_employee.birthday.substr(0,4) == target)
+        if (an_employee.second.year_birthday == stoi(target))
         {
-            result.push_back(an_employee);
+            result.push_back(an_employee.second.employee_num);
         }
     }
     return result;
 }
 
-vector<Employee> SearchByMonth(string target)
+vector<unsigned int> SearchByMonth(string target, unordered_map<unsigned int, Employee> employees)
 {
-    vector<Employee> result;
-    for (Employee an_employee : employees)
+    vector<unsigned int> result;
+
+    for (const auto& an_employee : employees)
     {
-        if (an_employee.birthday.substr (4, 2) == target)
+        if (an_employee.second.month_birthday == stoi(target))
         {
-            result.push_back(an_employee);
+            result.push_back(an_employee.second.employee_num);
         }
     }
     return result;
 }
-vector<Employee> SearchByDate(string target)
+vector<unsigned int> SearchByDate(string target, unordered_map<unsigned int, Employee> employees)
 {
-    vector<Employee> result;
-    for (Employee an_employee : employees)
+    vector<unsigned int> result;
+    for (const auto& an_employee : employees)
     {
-        if (an_employee.birthday.substr (6, 2) == target)
+        if (an_employee.second.day_birthday == stoi(target))
         {
-            result.push_back(an_employee);
+            result.push_back(an_employee.second.employee_num);
         }
     }
     return result;
 }
 
-int SearchByBirthday(string option, string target)
+vector<unsigned int> SearchByFullBirthday(string target, unordered_map<unsigned int, Employee> employees)
 {
-    vector<Employee> result;
-
-    switch(option[1])
+    vector<unsigned int> result;
+    for (const auto& an_employee : employees)
     {
-    case 'y':
-        result = SearchByYear(target);
-        break;
-
-    case 'm':
-        result = SearchByMonth(target);
-        break;
-
-    case 'd':
-        result = SearchByDate(target);
-        break;
+        if (an_employee.second.full_birthday == target)
+        {
+            result.push_back(an_employee.second.employee_num);
+        }
     }
+    return result;
+}
 
-    return result.size();
-
+vector<unsigned int> SearchByBirthday(string op2, string target, unordered_map<unsigned int, Employee> employees)
+{
+    if (op2 == "-y")
+    {
+        return SearchByYear(target, employees);
+    }
+    else if (op2 == "-m")
+    {
+        return SearchByMonth(target, employees);
+    }
+    else if (op2 == "-d")
+    {
+        return SearchByDate(target, employees);
+    }
+    else
+    {
+        return SearchByFullBirthday(target, employees);
+    }
 }

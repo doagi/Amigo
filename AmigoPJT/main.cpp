@@ -9,7 +9,7 @@
 
 using namespace std;
 
-vector<Employee> employees;
+unordered_map<unsigned int, Employee> employees;
 vector<Command> commands;
 unordered_map<unsigned int, Employee2> map_employees;
 
@@ -21,7 +21,7 @@ int main(int argc, char** argv)
 
 	commands = ParserFromTxt(Path);
 
-	CommandRun(commands);
+	CommandRun(commands, employees);
 
 	return 0;
 }

@@ -5,7 +5,7 @@
 #include "common.h"
 
 using namespace std;
-extern vector<Employee> employees;
-extern vector<Command> commands;
+//extern unordered_map<int, Employee> employees;
+//extern vector<Command> commands;
 
-int SearchByBirthday(string option, string target);
+vector<unsigned int> SearchByBirthday(string op2, string target, unordered_map<unsigned int, Employee> employees);
