@@ -7,10 +7,10 @@
 #include "../AmigoPJT/searchByName.cpp"
 #include "../AmigoPJT/searchByPhoneNumber.cpp"
 
-#include <map>
+#include <unordered_map>
 
 vector<Employee> employees;
-map<int, Employee2> map_employees;
+unordered_map<unsigned int, Employee2> map_employees;
 
 void Init()
 {

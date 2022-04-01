@@ -7,7 +7,7 @@
 using namespace std;
 
 extern vector<Employee> employees;
-extern map<int, Employee2> map_employees;
+extern unordered_map<unsigned int, Employee2> map_employees;
 
 
 int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi);

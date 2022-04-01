@@ -3,7 +3,7 @@
 int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
 {    
     Employee2 newEmployee = Employee2(employee_num, name, cl, phoneNum, birthday, certi);
-    map_employees.insert(make_pair(newEmployee.employee_num, newEmployee));
+    map_employees[newEmployee.employee_num] = newEmployee;
 
     return map_employees.size();
 }
