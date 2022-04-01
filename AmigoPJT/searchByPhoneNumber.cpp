@@ -1,24 +1,34 @@
 #include "searchByPhoneNumber.h"
 
-int searchByMiddlePhoneNumber(int target, vector<Employee> data) {
-	int result = 0;
-	for (size_t i = 0; i < data.size(); i++) {
-		string middle_number = data[i].phone_num.substr(4, 4);
-		if (stoi(middle_number) != target) continue;
-		result = i;
-		break; // TODO : return 형식 논의하여 여러 개 찾을 수 있도록 하고 Sort 구현하기
+vector<unsigned int> searchByPhoneNumber(string target, unordered_map<unsigned int, Employee2> data)
+{
+	vector<unsigned int> result;
+	for (auto aData : data)
+	{
+		if (aData.second.full_phone_number != target) continue;
+		result.emplace_back(aData.first);
 	}
 	return result;
 }
 
-int searchByLastPhoneNumber(int target, vector<Employee> data) {
-	int result = 0;
-	for (size_t i = 0; i < data.size(); i++) {
-		string last_number = data[i].phone_num.substr(9, 4);
-		if (stoi(last_number) != target) continue;
-		result = i;
-		break; // TODO : return 형식 논의하여 여러 개 찾을 수 있도록 하고 Sort 구현하기
+vector<unsigned int> searchByMiddlePhoneNumber(unsigned int target, unordered_map<unsigned int, Employee2> data)
+{
+	vector<unsigned int> result;
+	for (auto aData : data)
+	{
+		if (aData.second.middle_phone_num != target) continue;
+		result.emplace_back(aData.first);
 	}
+	return result;
+}
 
+vector<unsigned int> searchByLastPhoneNumber(unsigned int target, unordered_map<unsigned int, Employee2> data)
+{
+	vector<unsigned int> result;
+	for (auto aData : data) 
+	{
+		if (aData.second.last_phone_num != target) continue;
+		result.emplace_back(aData.first);
+	}
 	return result;
 }
