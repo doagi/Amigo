@@ -22,9 +22,38 @@ int Sch(string op1, string op2, string column, string value)
 {
     if(column == "birthday")
     {
-        return SearchByBirthday(op2, value);
+        //return SearchByBirthday(op2, value);
     }
     return 0;
+}
+
+
+
+string Del(vector<Employee>& employee, bool (*compare)(string, Employee), string targetValue)
+{
+
+    int numTarget = 0;
+    for (int i = 0; i < employee.size();)
+    {
+        if (compare(targetValue, employee[i]))
+        {
+            numTarget++;
+            employee.erase(employee.begin() + i);
+        }
+        else
+        {
+            i++;
+        }
+    }
+
+    if (numTarget == 0)
+    {
+        return "DEL,NONE";
+    }
+    else
+    {
+        return "DEL," + to_string(numTarget);
+    }
 }
 
 void CommandRun(vector<Command> commands)
@@ -46,7 +75,7 @@ void CommandRun(vector<Command> commands)
 		{
 			result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
 
-			Del(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
+			//Del(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
 
 		}
 		else if (a_command.param[0] == "MOD")

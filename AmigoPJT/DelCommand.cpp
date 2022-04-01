@@ -34,30 +34,3 @@ bool certi(string a, Employee b)
 {
     return a == b.certi;
 }
-
-string Del(vector<Employee>& employee, bool (*compare)(string, Employee), string targetValue)
-{
-
-    int numTarget = 0;
-    for (int i = 0; i < employee.size();)
-    {
-        if (compare(targetValue, employee[i]))
-        {
-            numTarget++;
-            employee.erase(employee.begin() + i);
-        }
-        else
-        {
-            i++;
-        }
-    }
-
-    if (numTarget == 0)
-    {
-        return "DEL,NONE";
-    }
-    else
-    {
-        return "DEL," + to_string(numTarget);
-    }
-}
