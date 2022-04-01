@@ -19,9 +19,62 @@ int Del(string op1, string op2, string column, string value) {
 
 int Sch(string op1, string op2, string column, string value)
 {
+    vector<unsigned int> employees;
     if(column == "birthday")
     {
         //return SearchByBirthday(op2, value);
+    }
+    if (column == "employeeNum")
+    {
+        //employees = 
+    }
+    if (column == "name")
+    {
+        if (op2.empty()) {
+            employees = searchByName(value, map_employees);
+        }
+        else if (op2 == "-f") 
+        {
+            employees = searchByFirstName(value, map_employees);
+        }
+        else if (op2 == "-l")
+        {
+            employees = searchByLastName(value, map_employees);
+        }
+        else
+        {
+            printf("Invalid Option 2!!\n"); // TODO : exception 설정
+        }
+    }
+    if (column == "cl")
+    {
+        //employees =
+    }
+    if (column == "phoneNum")
+    {
+        if (op2.empty()) {
+            employees = searchByPhoneNumber(value, map_employees);
+        }
+        else if (op2 == "-f")
+        {
+            employees = searchByMiddlePhoneNumber(stoi(value), map_employees);
+        }
+        else if (op2 == "-l")
+        {
+            employees = searchByLastPhoneNumber(stoi(value), map_employees);
+        }
+        else
+        {
+            printf("Invalid Option 2!!\n"); // TODO : exception 설정
+        }
+    }
+    if (column == "birthday")
+    {
+        //employees =
+    }
+    if (column == "certi")
+    {
+        employees = searchByCerti(value, map_employees);
     }
     return 0;
 }
