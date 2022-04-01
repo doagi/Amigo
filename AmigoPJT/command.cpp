@@ -2,10 +2,11 @@
 
 int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
 {
-    Employee newEmployee = Employee(employee_num, name, cl, phoneNum, birthday, certi);
-    employees.push_back(newEmployee);
+//    Employee newEmployee = Employee(employee_num, name, cl, phoneNum, birthday, certi);
+//   employees.push_back(newEmployee);
 
-    return employees.size();
+//    return employees.size();
+    return 0;
 }
 
 int Mod(string op1, string op2, string targetColumn, string targetValue, string srcColumn, string srcValue)
@@ -17,41 +18,41 @@ int Del(string op1, string op2, string column, string value) {
 	return 0;
 }
 
-int Sch(string op1, string op2, string column, string value)
+vector<unsigned int> Sch(string op1, string op2, string column, string value, unordered_map<unsigned int, Employee> employees)
 {
     if(column == "birthday")
     {
-        //return SearchByBirthday(op2, value);
+        return SearchByBirthday(op2, value, employees);
     }
-    return 0;
+
 }
 
 
-void CommandRun(vector<Command> commands)
+void CommandRun(vector<Command> commands, unordered_map<unsigned int, Employee> employees)
 {
-    int result;
+    vector<unsigned int> search_result;
 
     for (auto& a_command : commands)
     {
         if (a_command.param[0] == "ADD")
         {
-            result = Add(a_command.param[4], a_command.param[5], a_command.param[6], a_command.param[7], a_command.param[8], a_command.param[9]);
+            Add(a_command.param[4], a_command.param[5], a_command.param[6], a_command.param[7], a_command.param[8], a_command.param[9]);
         }
         else if (a_command.param[0] == "SCH")
         {
-            result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
+            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5], employees);
 
         }
         else if (a_command.param[0] == "DEL")
         {
-            result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
+            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5], employees);
 
             //Del(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
 
         }
         else if (a_command.param[0] == "MOD")
         {
-            result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
+            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5], employees);
 
         }
         else
@@ -61,7 +62,7 @@ void CommandRun(vector<Command> commands)
         //일단 갯수만 출력하도록 함
         if (a_command.param[0] != "ADD")
         {
-            cout << a_command.param[0] << ", " << result << endl;
+            cout << a_command.param[0] << ", " << search_result.size() << endl;
         }
     }
 }
@@ -70,12 +71,12 @@ void CommandRun(vector<Command> commands)
 
 bool employeeNum(string a, Employee b)
 {
-    return a == b.employee_num;
+    return a == b.str_employee_num;
 }
 
 bool name(string a, Employee b)
 {
-    return a == b.name;
+    return a == b.full_name;
 }
 
 bool cl(string a, Employee b)
@@ -85,12 +86,12 @@ bool cl(string a, Employee b)
 
 bool phoneNum(string a, Employee b)
 {
-    return a == b.phone_num;
+    return a == b.full_phone_number;
 }
 
 bool birthday(string a, Employee b)
 {
-    return a == b.birthday;
+    return a == b.full_birthday;
 }
 
 bool certi(string a, Employee b)
