@@ -78,38 +78,32 @@ int Mod(const vector<unsigned int>& founds, string column, string value)
     return result.size();
 }
 
-string GenerateCommandRecord(const std::string& command, const bool& detail_print, const vector<unsigned int>& targets)
+string GenerateCommandRecord(const std::string& command, const bool& is_print_list, const vector<unsigned int>& targets)
 {
-    if (detail_print)
+    if (targets.size() < 1)
     {
-        return GenerateDetailRecord(command, targets);
+        return command + ",NONE";
     }
 
-    return GenerateSimpleRecord(command, targets.size());
+    if (!is_print_list)
+    {
+        return command + "," + to_string(targets.size());
+    }
+
+    return GenerateDetailRecord(command, targets);
 }
 
 string GenerateDetailRecord(const std::string& command, const vector<unsigned int>& targets)
 {
     string result = "";
 
-    if (targets.size() > 0)
+    for (size_t i = 0; i < targets.size(); i++)
     {
-        for (const auto& num : targets)
-        {
-            result += GenerateRecord(command, map_employees[num]) + "\n";
-        }
-    }
-    else
-    {
-        result = command + ",NONE";
+        result += GenerateRecord(command, map_employees[targets[i]]);
+        result += (i < targets.size() - 1) ? "\n" : "";
     }
 
     return result;
-}
-
-string GenerateSimpleRecord(const std::string& command, const size_t count)
-{
-    return command + "," + to_string(count);
 }
 
 void CommandRun(vector<Command> commands)
