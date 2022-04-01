@@ -1,7 +1,7 @@
 #include "command.h"
 
 int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
-{    
+{
     Employee2 newEmployee = Employee2(employee_num, name, cl, phoneNum, birthday, certi);
     map_employees[newEmployee.employee_num] = newEmployee;
 
@@ -17,88 +17,133 @@ int Del(string op1, string op2, string column, string value) {
 	return 0;
 }
 
-int Sch(string op1, string op2, string column, string value)
+vector<unsigned int> Sch(string op1, string op2, string column, string value, unordered_map<unsigned int, Employee2> employees)
 {
+    vector<unsigned int> result;
     if(column == "birthday")
     {
-        //return SearchByBirthday(op2, value);
+        return SearchByBirthday(op2, value, employees);
     }
-    return 0;
+    else if(column == "name")
+    {
+        if(op2 == "-f")
+        {
+            return searchByFirstName(value, employees);
+        }
+        else if(op2 == "-l")
+        {
+            return searchByLastName(value, employees);
+        }
+        else
+        {
+            return searchByName(value, employees);
+        }
+    }
+    else if(column == "phoneNum")
+    {
+        if (op2 == "-m")
+        {
+            return searchByMiddlePhoneNumber(stoi(value), employees);
+        }
+        else if (op2 == "-l")
+        {
+            return searchByLastPhoneNumber(stoi(value), employees);
+        }
+        else
+        {
+            return searchByPhoneNumber(value, employees);
+        }
+    }
+    else if(column == "employeeNum")
+    {
+    
+    }
+
+    return result;
+
 }
 
 
 void CommandRun(vector<Command> commands)
 {
-    int result;
+    vector<unsigned int> search_result;
+    int num_data = 0;
 
     for (auto& a_command : commands)
     {
+        search_result.clear();
+
         if (a_command.param[0] == "ADD")
         {
-            result = Add(a_command.param[4], a_command.param[5], a_command.param[6], a_command.param[7], a_command.param[8], a_command.param[9]);
+            num_data = Add(a_command.param[4], a_command.param[5], a_command.param[6], a_command.param[7], a_command.param[8], a_command.param[9]);
         }
         else if (a_command.param[0] == "SCH")
         {
-            result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
+            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5], map_employees);
 
         }
         else if (a_command.param[0] == "DEL")
         {
-            result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
+           search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5], map_employees);
 
             //Del(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
 
         }
         else if (a_command.param[0] == "MOD")
         {
-            result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
+            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5], map_employees);
 
         }
         else
         {
             //exception case
         }
+
         //일단 갯수만 출력하도록 함
-        if (a_command.param[0] != "ADD")
-        {
-            cout << a_command.param[0] << ", " << result << endl;
-        }
+      if (a_command.param[0] != "ADD")
+      {
+            cout << a_command.param[0] << ", " << search_result.size() << endl;
+      }
+      else
+      {
+          cout << a_command.param[0] << ", " << num_data << endl;
+      }
     }
 }
 
 // from DelCommand.cpp
 
-bool employeeNum(string a, Employee b)
+bool employeeNum(string a, Employee2 b)
 {
-    return a == b.employee_num;
+    return a == b.str_employee_num;
 }
 
-bool name(string a, Employee b)
+bool name(string a, Employee2 b)
 {
-    return a == b.name;
+    return a == b.full_name;
 }
 
-bool cl(string a, Employee b)
+bool cl(string a, Employee2 b)
 {
     return a == b.cl;
 }
 
-bool phoneNum(string a, Employee b)
+bool phoneNum(string a, Employee2 b)
 {
-    return a == b.phone_num;
+    return a == b.full_phone_number;
 }
 
-bool birthday(string a, Employee b)
+bool birthday(string a, Employee2 b)
 {
-    return a == b.birthday;
+    return a == b.full_birthday;
 }
 
-bool certi(string a, Employee b)
+bool certi(string a, Employee2 b)
 {
     return a == b.certi;
 }
 
-string Del(vector<Employee>& employee, bool (*compare)(string, Employee), string targetValue)
+string Del(vector<Employee2>& employee, bool (*compare)(string, Employee2), string targetValue)
 {
 
     int numTarget = 0;
