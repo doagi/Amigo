@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <unordered_map>
 
 #include "common.h"
 #include "cmd_parser.h"
@@ -9,7 +8,7 @@
 
 using namespace std;
 
-vector<Employee> employees;
+//unordered_map<unsigned int, Employee> employees;
 vector<Command> commands;
 unordered_map<unsigned int, Employee2> map_employees;
 
