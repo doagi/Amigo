@@ -98,6 +98,20 @@ struct Command
         param_end,
         param_count = param_end - param_start
     };
+
+    Command()
+    {
+        for (auto entry : param)
+        {
+            entry = "";
+        }
+    }
+
+    bool IsValid()
+    {
+        return param[0] != "";
+    }
+
     string param[param_count];
 };
 
