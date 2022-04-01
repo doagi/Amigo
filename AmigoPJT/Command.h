@@ -1,9 +1,13 @@
 #pragma once
 #include <iostream>
+#include <map>
 #include "common.h"
 #include "search1.h"
 
 using namespace std;
+
+extern vector<Employee> employees;
+extern map<int, Employee2> map_employees;
 
 
 int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi);

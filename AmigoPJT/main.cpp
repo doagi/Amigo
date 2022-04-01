@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <map>
+
 #include "common.h"
 #include "cmd_parser.h"
 #include "search1.h"
@@ -9,6 +11,7 @@ using namespace std;
 
 vector<Employee> employees;
 vector<Command> commands;
+map<int, Employee2> map_employees;
 
 int main(int argc, char** argv) 
 {
