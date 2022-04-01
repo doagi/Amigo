@@ -10,51 +10,57 @@ int Add(string employee_num, string name, string cl, string phoneNum, string bir
     return map_employees.size();
 }
 
-vector<unsigned int> Sch(string op1, string op2, string column, string value, unordered_map<unsigned int, Employee2> employees)
+vector<unsigned int> Sch(string op1, string op2, string column, string value)
 {
-    vector<unsigned int> result;
-    if(column == "birthday")
+    vector<unsigned int> employees;
+    if (column == "birthday")
     {
-        return SearchByBirthday(op2, value, employees);
+        employees = SearchByBirthday(op2, value, map_employees);
     }
-    else if(column == "name")
+    else if (column == "name")
     {
-        if(op2 == "-f")
+        if (op2 == "-f")
         {
-            return searchByFirstName(value, employees);
-        }
-        else if(op2 == "-l")
-        {
-            return searchByLastName(value, employees);
-        }
-        else
-        {
-            return searchByName(value, employees);
-        }
-    }
-    else if(column == "phoneNum")
-    {
-        if (op2 == "-m")
-        {
-            return searchByMiddlePhoneNumber(stoi(value), employees);
+            employees = searchByFirstName(value, map_employees);
         }
         else if (op2 == "-l")
         {
-            return searchByLastPhoneNumber(stoi(value), employees);
+            employees = searchByLastName(value, map_employees);
         }
         else
         {
-            return searchByPhoneNumber(value, employees);
+            employees = searchByName(value, map_employees);
         }
     }
-    else if(column == "employeeNum")
+    else if (column == "phoneNum")
     {
-    
+        if (op2 == "-m")
+        {
+            employees = searchByMiddlePhoneNumber(stoi(value), map_employees);
+        }
+        else if (op2 == "-l")
+        {
+            employees = searchByLastPhoneNumber(stoi(value), map_employees);
+        }
+        else
+        {
+            employees = searchByPhoneNumber(value, map_employees);
+        }
     }
-
-    return result;
+    else if (column == "employeeNum")
+    {
+        employees = searchByEmployeeNumber(value, map_employees);
+    }
+    else if (column == "certi")
+    {
+        employees = searchByCerti(value, map_employees);
+    }
+    else if (column == "cl")
+    {
+        employees = searchByCl(value, map_employees);
+    }
+    return employees;
 }
-
 int Del(string op2, string column, string value) {
     // ToDo(한수용) : 구현
 
@@ -96,11 +102,19 @@ string GenerateCommandRecord(const std::string& command, const bool& is_print_li
 string GenerateDetailRecord(const std::string& command, const vector<unsigned int>& targets)
 {
     string result = "";
+    map<unsigned int, Employee2> sorted_results;
+    const int kMaxPrintNum = 5;
+    int num_data = 0;
 
-    for (size_t i = 0; i < targets.size(); i++)
+    for (const auto& num : targets)
     {
-        result += GenerateRecord(command, map_employees[targets[i]]);
-        result += (i < targets.size() - 1) ? "\n" : "";
+        sorted_results.insert(pair<unsigned int, Employee2> (num, map_employees[num]));
+    }
+
+    for (auto it = sorted_results.begin(); ((it != sorted_results.end()) && (num_data < kMaxPrintNum)); it++, num_data++)
+    {
+        result += GenerateRecord(command, it->second);
+        result += (i < (kMaxPrintNum - 1)) ? "\n" : "";
     }
 
     return result;
@@ -125,13 +139,13 @@ void CommandRun(vector<Command> commands)
         }
         else if (command == "SCH")
         {
-            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5], map_employees);
+            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
 
             output_records.emplace_back(GenerateCommandRecord(command, (option1 == "-p"), search_result));
         }
         else if (command == "DEL")
         {
-            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5], map_employees);
+           search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
 
             output_records.emplace_back(GenerateCommandRecord(command, (option1 == "-p"), search_result));
 
@@ -139,7 +153,7 @@ void CommandRun(vector<Command> commands)
         }
         else if (command == "MOD")
         {
-            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5], map_employees);
+            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
 
             output_records.emplace_back(GenerateCommandRecord(command, (option1 == "-p"), search_result));
 
