@@ -19,6 +19,7 @@ struct Employee
 
 struct Employee2
 {
+    Employee2() {}
     Employee2(string employee_num_, string name_, string cl_, string phone_num_, string birthday_, string certi_)
     {
         str_employee_num = employee_num_;
