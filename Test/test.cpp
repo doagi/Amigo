@@ -371,55 +371,72 @@ namespace SeachTest
 
     
     
-    makeDataforSearch();
     TEST(AmigoSearchTest, Name)
     {
+        makeDataforSearch();
         vector<unsigned int> answer = { map_employees[2015123099].employee_num };
-        for (size_t i = 0; i < answer.size(); i++)
+        vector<unsigned int> ret = searchByName("VXIHXOTH JHOP", map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
         {
-            EXPECT_EQ(answer[i], searchByName("VXIHXOTH JHOP", map_employees)[i]);
+            EXPECT_EQ(answer[i], ret[i]);
         }
 
     }
 
     TEST(AmigoSearchTest, optionF_Name) {
-        vector<unsigned int> answer = { map_employees[2018117906].employee_num, map_employees[11].employee_num };
-        for (size_t i = 0; i < answer.size(); i++)
+        makeDataforSearch();
+        vector<unsigned int> answer = { map_employees[2018117906].employee_num, map_employees[2001122329].employee_num };
+        vector<unsigned int> ret = searchByFirstName("TWU", map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
         {
-            EXPECT_EQ(answer[i], searchByFirstName("TWU", map_employees)[i]);
+            EXPECT_EQ(answer[i], ret[i]);
         }
     }
 
     TEST(AmigoSearchTest, optionL_Name) {
-        vector<unsigned int> answer = { map_employees[2018115040].employee_num };
-        for (size_t i = 0; i < answer.size(); i++)
+        makeDataforSearch();
+        vector<unsigned int> answer = { map_employees.find(2018115040)->second.employee_num };
+        vector<unsigned int> ret = searchByLastName("HBO", map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
         {
-            EXPECT_EQ(answer[i], searchByLastName("HBO", map_employees)[i]);
+            EXPECT_EQ(answer[i], ret[i]);
         }
     }
 
     TEST(AmigoSearchTest, PhoneNumber)
     {
+        makeDataforSearch();
         vector<unsigned int> answer = { map_employees[2017112609].employee_num };
-        for (size_t i = 0; i < answer.size(); i++)
+        vector<unsigned int> ret = searchByPhoneNumber("010-5645-6122", map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
         {
-            EXPECT_EQ(answer[i], searchByPhoneNumber("010-5645-6122", map_employees)[i]);
+            EXPECT_EQ(answer[i], ret[i]);
         }
     }
 
     TEST(AmigoSearchTest, optionM_Phone) {
+        makeDataforSearch();
         vector<unsigned int> answer = { map_employees[1988114052].employee_num, map_employees[2014130827].employee_num };
-        for (size_t i = 0; i < answer.size(); i++)
+        vector<unsigned int> ret = searchByMiddlePhoneNumber(4528, map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
         {
-            EXPECT_EQ(answer[i], searchByMiddlePhoneNumber(4528, map_employees)[i]);
+            EXPECT_EQ(answer[i], ret[i]);
         }
     }
 
     TEST(AmigoSearchTest, optionL_Phone) {
+        makeDataforSearch();
         vector<unsigned int> answer = { map_employees[2008123556].employee_num };
-        for (size_t i = 0; i < answer.size(); i++)
+        vector<unsigned int> ret = searchByLastPhoneNumber(5047, map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
         {
-            EXPECT_EQ(answer[i], searchByLastPhoneNumber(5047, map_employees)[i]);
+            EXPECT_EQ(answer[i], ret[i]);
         }
     }
 }
