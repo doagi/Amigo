@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "../AmigoPJT/search1.cpp"
 
+vector<Employee> employees;
+
 TEST(AmigoSCH1Test, TestByYear) 
 {
     employees.push_back({ "15123099","VXASDGH J","CL3","010-2049-2609","19771211","ADV" });

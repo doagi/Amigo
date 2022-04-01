@@ -1,32 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="command.cpp" />
-    <ClCompile Include="txt_parser.cpp" />
-    <ClCompile Include="common.h" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="search1.cpp" />
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="command.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="DelCommand.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="searchByPhoneNumber.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="searchByName.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="command\mod.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="command.cpp">
+    <ClCompile Include="search1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="searchByName.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="searchByPhoneNumber.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="txt_parser.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="DelCommand.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -34,32 +50,32 @@
     <Text Include="input_20_20.txt">
       <Filter>리소스 파일</Filter>
     </Text>
+    <Text Include="output_20_20.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cmd_parser.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="command.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="command\mod.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="search1.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="searchByName.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="searchByPhoneNumber.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="common.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="cmd_parser.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="command\mod.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClCompile Include="common.h">
-      <Filter>헤더 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="search1.h">
-      <Filter>헤더 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="command.h">
-      <Filter>헤더 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
