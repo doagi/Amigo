@@ -145,6 +145,9 @@
     <ClCompile Include="search1.cpp" />
     <ClCompile Include="searchByName.cpp" />
     <ClCompile Include="searchByPhoneNumber.cpp" />
+    <ClCompile Include="searchByCerti.cpp" />
+    <ClCompile Include="searchByCl.cpp" />
+    <ClCompile Include="searchByEmployeeNum.cpp" />
     <ClCompile Include="txt_parser.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +158,7 @@
     <ClInclude Include="search1.h" />
     <ClInclude Include="searchByName.h" />
     <ClInclude Include="searchByPhoneNumber.h" />
+    <ClInclude Include="searchEtc.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
