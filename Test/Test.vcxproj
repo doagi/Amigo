@@ -43,8 +43,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="test.cpp" />
-    <ClCompile Include="test_sch1.cpp" />
-    <ClCompile Include="test_sch2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AmigoPJT\AmigoPJT.vcxproj">
