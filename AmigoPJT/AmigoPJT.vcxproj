@@ -140,7 +140,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="command\mod.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="command.cpp" />
     <ClCompile Include="txt_parser.cpp" />
     <ClCompile Include="common.h" />
@@ -150,8 +149,8 @@
     <Text Include="input_20_20.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="command\mod.h" />
     <ClInclude Include="cmd_parser.h" />
+    <ClInclude Include="command\mod.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

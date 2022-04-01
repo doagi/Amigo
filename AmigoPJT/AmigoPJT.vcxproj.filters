@@ -37,11 +37,11 @@
     <ClInclude Include="cmd_parser.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="common.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="command\mod.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClCompile Include="common.h">
+      <Filter>헤더 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
