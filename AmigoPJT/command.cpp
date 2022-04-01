@@ -104,17 +104,23 @@ string GenerateDetailRecord(const std::string& command, const vector<unsigned in
     string result = "";
     map<unsigned int, Employee2> sorted_results;
     const int kMaxPrintNum = 5;
-    int num_data = 0;
 
     for (const auto& num : targets)
     {
-        sorted_results.insert(pair<unsigned int, Employee2> (num, map_employees[num]));
+        sorted_results.insert(pair<unsigned int, Employee2>(num, map_employees[num]));
+    }
+
+    int num_data = 0;
+    int max_iter = kMaxPrintNum;
+    if (max_iter > sorted_results.size())
+    {
+        max_iter = sorted_results.size();
     }
 
     for (auto it = sorted_results.begin(); ((it != sorted_results.end()) && (num_data < kMaxPrintNum)); it++, num_data++)
     {
         result += GenerateRecord(command, it->second);
-        result += (i < (kMaxPrintNum - 1)) ? "\n" : "";
+        result += (num_data < (max_iter - 1)) ? "\n" : "";
     }
 
     return result;
