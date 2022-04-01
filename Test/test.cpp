@@ -414,7 +414,7 @@ namespace SeachTest
 
     TEST(AmigoSearchTest, optionL_Name) {
         makeDataforSearch();
-        vector<unsigned int> answer = { map_employees.find(2018115040)->second.employee_num };
+        vector<unsigned int> answer = { map_employees[2018115040].employee_num };
         vector<unsigned int> ret = searchByLastName("HBO", map_employees);
         EXPECT_EQ(answer.size(), ret.size());
         for (size_t i = 0; i < ret.size(); i++)

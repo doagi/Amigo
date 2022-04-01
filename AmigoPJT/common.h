@@ -52,7 +52,7 @@ struct Employee2
         // make first / last name
         int pos_space = name_.find(" ");
         first_name = name_.substr(0, pos_space);
-        last_name = name_.substr(pos_space, name_.length());
+        last_name = name_.substr(pos_space + 1, name_.length());
 
         // make phone num
         middle_phone_num = stoi(full_phone_number.substr(4, 4));
