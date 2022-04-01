@@ -97,12 +97,18 @@ string GenerateCommandRecord(const std::string& command, const bool& detail_prin
 string GenerateDetailRecord(const std::string& command, const vector<unsigned int>& targets)
 {
     string result = "";
+    map<unsigned int, Employee2> sorted_results;
+    int num_data = 0;
 
     if (targets.size() > 0)
     {
         for (const auto& num : targets)
         {
-            result += GenerateRecord(command, map_employees[num]) + "\n";
+            sorted_results.insert(pair<unsigned int, Employee2> (num, map_employees[num]));
+        }
+        for (auto it = sorted_results.begin(); ((it != sorted_results.end()) && (num_data < 5)); it++, num_data++)
+        {
+            result += GenerateRecord(command, it->second) + "\n";
         }
     }
     else
