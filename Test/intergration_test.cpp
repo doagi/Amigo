@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../../Amigo/AmigoPJT/command.cpp"
+//#include "../../Amigo/AmigoPJT/command.cpp"
 #include "../../Amigo/AmigoPJT/txt_parser.cpp"
 
 TEST(AmigoIntergtaionTest, Sample_TC_Test) {
