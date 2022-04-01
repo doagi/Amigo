@@ -6,6 +6,9 @@
 #include "../AmigoPJT/search1.cpp"
 #include "../AmigoPJT/searchByName.cpp"
 #include "../AmigoPJT/searchByPhoneNumber.cpp"
+#include "../AmigoPJT/searchByCl.cpp"
+#include "../AmigoPJT/searchByCerti.cpp"
+#include "../AmigoPJT/searchByEmployeeNum.cpp"
 
 #include <unordered_map>
 #include <iostream>
@@ -61,6 +64,57 @@ namespace IntergrationTest
         //vector<Command> vect_amigo_outputs = 
 
         // EXPECT_EQ(vect_outputs, vect_amigo_outputs);
+    }
+}
+
+namespace CommandTest
+{
+    TEST(AmigoCommandTest, Unsupported_Command)
+    {
+        vector<string> raw_command
+        {
+            "SWAP","op1","op2","op3","employeeNum", "name", "cl", "phoneNum", "birthday", "certi"
+        };
+
+        int i = 0;
+        Command command;
+        for (const string param : raw_command)
+        {
+            command.param[i++] = param;
+        }
+
+        vector<Command> commands{ command };
+
+        EXPECT_THROW(CommandRun(commands), runtime_error);
+    }
+
+    TEST(AmigoCommandTest, Supported_All_Command)
+    {
+        vector<vector<string>> raw_commands
+        {
+            { "ADD", "", "", "", "15123099", "VXIHXOTH JHOP", "CL3", "010-3112-2609", "19771211", "ADV" },
+            { "ADD", "", "", "", "17112609", "FB NTAWR", "CL4", "010-5645-6122", "19861203", "PRO" },
+            { "ADD", "", "", "", "18115040", "TTETHU HBO", "CL3", "010-4581-2050", "20080718", "ADV" },
+            { "SCH", "-p", "-d", "", "birthday", "04" },
+            { "MOD", "-p", "", "", "name", "FB NTAWR", "birthday", "20050520" },
+            { "DEL", "", "", "", "employeeNum", "18115040" }
+        };
+
+        vector<Command> commands;
+        commands.reserve(raw_commands.size());
+
+        for (const auto& raw_command : raw_commands)
+        {
+            int i = 0;
+            Command command;
+            for (const string param : raw_command)
+            {
+                command.param[i++] = param;
+            }
+            commands.emplace_back(command);
+        }
+
+        EXPECT_NO_THROW(CommandRun(commands));
     }
 }
 
@@ -463,6 +517,47 @@ namespace SeachTest
         makeDataforSearch();
         vector<unsigned int> answer = { map_employees[2008123556].employee_num };
         vector<unsigned int> ret = searchByLastPhoneNumber(5047, map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
+        {
+            EXPECT_EQ(answer[i], ret[i]);
+        }
+    }
+
+    TEST(AmigoSearchTest, Certi) {
+        makeDataforSearch();
+        vector<unsigned int> answer = { 
+            map_employees[2015123099].employee_num,
+            map_employees[2018115040].employee_num,
+            map_employees[2014130827].employee_num,
+            map_employees[2002117175].employee_num
+        };
+        vector<unsigned int> ret = searchByCerti("ADV", map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
+        {
+            EXPECT_EQ(answer[i], ret[i]);
+        }
+    }
+
+    TEST(AmigoSearchTest, Cl) {
+        makeDataforSearch();
+        vector<unsigned int> answer = { 
+            map_employees[2019129568].employee_num,
+            map_employees[2003113260].employee_num
+        };
+        vector<unsigned int> ret = searchByCl("CL2", map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
+        {
+            EXPECT_EQ(answer[i], ret[i]);
+        }
+    }
+
+    TEST(AmigoSearchTest, EmployeeNumber) {
+        makeDataforSearch();
+        vector<unsigned int> answer = { map_employees[2001122329].employee_num };
+        vector<unsigned int> ret = searchByEmployeeNumber("01122329", map_employees);
         EXPECT_EQ(answer.size(), ret.size());
         for (size_t i = 0; i < ret.size(); i++)
         {
