@@ -6,5 +6,6 @@
 using std::string;
 using std::vector;
 
-int searchByFirstName(string target, vector<Employee> data);
-int searchByLastName(string target, vector<Employee> data);
+vector<int> searchByName(string target, vector<Employee> data);
+vector<int> searchByFirstName(string target, vector<Employee> data);
+vector<int> searchByLastName(string target, vector<Employee> data);

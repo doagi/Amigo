@@ -7,7 +7,8 @@ using std::vector;
 #include "../../Amigo/AmigoPJT/searchByPhoneNumber.cpp"
 #include "../../Amigo/AmigoPJT/common.h"
 
-vector<Employee> testdata = {
+vector<Employee> testdata = 
+{
 	{"15123099", "VXIHXOTH JHOP" , "CL3", "010-3112-2609", "19771211", "ADV"},
 	{"17112609", "FB NTAWR"      , "CL4", "010-5645-6122", "19861203", "PRO"},
 	{"18115040", "TTETHU HBO"    , "CL3", "010-4581-2050", "20080718", "ADV"},
@@ -18,22 +19,62 @@ vector<Employee> testdata = {
 	{"08123556", "WN XV"         , "CL1", "010-7986-5047", "20100614", "PRO"},
 	{"02117175", "SBILHUT LDEXRI", "CL4", "010-2814-1699", "19950704", "ADV"},
 	{"03113260", "HH LTUPF"      , "CL2", "010-5798-5383", "19791018", "PRO"},
-	{"14130827", "RPO JK"        , "CL4", "010-3231-1698", "20090201", "ADV"},
-	{"01122329", "DN WD"         , "CL4", "010-7174-5680", "20071117", "PRO"}
+	{"14130827", "RPO JK"        , "CL4", "010-4528-1698", "20090201", "ADV"},
+	{"01122329", "TWU WD"         , "CL4", "010-7174-5680", "20071117", "PRO"}
 };
 
-TEST(AmigoSearchTest, optionF_Name) {
-	EXPECT_EQ(6, searchByFirstName("TWU", testdata));
+TEST(AmigoSearchTest, Name)
+{
+	vector<int> answer = { 0 };
+	for (size_t i = 0; i < answer.size(); i++)
+	{
+		EXPECT_EQ(answer[i], searchByName("VXIHXOTH JHOP", testdata)[i]);
+	}
+
 }
 
-TEST(AmigoSearchTest, optionL_Name) {
-	EXPECT_EQ(2, searchByLastName("HBO", testdata));
+TEST(AmigoSearchTest, optionF_Name) 
+{
+	vector<int> answer = { 6, 11 };
+	for (size_t i = 0; i < answer.size(); i++) 
+	{
+		EXPECT_EQ(answer[i], searchByFirstName("TWU", testdata)[i]);
+	}
+
 }
 
-TEST(AmigoSearchTest, optionM_Phone) {
-	EXPECT_EQ(3, searchByMiddlePhoneNumber(4528, testdata));
+TEST(AmigoSearchTest, optionL_Name) 
+{
+	vector<int> answer = { 2 };
+	for (size_t i = 0; i < answer.size(); i++) 
+	{
+		EXPECT_EQ(answer[i], searchByLastName("HBO", testdata)[i]);
+	}
 }
 
-TEST(AmigoSearchTest, optionL_Phone) {
-	EXPECT_EQ(7, searchByLastPhoneNumber(5047, testdata));
+TEST(AmigoSearchTest, PhoneNumber)
+{
+	vector<int> answer = { 1 };
+	for (size_t i = 0; i < answer.size(); i++)
+	{
+		EXPECT_EQ(answer[i], searchByPhoneNumber("010-5645-6122", testdata)[i]);
+	}
+}
+
+TEST(AmigoSearchTest, optionM_Phone) 
+{
+	vector<int> answer = { 3, 10 };
+	for (size_t i = 0; i < answer.size(); i++) 
+	{
+		EXPECT_EQ(answer[i], searchByMiddlePhoneNumber(4528, testdata)[i]);
+	}
+}
+
+TEST(AmigoSearchTest, optionL_Phone) 
+{
+	vector<int> answer = { 7 };
+	for (size_t i = 0; i < answer.size(); i++) 
+	{
+		EXPECT_EQ(answer[i], searchByLastPhoneNumber(5047, testdata)[i]);
+	}
 }
