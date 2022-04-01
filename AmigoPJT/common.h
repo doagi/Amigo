@@ -53,7 +53,7 @@ struct Employee2
     {
         SetEmployeeNumber(employee_num_);
         SetName(name_);
-        SetCareeLevel(cl_);
+        SetCareerLevel(cl_);
         SetPhoneNumber(phone_num_);
         SetBirthDay(birthday_);
         SetCerti(certi_);
@@ -87,7 +87,7 @@ struct Employee2
         }
     }
 
-    void SetCareeLevel(const string& cl_)
+    void SetCareerLevel(const string& cl_)
     {
         cl = cl_;
     }

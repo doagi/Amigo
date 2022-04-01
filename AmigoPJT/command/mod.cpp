@@ -36,7 +36,7 @@ void ModifyColumnData(Employee2& employee, const ModificationInfo& mod_info)
         employee.SetName(mod_info.value);
         return;
     case Column::CL:
-        employee.SetCareeLevel(mod_info.value);
+        employee.SetCareerLevel(mod_info.value);
         return;
     case Column::PHONENUM:
         employee.SetPhoneNumber(mod_info.value);
