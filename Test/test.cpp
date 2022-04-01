@@ -6,6 +6,9 @@
 #include "../AmigoPJT/search1.cpp"
 #include "../AmigoPJT/searchByName.cpp"
 #include "../AmigoPJT/searchByPhoneNumber.cpp"
+#include "../AmigoPJT/searchByCl.cpp"
+#include "../AmigoPJT/searchByCerti.cpp"
+#include "../AmigoPJT/searchByEmployeeNum.cpp"
 
 #include <unordered_map>
 #include <iostream>
@@ -514,6 +517,47 @@ namespace SeachTest
         makeDataforSearch();
         vector<unsigned int> answer = { map_employees[2008123556].employee_num };
         vector<unsigned int> ret = searchByLastPhoneNumber(5047, map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
+        {
+            EXPECT_EQ(answer[i], ret[i]);
+        }
+    }
+
+    TEST(AmigoSearchTest, Certi) {
+        makeDataforSearch();
+        vector<unsigned int> answer = { 
+            map_employees[2015123099].employee_num,
+            map_employees[2018115040].employee_num,
+            map_employees[2014130827].employee_num,
+            map_employees[2002117175].employee_num
+        };
+        vector<unsigned int> ret = searchByCerti("ADV", map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
+        {
+            EXPECT_EQ(answer[i], ret[i]);
+        }
+    }
+
+    TEST(AmigoSearchTest, Cl) {
+        makeDataforSearch();
+        vector<unsigned int> answer = { 
+            map_employees[2019129568].employee_num,
+            map_employees[2003113260].employee_num
+        };
+        vector<unsigned int> ret = searchByCl("CL2", map_employees);
+        EXPECT_EQ(answer.size(), ret.size());
+        for (size_t i = 0; i < ret.size(); i++)
+        {
+            EXPECT_EQ(answer[i], ret[i]);
+        }
+    }
+
+    TEST(AmigoSearchTest, EmployeeNumber) {
+        makeDataforSearch();
+        vector<unsigned int> answer = { map_employees[2001122329].employee_num };
+        vector<unsigned int> ret = searchByEmployeeNumber("01122329", map_employees);
         EXPECT_EQ(answer.size(), ret.size());
         for (size_t i = 0; i < ret.size(); i++)
         {

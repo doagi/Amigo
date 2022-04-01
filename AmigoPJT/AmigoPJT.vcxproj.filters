@@ -42,6 +42,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="searchByCl.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="searchByEmployeeNum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="searchByCerti.cpp">
     <ClCompile Include="client.h">
       <Filter>헤더 파일</Filter>
     </ClCompile>
@@ -81,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="searchByPhoneNumber.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="searchEtc.h">
+    <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="inputStream.h">
       <Filter>헤더 파일</Filter>
