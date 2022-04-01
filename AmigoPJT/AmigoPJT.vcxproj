@@ -143,7 +143,6 @@
     <ClCompile Include="command.cpp" />
     <ClCompile Include="DelCommand.cpp" />
     <ClCompile Include="txt_parser.cpp" />
-    <ClCompile Include="common.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="search1.cpp" />
     <ClCompile Include="searchByName.cpp" />
