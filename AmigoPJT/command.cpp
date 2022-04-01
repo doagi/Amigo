@@ -17,49 +17,56 @@ int Del(string op1, string op2, string column, string value) {
 	return 0;
 }
 
-vector<unsigned int> Sch(string op1, string op2, string column, string value, unordered_map<unsigned int, Employee2> employees)
+vector<unsigned int> Sch(string op1, string op2, string column, string value)
 {
-    vector<unsigned int> result;
+    vector<unsigned int> employees;
     if(column == "birthday")
     {
-        return SearchByBirthday(op2, value, employees);
+        employees = SearchByBirthday(op2, value, map_employees);
     }
     else if(column == "name")
     {
         if(op2 == "-f")
         {
-            return searchByFirstName(value, employees);
+            employees = searchByFirstName(value, map_employees);
         }
         else if(op2 == "-l")
         {
-            return searchByLastName(value, employees);
+            employees = searchByLastName(value, map_employees);
         }
         else
         {
-            return searchByName(value, employees);
+            employees = searchByName(value, map_employees);
         }
     }
     else if(column == "phoneNum")
     {
         if (op2 == "-m")
         {
-            return searchByMiddlePhoneNumber(stoi(value), employees);
+            employees = searchByMiddlePhoneNumber(stoi(value), map_employees);
         }
         else if (op2 == "-l")
         {
-            return searchByLastPhoneNumber(stoi(value), employees);
+            employees = searchByLastPhoneNumber(stoi(value), map_employees);
         }
         else
         {
-            return searchByPhoneNumber(value, employees);
+            employees = searchByPhoneNumber(value, map_employees);
         }
     }
     else if(column == "employeeNum")
     {
+
+    }
+    else if(column == "certi")
+    {
     
     }
+    else if (column == "cl")
+    {
 
-    return result;
+    }
+    return employees;
 
 }
 
@@ -79,19 +86,19 @@ void CommandRun(vector<Command> commands)
         }
         else if (a_command.param[0] == "SCH")
         {
-            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5], map_employees);
+            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
 
         }
         else if (a_command.param[0] == "DEL")
         {
-           search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5], map_employees);
+           search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
 
             //Del(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
 
         }
         else if (a_command.param[0] == "MOD")
         {
-            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5], map_employees);
+            search_result = Sch(a_command.param[1], a_command.param[2], a_command.param[4], a_command.param[5]);
 
         }
         else

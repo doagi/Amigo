@@ -14,7 +14,7 @@ extern unordered_map<unsigned int, Employee2> map_employees;
 
 int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi);
 int Mod(string op1, string op2, string targetColumn, string targetValue, string srcColumn, string srcValue);
-vector<unsigned int> Sch(string op1, string op2, string column, string value, unordered_map<unsigned int, Employee2> employees);
+vector<unsigned int> Sch(string op1, string op2, string column, string value);
 int Del(string op1, string op2, string column, string value);
 
 void CommandRun(vector<Command> commands);
