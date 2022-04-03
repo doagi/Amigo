@@ -8,6 +8,8 @@
 
 #include "client.h"
 
+#define USE_ARGC_ARGV (0)
+
 using namespace std;
 
 //unordered_map<unsigned int, Employee> employees;
@@ -22,12 +24,27 @@ int main(int argc, char** argv)
 
 	amigo_client.Run();
 #endif
-	//TODO : main 함수의 argv[1]로 받아오도록 수정 필요
-	string Path = "input_20_20.txt"; 
+#if USE_ARGC_ARGV
+	string Path = string(argv[1]);
+#else
+	string Path = "input_20_20.txt";
+#endif
 
 	commands = ParserFromTxt(Path);
 
-	CommandRun(commands);
+	vector<string> result = CommandRun(commands);
 
+	ofstream fout;
+#if USE_ARGC_ARGV
+	fout.open(string(argv[2]));
+#else
+	fout.open("output_20_20.txt");
+#endif
+	
+	for (const string& outputTxt : result)
+	{
+		fout << outputTxt << endl;
+	}
+	fout.close();
 	return 0;
 }
