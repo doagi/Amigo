@@ -3,7 +3,6 @@
 
 #include "common.h"
 #include "cmd_parser.h"
-#include "search1.h"
 #include "command.h"
 
 #include "client.h"

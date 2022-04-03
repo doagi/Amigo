@@ -3,7 +3,7 @@
 #include "../AmigoPJT/command.cpp"
 #include "../AmigoPJT/txt_parser.cpp"
 #include "../AmigoPJT/command/mod.cpp"
-#include "../AmigoPJT/search1.cpp"
+#include "../AmigoPJT/searchByBirthday.cpp"
 #include "../AmigoPJT/searchByName.cpp"
 #include "../AmigoPJT/searchByPhoneNumber.cpp"
 #include "../AmigoPJT/searchByCl.cpp"
