@@ -126,7 +126,7 @@ string GenerateDetailRecord(const std::string& command, const vector<unsigned in
     return result;
 }
 
-void CommandRun(vector<Command> commands)
+vector<string>  CommandRun(vector<Command> commands)
 {
     int result = 0;
     vector<unsigned int> search_result;
@@ -171,11 +171,11 @@ void CommandRun(vector<Command> commands)
         }
     }
 
-    //ToDo(최인수) : 파일로 저장
     for (const string& record : output_records)
     {
         cout << record << endl;
     }
+    return output_records;
 }
 
 // from DelCommand.cpp
