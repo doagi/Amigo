@@ -133,7 +133,7 @@ namespace AddTest
 
 namespace DelTest
 {
-    vector<Employee> test =
+    Employee2 testdata[8] =
     {
         {"15123099", "VXIHXOTH JHOP" , "CL3", "010-3112-2609", "19771211", "ADV"},
         {"17112609", "FB NTAWR"      , "CL4", "010-5645-6122", "19861203", "PRO"},
@@ -144,56 +144,198 @@ namespace DelTest
         {"18117906", "TWU QSOLT"     , "CL4", "010-6672-7186", "20030413", "PRO"},
         {"08123556", "WN XV"         , "CL1", "010-7986-5047", "20100614", "PRO"}
     };
+    
+    TEST(AmigoDelTest, DelCLTest)
+    {
+        unordered_map<unsigned int, Employee2> test1, test2, test3, test4, test5;
+        vector<unsigned int> deleteVecCL1, deleteVecCL2, deleteVecCL3, deleteVecCL4, deleteVecNone;
+        for (int i = 0; i < 8; i++) {
+            test1[(unsigned int)testdata[i].employee_num] = testdata[i];
+            test2[(unsigned int)testdata[i].employee_num] = testdata[i];
+            test3[(unsigned int)testdata[i].employee_num] = testdata[i];
+            test4[(unsigned int)testdata[i].employee_num] = testdata[i];
+            test5[(unsigned int)testdata[i].employee_num] = testdata[i];
+        }
+        deleteVecCL4 = { testdata[1].employee_num,  testdata[3].employee_num, testdata[6].employee_num };
+        deleteVecCL3 = { testdata[0].employee_num,  testdata[2].employee_num };
+        deleteVecCL2 = { testdata[4].employee_num };
+        deleteVecCL1 = { testdata[5].employee_num,  testdata[7].employee_num };
+        deleteVecNone = {};
+        EXPECT_EQ("DEL,3", Del(test1, deleteVecCL4));
+        EXPECT_EQ("DEL,2", Del(test2, deleteVecCL3));
+        EXPECT_EQ("DEL,1", Del(test3, deleteVecCL2));
+        EXPECT_EQ("DEL,2", Del(test4, deleteVecCL1));
+        EXPECT_EQ("DEL,NONE", Del(test5, deleteVecNone));
 
+        EXPECT_EQ(5, test1.size());
+        EXPECT_EQ(6, test2.size());
+        EXPECT_EQ(7, test3.size());
+        EXPECT_EQ(6, test4.size());
+        EXPECT_EQ(8, test5.size());
 
-    TEST(AmigoDelTest, DelCLTest) {
-        vector<Employee> test1 = test;
-        vector<Employee> test2 = test;
-        vector<Employee> test3 = test;
-        vector<Employee> test4 = test;
-        EXPECT_EQ("DEL,3", Del(test1, cl, "CL4"));
-        EXPECT_EQ("DEL,2", Del(test2, cl, "CL3"));
-        EXPECT_EQ("DEL,1", Del(test3, cl, "CL2"));
-        EXPECT_EQ("DEL,2", Del(test4, cl, "CL1"));
-    }
+        for (int i = 0; i < 8; i++)
+        {
+            if (i == 1 || i == 3 || i == 6)
+            {
+                EXPECT_NE(testdata[i].str_employee_num, test1[testdata[i].employee_num].str_employee_num);
+                EXPECT_NE(testdata[i].full_name, test1[testdata[i].employee_num].full_name);
+                EXPECT_NE(testdata[i].full_phone_number, test1[testdata[i].employee_num].full_phone_number);
+                EXPECT_NE(testdata[i].full_birthday, test1[testdata[i].employee_num].full_birthday);
+                EXPECT_NE(testdata[i].cl, test1[testdata[i].employee_num].cl);
+                EXPECT_NE(testdata[i].first_name, test1[testdata[i].employee_num].first_name);
+                EXPECT_NE(testdata[i].last_name, test1[testdata[i].employee_num].last_name);
+                EXPECT_NE(testdata[i].middle_phone_num, test1[testdata[i].employee_num].middle_phone_num);
+                EXPECT_NE(testdata[i].last_phone_num, test1[testdata[i].employee_num].last_phone_num);
+                EXPECT_NE(testdata[i].year_birthday, test1[testdata[i].employee_num].year_birthday);
+                EXPECT_NE(testdata[i].month_birthday, test1[testdata[i].employee_num].month_birthday);
+                EXPECT_NE(testdata[i].day_birthday, test1[testdata[i].employee_num].day_birthday);
+                EXPECT_NE(testdata[i].certi, test1[testdata[i].employee_num].certi);
+            }
+            else
+            {
+                EXPECT_EQ(testdata[i].str_employee_num, test1[testdata[i].employee_num].str_employee_num);
+                EXPECT_EQ(testdata[i].full_name, test1[testdata[i].employee_num].full_name);
+                EXPECT_EQ(testdata[i].full_phone_number, test1[testdata[i].employee_num].full_phone_number);
+                EXPECT_EQ(testdata[i].full_birthday, test1[testdata[i].employee_num].full_birthday);
+                EXPECT_EQ(testdata[i].cl, test1[testdata[i].employee_num].cl);
+                EXPECT_EQ(testdata[i].first_name, test1[testdata[i].employee_num].first_name);
+                EXPECT_EQ(testdata[i].last_name, test1[testdata[i].employee_num].last_name);
+                EXPECT_EQ(testdata[i].middle_phone_num, test1[testdata[i].employee_num].middle_phone_num);
+                EXPECT_EQ(testdata[i].last_phone_num, test1[testdata[i].employee_num].last_phone_num);
+                EXPECT_EQ(testdata[i].year_birthday, test1[testdata[i].employee_num].year_birthday);
+                EXPECT_EQ(testdata[i].month_birthday, test1[testdata[i].employee_num].month_birthday);
+                EXPECT_EQ(testdata[i].day_birthday, test1[testdata[i].employee_num].day_birthday);
+                EXPECT_EQ(testdata[i].certi, test1[testdata[i].employee_num].certi);
+            }
+        }
 
-    TEST(AmigoDelTest, DelEmployeeNumTest) {
-        vector<Employee> test1 = test;
-        vector<Employee> test2 = test;
-        EXPECT_EQ("DEL,1", Del(test1, employeeNum, "19129568"));
-        EXPECT_EQ("DEL,NONE", Del(test2, employeeNum, "111100000"));
-    }
+        for (int i = 0; i < 8; i++)
+        {
+            if (i == 0 || i == 2)
+            {
+                EXPECT_NE(testdata[i].str_employee_num, test2[testdata[i].employee_num].str_employee_num);
+                EXPECT_NE(testdata[i].full_name, test2[testdata[i].employee_num].full_name);
+                EXPECT_NE(testdata[i].full_phone_number, test2[testdata[i].employee_num].full_phone_number);
+                EXPECT_NE(testdata[i].full_birthday, test2[testdata[i].employee_num].full_birthday);
+                EXPECT_NE(testdata[i].cl, test2[testdata[i].employee_num].cl);
+                EXPECT_NE(testdata[i].first_name, test2[testdata[i].employee_num].first_name);
+                EXPECT_NE(testdata[i].last_name, test2[testdata[i].employee_num].last_name);
+                EXPECT_NE(testdata[i].middle_phone_num, test2[testdata[i].employee_num].middle_phone_num);
+                EXPECT_NE(testdata[i].last_phone_num, test2[testdata[i].employee_num].last_phone_num);
+                EXPECT_NE(testdata[i].year_birthday, test2[testdata[i].employee_num].year_birthday);
+                EXPECT_NE(testdata[i].month_birthday, test2[testdata[i].employee_num].month_birthday);
+                EXPECT_NE(testdata[i].day_birthday, test2[testdata[i].employee_num].day_birthday);
+                EXPECT_NE(testdata[i].certi, test2[testdata[i].employee_num].certi);
+            }
+            else
+            {
+                EXPECT_EQ(testdata[i].str_employee_num, test2[testdata[i].employee_num].str_employee_num);
+                EXPECT_EQ(testdata[i].full_name, test2[testdata[i].employee_num].full_name);
+                EXPECT_EQ(testdata[i].full_phone_number, test2[testdata[i].employee_num].full_phone_number);
+                EXPECT_EQ(testdata[i].full_birthday, test2[testdata[i].employee_num].full_birthday);
+                EXPECT_EQ(testdata[i].cl, test2[testdata[i].employee_num].cl);
+                EXPECT_EQ(testdata[i].first_name, test2[testdata[i].employee_num].first_name);
+                EXPECT_EQ(testdata[i].last_name, test2[testdata[i].employee_num].last_name);
+                EXPECT_EQ(testdata[i].middle_phone_num, test2[testdata[i].employee_num].middle_phone_num);
+                EXPECT_EQ(testdata[i].last_phone_num, test2[testdata[i].employee_num].last_phone_num);
+                EXPECT_EQ(testdata[i].year_birthday, test2[testdata[i].employee_num].year_birthday);
+                EXPECT_EQ(testdata[i].month_birthday, test2[testdata[i].employee_num].month_birthday);
+                EXPECT_EQ(testdata[i].day_birthday, test2[testdata[i].employee_num].day_birthday);
+                EXPECT_EQ(testdata[i].certi, test2[testdata[i].employee_num].certi);
+            }
+        }
 
-    TEST(AmigoDelTest, DelNameTest) {
-        vector<Employee> test1 = test;
-        vector<Employee> test2 = test;
-        EXPECT_EQ("DEL,1", Del(test1, name, "SRERLALH HMEF"));
-        EXPECT_EQ("DEL,NONE", Del(test2, name, "HAHAHAHA HA"));
-    }
+        for (int i = 0; i < 8; i++)
+        {
+            if (i == 4)
+            {
+                EXPECT_NE(testdata[i].str_employee_num, test3[testdata[i].employee_num].str_employee_num);
+                EXPECT_NE(testdata[i].full_name, test3[testdata[i].employee_num].full_name);
+                EXPECT_NE(testdata[i].full_phone_number, test3[testdata[i].employee_num].full_phone_number);
+                EXPECT_NE(testdata[i].full_birthday, test3[testdata[i].employee_num].full_birthday);
+                EXPECT_NE(testdata[i].cl, test3[testdata[i].employee_num].cl);
+                EXPECT_NE(testdata[i].first_name, test3[testdata[i].employee_num].first_name);
+                EXPECT_NE(testdata[i].last_name, test3[testdata[i].employee_num].last_name);
+                EXPECT_NE(testdata[i].middle_phone_num, test3[testdata[i].employee_num].middle_phone_num);
+                EXPECT_NE(testdata[i].last_phone_num, test3[testdata[i].employee_num].last_phone_num);
+                EXPECT_NE(testdata[i].year_birthday, test3[testdata[i].employee_num].year_birthday);
+                EXPECT_NE(testdata[i].month_birthday, test3[testdata[i].employee_num].month_birthday);
+                EXPECT_NE(testdata[i].day_birthday, test3[testdata[i].employee_num].day_birthday);
+                EXPECT_NE(testdata[i].certi, test3[testdata[i].employee_num].certi);
+            }
+            else
+            {
+                EXPECT_EQ(testdata[i].str_employee_num, test3[testdata[i].employee_num].str_employee_num);
+                EXPECT_EQ(testdata[i].full_name, test3[testdata[i].employee_num].full_name);
+                EXPECT_EQ(testdata[i].full_phone_number, test3[testdata[i].employee_num].full_phone_number);
+                EXPECT_EQ(testdata[i].full_birthday, test3[testdata[i].employee_num].full_birthday);
+                EXPECT_EQ(testdata[i].cl, test3[testdata[i].employee_num].cl);
+                EXPECT_EQ(testdata[i].first_name, test3[testdata[i].employee_num].first_name);
+                EXPECT_EQ(testdata[i].last_name, test3[testdata[i].employee_num].last_name);
+                EXPECT_EQ(testdata[i].middle_phone_num, test3[testdata[i].employee_num].middle_phone_num);
+                EXPECT_EQ(testdata[i].last_phone_num, test3[testdata[i].employee_num].last_phone_num);
+                EXPECT_EQ(testdata[i].year_birthday, test3[testdata[i].employee_num].year_birthday);
+                EXPECT_EQ(testdata[i].month_birthday, test3[testdata[i].employee_num].month_birthday);
+                EXPECT_EQ(testdata[i].day_birthday, test3[testdata[i].employee_num].day_birthday);
+                EXPECT_EQ(testdata[i].certi, test3[testdata[i].employee_num].certi);
+            }
+        }
 
-    TEST(AmigoDelTest, DelPhoneNumTest) {
-        vector<Employee> test1 = test;
-        vector<Employee> test2 = test;
-        EXPECT_EQ("DEL,1", Del(test1, phoneNum, "010-3669-1077"));
-        EXPECT_EQ("DEL,NONE", Del(test2, phoneNum, "010-0000-1111"));
-    }
+        for (int i = 0; i < 8; i++)
+        {
+            if (i == 5 || i == 7)
+            {
+                EXPECT_NE(testdata[i].str_employee_num, test4[testdata[i].employee_num].str_employee_num);
+                EXPECT_NE(testdata[i].full_name, test4[testdata[i].employee_num].full_name);
+                EXPECT_NE(testdata[i].full_phone_number, test4[testdata[i].employee_num].full_phone_number);
+                EXPECT_NE(testdata[i].full_birthday, test4[testdata[i].employee_num].full_birthday);
+                EXPECT_NE(testdata[i].cl, test4[testdata[i].employee_num].cl);
+                EXPECT_NE(testdata[i].first_name, test4[testdata[i].employee_num].first_name);
+                EXPECT_NE(testdata[i].last_name, test4[testdata[i].employee_num].last_name);
+                EXPECT_NE(testdata[i].middle_phone_num, test4[testdata[i].employee_num].middle_phone_num);
+                EXPECT_NE(testdata[i].last_phone_num, test4[testdata[i].employee_num].last_phone_num);
+                EXPECT_NE(testdata[i].year_birthday, test4[testdata[i].employee_num].year_birthday);
+                EXPECT_NE(testdata[i].month_birthday, test4[testdata[i].employee_num].month_birthday);
+                EXPECT_NE(testdata[i].day_birthday, test4[testdata[i].employee_num].day_birthday);
+                EXPECT_NE(testdata[i].certi, test4[testdata[i].employee_num].certi);
+            }
+            else
+            {
+                EXPECT_EQ(testdata[i].str_employee_num, test4[testdata[i].employee_num].str_employee_num);
+                EXPECT_EQ(testdata[i].full_name, test4[testdata[i].employee_num].full_name);
+                EXPECT_EQ(testdata[i].full_phone_number, test4[testdata[i].employee_num].full_phone_number);
+                EXPECT_EQ(testdata[i].full_birthday, test4[testdata[i].employee_num].full_birthday);
+                EXPECT_EQ(testdata[i].cl, test4[testdata[i].employee_num].cl);
+                EXPECT_EQ(testdata[i].first_name, test4[testdata[i].employee_num].first_name);
+                EXPECT_EQ(testdata[i].last_name, test4[testdata[i].employee_num].last_name);
+                EXPECT_EQ(testdata[i].middle_phone_num, test4[testdata[i].employee_num].middle_phone_num);
+                EXPECT_EQ(testdata[i].last_phone_num, test4[testdata[i].employee_num].last_phone_num);
+                EXPECT_EQ(testdata[i].year_birthday, test4[testdata[i].employee_num].year_birthday);
+                EXPECT_EQ(testdata[i].month_birthday, test4[testdata[i].employee_num].month_birthday);
+                EXPECT_EQ(testdata[i].day_birthday, test4[testdata[i].employee_num].day_birthday);
+                EXPECT_EQ(testdata[i].certi, test4[testdata[i].employee_num].certi);
+            }
+        }
 
-    TEST(AmigoDelTest, DelBirthdayTest) {
-        vector<Employee> test1 = test;
-        vector<Employee> test2 = test;
-        EXPECT_EQ("DEL,1", Del(test1, birthday, "20100614"));
-        EXPECT_EQ("DEL,NONE", Del(test2, birthday, "20100613"));
-    }
-
-    TEST(AmigoDelTest, DelCertiTest) {
-        vector<Employee> test1 = test;
-        vector<Employee> test2 = test;
-        vector<Employee> test3 = test;
-        EXPECT_EQ("DEL,2", Del(test1, certi, "ADV"));
-        EXPECT_EQ("DEL,6", Del(test2, certi, "PRO"));
-        EXPECT_EQ("DEL,NONE", Del(test3, certi, "EX"));
+        for (int i = 0; i < 8; i++)
+        {
+            EXPECT_EQ(testdata[i].str_employee_num, test5[testdata[i].employee_num].str_employee_num);
+            EXPECT_EQ(testdata[i].full_name, test5[testdata[i].employee_num].full_name);
+            EXPECT_EQ(testdata[i].full_phone_number, test5[testdata[i].employee_num].full_phone_number);
+            EXPECT_EQ(testdata[i].full_birthday, test5[testdata[i].employee_num].full_birthday);
+            EXPECT_EQ(testdata[i].cl, test5[testdata[i].employee_num].cl);
+            EXPECT_EQ(testdata[i].first_name, test5[testdata[i].employee_num].first_name);
+            EXPECT_EQ(testdata[i].last_name, test5[testdata[i].employee_num].last_name);
+            EXPECT_EQ(testdata[i].middle_phone_num, test5[testdata[i].employee_num].middle_phone_num);
+            EXPECT_EQ(testdata[i].last_phone_num, test5[testdata[i].employee_num].last_phone_num);
+            EXPECT_EQ(testdata[i].year_birthday, test5[testdata[i].employee_num].year_birthday);
+            EXPECT_EQ(testdata[i].month_birthday, test5[testdata[i].employee_num].month_birthday);
+            EXPECT_EQ(testdata[i].day_birthday, test5[testdata[i].employee_num].day_birthday);
+            EXPECT_EQ(testdata[i].certi, test5[testdata[i].employee_num].certi);
+        }
     }
 }
+
 
 namespace ModTest
 {
