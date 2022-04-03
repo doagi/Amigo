@@ -61,11 +61,6 @@ vector<unsigned int> Sch(string op1, string op2, string column, string value)
     }
     return employees;
 }
-int Del(string op2, string column, string value) {
-    // ToDo(한수용) : 구현
-
-    return 0;
-}
 
 int Mod(const vector<unsigned int>& founds, string column, string value)
 {
@@ -155,7 +150,7 @@ void CommandRun(vector<Command> commands)
 
             output_records.emplace_back(GenerateCommandRecord(command, (option1 == "-p"), search_result));
 
-            result = Del(option2, a_command.param[4], a_command.param[5]);
+            Del(map_employees, search_result);
         }
         else if (command == "MOD")
         {
@@ -177,62 +172,23 @@ void CommandRun(vector<Command> commands)
         cout << record << endl;
     }
 }
-
 // from DelCommand.cpp
 
-bool employeeNum(string a, Employee2 b)
-{
-    return a == b.str_employee_num;
-}
-
-bool name(string a, Employee2 b)
-{
-    return a == b.full_name;
-}
-
-bool cl(string a, Employee2 b)
-{
-    return a == b.cl;
-}
-
-bool phoneNum(string a, Employee2 b)
-{
-    return a == b.full_phone_number;
-}
-
-bool birthday(string a, Employee2 b)
-{
-    return a == b.full_birthday;
-}
-
-bool certi(string a, Employee2 b)
-{
-    return a == b.certi;
-}
-
-string Del(vector<Employee2>& employee, bool (*compare)(string, Employee2), string targetValue)
+string Del(unordered_map<unsigned int, Employee2>& employee, vector<unsigned int> deleteList)
 {
 
     int numTarget = 0;
-    for (int i = 0; i < employee.size();)
+    for (int i = 0; i < deleteList.size(); i++)
     {
-        if (compare(targetValue, employee[i]))
-        {
-            numTarget++;
-            employee.erase(employee.begin() + i);
-        }
-        else
-        {
-            i++;
-        }
+        employee.erase(deleteList[i]);
     }
 
-    if (numTarget == 0)
+    if (deleteList.size() == 0)
     {
         return "DEL,NONE";
     }
     else
     {
-        return "DEL," + to_string(numTarget);
+        return "DEL," + to_string(deleteList.size());
     }
 }
