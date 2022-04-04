@@ -203,7 +203,7 @@ static string GenerateRecord(const std::string& cmd, Employee2& employee)
 }
 
 #if _DEBUG
-static void Compare(string reference, string result)
+static int Compare(string reference, string result)
 {
     cout << "\x1b[33m" << endl;
     string command = "fc.exe " + reference + " " + result;
@@ -218,5 +218,7 @@ static void Compare(string reference, string result)
     {
         cout << "\x1b[32m[PASSED]\x1b[0m" << endl;
     }
+
+    return error_level;
 }
 #endif

@@ -19,7 +19,7 @@ unordered_map<unsigned int, Employee2> map_employees;
 int main(int argc, char** argv)
 {
 #if 0
-    // App 진입 코드. 추후 enable
+    // Will enable to the code of client app
     Client amigo_client;
 
     amigo_client.Run();

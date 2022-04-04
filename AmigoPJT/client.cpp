@@ -8,7 +8,7 @@ void Client::Run()
     iStream.SetInputTxt("../AmigoPJT/input_20_20.txt");
 
     // Txt output 시에 설정. 표준 출력시에 주석 필요
-    oStream.SetOutputTxt("../AmigoPJT/Amigo_output_20_20.txt");
+    oStream.SetOutputTxt("../AmigoPJT/output_20_20.txt");
 
     while (1)
     {
