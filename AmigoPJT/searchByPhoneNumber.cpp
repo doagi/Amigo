@@ -43,7 +43,10 @@ vector<unsigned int> searchByFullPhoneNumber(string target, unordered_map<unsign
 	vector<unsigned int> result;
 	for (auto aData : data)
 	{
-		if (aData.second.full_phone_number != target) continue;
+		if (aData.second.full_phone_number != target) 
+		{
+			continue;
+		}
 		result.emplace_back(aData.first);
 	}
 	return result;
@@ -60,7 +63,10 @@ vector<unsigned int> searchByMiddlePhoneNumber(string target, unordered_map<unsi
 	vector<unsigned int> result;
 	for (auto aData : data)
 	{
-		if (aData.second.middle_phone_num != target_int) continue;
+		if (aData.second.middle_phone_num != target_int) 
+		{
+			continue;
+		}
 		result.emplace_back(aData.first);
 	}
 	return result;
@@ -77,7 +83,10 @@ vector<unsigned int> searchByLastPhoneNumber(string target, unordered_map<unsign
 	vector<unsigned int> result;
 	for (auto aData : data) 
 	{
-		if (aData.second.last_phone_num != target_int) continue;
+		if (aData.second.last_phone_num != target_int) 
+		{
+			continue;
+		}
 		result.emplace_back(aData.first);
 	}
 	return result;
