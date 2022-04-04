@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "command.h"
 #include "client.h"
 
 Client::Client()
 {
     amigo_db = new AmigoDatabase();
 
+#if 0
     map<string, int> supported_cmds_amigo_db = amigo_db->GetSupportedCmds();
 
     for (auto value : supported_cmds_amigo_db)
@@ -33,6 +33,7 @@ Client::Client()
             break;
         }
     }
+#endif
 }
 
 Client::Client(const string& input_path_, const string& output_path_) : Client()

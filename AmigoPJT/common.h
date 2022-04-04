@@ -34,22 +34,11 @@ static vector<unsigned int> split_date(const string& input)
     return result;
 }
 
+
 struct Employee
 {
+    Employee() {}
     Employee(string employee_num_, string name_, string cl_, string phone_num_, string birthday_, string certi_)
-        : employee_num(employee_num_), name(name_), cl(cl_), phone_num(phone_num_), birthday(birthday_), certi(certi_) {}
-    string employee_num;
-    string name;
-    string cl;
-    string phone_num;
-    string birthday;
-    string certi;
-};
-
-struct Employee2
-{
-    Employee2() {}
-    Employee2(string employee_num_, string name_, string cl_, string phone_num_, string birthday_, string certi_)
     {
         SetEmployeeNumber(employee_num_);
         SetName(name_);
@@ -150,6 +139,25 @@ enum CommandType
     CommandType_count = CommandType_end - CommandType_start
 };
 
+enum SearchType
+{
+    SearchType_start = 0,
+    EMPLOYEE_NUM = SearchType_start,
+    NAME,
+    FIRST_NAME,
+    LAST_NAME,
+    CL,
+    PHONE_NUMBER,
+    MIDDLE_PHONE_NUMBER,
+    LAST_PHONE_NUMBER,
+    BIRTHDAY,
+    BIRTHDAY_YEAR,
+    BIRTHDAY_MONTH,
+    BIRTHDAY_DAY,
+    CERTI,
+    SearchType_end
+};
+
 struct Command
 {
     enum
@@ -209,7 +217,7 @@ struct ModificationInfo
     string value;
 };
 
-static string GenerateRecord(const std::string& cmd, Employee2& employee)
+static string GenerateRecord(const std::string& cmd, Employee& employee)
 {
     string result = cmd + ",";
     result += employee.str_employee_num + ",";
