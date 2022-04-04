@@ -145,8 +145,8 @@
     <ClCompile Include="command.cpp" />
     <ClCompile Include="InputStream.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="searchByBirthday.cpp" />
     <ClCompile Include="outputStream.cpp" />
-    <ClCompile Include="search1.cpp" />
     <ClCompile Include="searchByName.cpp" />
     <ClCompile Include="searchByPhoneNumber.cpp" />
     <ClCompile Include="searchByCerti.cpp" />
@@ -160,8 +160,9 @@
     <ClInclude Include="command.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="inputStream.h" />
+    <ClInclude Include="search.h" />
+    <ClInclude Include="searchByBirthday.h" />
     <ClInclude Include="outputStream.h" />
-    <ClInclude Include="search1.h" />
     <ClInclude Include="searchByName.h" />
     <ClInclude Include="searchByPhoneNumber.h" />
     <ClInclude Include="searchEtc.h" />

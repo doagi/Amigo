@@ -24,7 +24,7 @@
     <ClCompile Include="command\mod.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="search1.cpp">
+    <ClCompile Include="searchByBirthday.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="searchByName.cpp">
@@ -88,7 +88,7 @@
     <ClInclude Include="command\mod.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="search1.h">
+    <ClInclude Include="searchByBirthday.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="searchByName.h">
@@ -104,6 +104,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="outputStream.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="search.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

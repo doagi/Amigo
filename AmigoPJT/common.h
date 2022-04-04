@@ -138,6 +138,17 @@ struct Employee2
     string certi;
 };
 
+
+enum CommandType
+{
+    CommandType_start = 0,
+    AddCommand = CommandType_start,
+    DelCommand,
+    SchCommand,
+    ModCommand,
+    CommandType_end,
+};
+
 struct Command
 {
     enum
@@ -201,3 +212,24 @@ static string GenerateRecord(const std::string& cmd, Employee2& employee)
     result += employee.certi;
     return result;
 }
+
+#if _DEBUG
+static int Compare(string reference, string result)
+{
+    cout << "\x1b[33m" << endl;
+    string command = "fc.exe " + reference + " " + result;
+    int error_level = system(command.c_str());
+    cout << "\x1b[0m";
+
+    if (error_level)
+    {
+        cout << "\x1b[31m[FAILED]\x1b[0m" << endl;
+    }
+    else
+    {
+        cout << "\x1b[32m[PASSED]\x1b[0m" << endl;
+    }
+
+    return error_level;
+}
+#endif

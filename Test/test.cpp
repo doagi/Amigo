@@ -3,7 +3,7 @@
 #include "../AmigoPJT/command.cpp"
 #include "../AmigoPJT/txt_parser.cpp"
 #include "../AmigoPJT/command/mod.cpp"
-#include "../AmigoPJT/search1.cpp"
+#include "../AmigoPJT/searchByBirthday.cpp"
 #include "../AmigoPJT/searchByName.cpp"
 #include "../AmigoPJT/searchByPhoneNumber.cpp"
 #include "../AmigoPJT/searchByCl.cpp"
@@ -53,17 +53,20 @@ void makeDataforSearch()
 
 namespace IntergrationTest
 {
-    TEST(AmigoIntergtaionTest, Sample_TC_Test) {
+    TEST(AmigoIntergtaionTest, Sample_TC_Test)
+    {
+        string input_path = "..\\AmigoPJT\\input_20_20.txt";
+        string refer_path = "..\\AmigoPJT\\output_20_20_ref.txt";
+        string output_path = "output_20_20.txt";
 
-        vector<Command> vect_tc_inputs = ParserFromTxt("../../Amigo/AmigoPJT/input_20_20.txt");
+        ofstream fout(output_path);
+        for (const string& outputTxt : CommandRun(ParserFromTxt(input_path)))
+        {
+            fout << outputTxt << endl;
+        }
+        fout.close();
 
-        // TODO : 추구 구현된 feature로 output 얻어옴
-
-        // 아래 TC output과 비교
-        vector<Command> vect_tc_outputs = ParserFromTxt("../../Amigo/AmigoPJT/output_20_20.txt");
-        //vector<Command> vect_amigo_outputs = 
-
-        // EXPECT_EQ(vect_outputs, vect_amigo_outputs);
+        EXPECT_EQ(0, Compare(refer_path, output_path));
     }
 }
 
