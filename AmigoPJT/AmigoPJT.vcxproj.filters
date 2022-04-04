@@ -60,6 +60,12 @@
     <ClCompile Include="client.h">
       <Filter>헤더 파일</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="outputStream.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+>>>>>>> origin/Master
   </ItemGroup>
   <ItemGroup>
     <Text Include="input_20_20.txt">
@@ -95,6 +101,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="inputStream.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="outputStream.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
