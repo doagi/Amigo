@@ -1,21 +1,67 @@
+#include <iostream>
 
-#include "command.h"
 #include "client.h"
 
-
-void Client::Run()
+Client::Client()
 {
-    // Txt input 시에 설정. 표준 입력시에 주석 필요
-    iStream.SetInputTxt("../AmigoPJT/input_20_20.txt");
+    amigo_db = new AmigoDatabase();
 
-    // Txt output 시에 설정. 표준 출력시에 주석 필요
-    oStream.SetOutputTxt("../AmigoPJT/output_20_20.txt");
+#if 0
+    map<string, int> supported_cmds_amigo_db = amigo_db->GetSupportedCmds();
+
+    for (auto value : supported_cmds_amigo_db)
+    {
+        switch (value.second)
+        {
+        case AddCommand:
+            cmd_handlers[value.second] = new AddCommandHandler();
+            cmd_handlers[value.second]->SetDatabase(amigo_db);
+            break;
+        case DelCommand:
+            cmd_handlers[value.second] = new DelCommandHandler();
+            cmd_handlers[value.second]->SetDatabase(amigo_db);
+            break;
+        case ModCommand:
+            cmd_handlers[value.second] = new ModCommandHandler();
+            cmd_handlers[value.second]->SetDatabase(amigo_db);
+            break;
+        case SchCommand:
+            cmd_handlers[value.second] = new SchCommandHandler();
+            cmd_handlers[value.second]->SetDatabase(amigo_db);
+            break;
+        default:
+            break;
+        }
+    }
+#endif
+}
+
+Client::Client(const string& input_path_, const string& output_path_) : Client()
+{
+    input_path = input_path_;
+    output_path = output_path_;
+}
+
+void Client::Run(const bool& debug_print)
+{
+    Run(input_path, output_path, debug_print);
+}
+
+void Client::Run(const string& input_path_, const string& output_path_, const bool& debug_print) try
+{
+    if (input_path_.empty() || output_path_.empty())
+    {
+        throw invalid_argument("Input or Output path is empty");
+    }
+
+    InputStream input_stream{ input_path_ };
+    OutputStream output_stream{ output_path_ };
 
     //map<string, int> supported_cmds_amigo_db = amigo_db->GetSupportedCmds();
 
     while (1)
     {
-        Command cmd = iStream.Input();
+        Command cmd = input_stream.Input();
 
         if (!cmd.IsValid())
         {
@@ -37,7 +83,16 @@ void Client::Run()
 
         if (result.length() > 1)
         {
-            oStream.Output(result);
+            output_stream.Output(result);
+
+            if (debug_print)
+            {
+                cout << result << endl;
+            }
         }
     }
+}
+catch (const exception& ex)
+{
+    cout << endl << "ERROR: " << ex.what() << endl;
 }

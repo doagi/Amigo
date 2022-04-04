@@ -13,27 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\Database">
+      <UniqueIdentifier>{c6e5cb59-8471-4625-8074-ee4d0df455e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\IOStream">
+      <UniqueIdentifier>{4fa34574-0067-4798-b371-82eb737029a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Client">
+      <UniqueIdentifier>{41aa4998-e670-49b3-9344-b94a1d5669f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="command.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="command\mod.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="searchByBirthday.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="searchByName.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="searchByPhoneNumber.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="txt_parser.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc">
@@ -42,29 +33,20 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="searchByCl.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="searchByEmployeeNum.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="searchByCerti.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="client.h">
       <Filter>헤더 파일</Filter>
     </ClCompile>
-    <ClCompile Include="client.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="amigoDatabase.cpp">
+      <Filter>소스 파일\Database</Filter>
     </ClCompile>
     <ClCompile Include="InputStream.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="client.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\IOStream</Filter>
     </ClCompile>
     <ClCompile Include="outputStream.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\IOStream</Filter>
+    </ClCompile>
+    <ClCompile Include="client.cpp">
+      <Filter>소스 파일\Client</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,28 +58,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cmd_parser.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="command.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="common.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="command\mod.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="searchByBirthday.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="searchByName.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="searchByPhoneNumber.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="searchEtc.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="inputStream.h">
@@ -107,6 +68,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="search.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="amigoDatabase.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="iDatabase.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

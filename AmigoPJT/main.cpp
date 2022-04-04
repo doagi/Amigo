@@ -1,57 +1,34 @@
-#include <iostream>
-#include <fstream>
-
-#include "common.h"
-#include "cmd_parser.h"
-#include "command.h"
+using namespace std;
 
 #include "client.h"
 
-#define USE_ARGC_ARGV (0)
-
-using namespace std;
-
-//unordered_map<unsigned int, Employee> employees;
-vector<Command> commands;
-unordered_map<unsigned int, Employee2> map_employees;
-
 int main(int argc, char** argv)
 {
-#if 1
-    // Will enable to the code of client app
-    Client amigo_client;
+    string input_path;
+    string output_path;
 
-    amigo_client.Run();
-
-#else
-
-#if USE_ARGC_ARGV
-    string Path = string(argv[1]);
-#else
-    string Path = "input_20_20.txt";
-#endif
-
-    commands = ParserFromTxt(Path);
-
-    vector<string> result = CommandRun(commands);
-
-    ofstream fout;
-#if USE_ARGC_ARGV
-    fout.open(string(argv[2]));
-#else
-    fout.open("output_20_20.txt");
-#endif
-
-    for (const string& outputTxt : result)
+    if (argc == 3)
     {
-        fout << outputTxt << endl;
+        input_path = argv[1];
+        output_path = argv[2];
     }
-    fout.close();
+    else
+    {
+        cout << "[Debugging] Set default file path" << endl;
+        input_path = "../AmigoPJT/input_20_20.txt";
+        output_path = "../AmigoPJT/output_20_20.txt";
+        cout << "- Input  : " << input_path << endl;
+        cout << "- Output : " << output_path << endl << endl;
+    }
 
-#endif
+    Client amigo_client{ input_path, output_path };
+    amigo_client.Run(true);
 
 #if _DEBUG
-    Compare("output_20_20_ref.txt", "output_20_20.txt");
+    if (argc != 3)
+    {
+        Compare("output_20_20_ref.txt", output_path);
+    }
 #endif
 
     return 0;

@@ -1,18 +1,29 @@
 #pragma once
 
 #include <fstream>
-#include "Command.h"
+#include <iostream>
+#include <string>
+#include "common.h"
+
+using namespace std;
 
 class InputStream
 {
 public:
     InputStream() {}
+
+    InputStream(const string& path)
+    {
+        SetInputPath(path);
+    }
+
     ~InputStream()
     {
         input_stream.close();
     }
 
-    void SetInputTxt(string src_txt_path);
+    void SetInputPath(const string& path);
+
     Command Input();
 
 private:
