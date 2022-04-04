@@ -19,33 +19,11 @@ vector<unsigned int> Sch(string op1, string op2, string column, string value)
     }
     else if (column == "name")
     {
-        if (op2 == "-f")
-        {
-            employees = searchByFirstName(value, map_employees);
-        }
-        else if (op2 == "-l")
-        {
-            employees = searchByLastName(value, map_employees);
-        }
-        else
-        {
-            employees = searchByName(value, map_employees);
-        }
+        employees = searchByName(op2, value, map_employees);
     }
     else if (column == "phoneNum")
     {
-        if (op2 == "-m")
-        {
-            employees = searchByMiddlePhoneNumber(stoi(value), map_employees);
-        }
-        else if (op2 == "-l")
-        {
-            employees = searchByLastPhoneNumber(stoi(value), map_employees);
-        }
-        else
-        {
-            employees = searchByPhoneNumber(value, map_employees);
-        }
+        employees = searchByPhoneNumber(op2, value, map_employees);
     }
     else if (column == "employeeNum")
     {
@@ -58,6 +36,11 @@ vector<unsigned int> Sch(string op1, string op2, string column, string value)
     else if (column == "cl")
     {
         employees = searchByCl(value, map_employees);
+    }
+    else
+    {
+        printf("Invalid column name\n");
+        exit(EXIT_FAILURE);
     }
     return employees;
 }
