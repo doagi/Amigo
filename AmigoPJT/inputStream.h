@@ -7,12 +7,19 @@ class InputStream
 {
 public:
     InputStream() {}
+
+    InputStream(const string& path)
+    {
+        SetInputPath(path);
+    }
+
     ~InputStream()
     {
         input_stream.close();
     }
 
-    void SetInputTxt(string src_txt_path);
+    void SetInputPath(const string& path);
+
     Command Input();
 
 private:

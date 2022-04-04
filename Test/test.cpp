@@ -1,5 +1,8 @@
 #include "pch.h"
 
+#include "../AmigoPJT/client.cpp"
+#include "../AmigoPJT/inputStream.cpp"
+#include "../AmigoPJT/outputStream.cpp"
 #include "../AmigoPJT/command.cpp"
 #include "../AmigoPJT/txt_parser.cpp"
 #include "../AmigoPJT/command/mod.cpp"
@@ -59,12 +62,8 @@ namespace IntergrationTest
         string refer_path = "..\\AmigoPJT\\output_20_20_ref.txt";
         string output_path = "output_20_20.txt";
 
-        ofstream fout(output_path);
-        for (const string& outputTxt : CommandRun(ParserFromTxt(input_path)))
-        {
-            fout << outputTxt << endl;
-        }
-        fout.close();
+        Client amigo_client{ input_path, output_path };
+        amigo_client.Run(true);
 
         EXPECT_EQ(0, Compare(refer_path, output_path));
     }
