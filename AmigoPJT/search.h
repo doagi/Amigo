@@ -77,7 +77,6 @@ SearchType AmigoDatabase::GetSearchType(string option, string column)
         else
         {
             throw invalid_argument("Invalid Column");
-            return SearchType_end;
         }
     }
     else if (column == "name")
@@ -97,7 +96,6 @@ SearchType AmigoDatabase::GetSearchType(string option, string column)
         else
         {
             throw invalid_argument("Invalid Column");
-            return SearchType_end;
         }
     }
     else if (column == "phoneNum")
@@ -117,7 +115,6 @@ SearchType AmigoDatabase::GetSearchType(string option, string column)
         else
         {
             throw invalid_argument("Invalid Column");
-            return SearchType_end;
         }
     }
     else if (column == "certi")
@@ -131,7 +128,6 @@ SearchType AmigoDatabase::GetSearchType(string option, string column)
     else
     {
         throw invalid_argument("Invalid Column");
-        return SearchType_end;
     }
 }
 
