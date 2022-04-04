@@ -119,29 +119,29 @@ class Client
 public:
     Client()
     {
-        AmigoDB = new AmigoDatabase();
+        amigo_db = new AmigoDatabase();
 
-        map<string, int> SupportedCmdsFromAmigoDB = AmigoDB->GetSupportedCmds();
+        map<string, int> SupportedCmdsFromAmigoDB = amigo_db->GetSupportedCmds();
 
         for (auto value : SupportedCmdsFromAmigoDB)
         {
             switch (value.second)
             {
             case AddCommand:
-                cmdHandlers[value.second] = new AddCommandHandler();
-                cmdHandlers[value.second]->SetDatabase(AmigoDB);
+                cmd_handlers[value.second] = new AddCommandHandler();
+                cmd_handlers[value.second]->SetDatabase(amigo_db);
                 break;
             case DelCommand:
-                cmdHandlers[value.second] = new DelCommandHandler();
-                cmdHandlers[value.second]->SetDatabase(AmigoDB);
+                cmd_handlers[value.second] = new DelCommandHandler();
+                cmd_handlers[value.second]->SetDatabase(amigo_db);
                 break;
             case ModCommand:
-                cmdHandlers[value.second] = new ModCommandHandler();
-                cmdHandlers[value.second]->SetDatabase(AmigoDB);
+                cmd_handlers[value.second] = new ModCommandHandler();
+                cmd_handlers[value.second]->SetDatabase(amigo_db);
                 break;
             case SchCommand:
-                cmdHandlers[value.second] = new SchCommandHandler();
-                cmdHandlers[value.second]->SetDatabase(AmigoDB);
+                cmd_handlers[value.second] = new SchCommandHandler();
+                cmd_handlers[value.second]->SetDatabase(amigo_db);
                 break;
             default:
                 break;
@@ -154,6 +154,6 @@ private:
     InputStream iStream;
     OutputStream oStream;
     
-    ICommandHandler* cmdHandlers[CommandType::CommandType_end];
-    IDatabase* AmigoDB;
+    ICommandHandler* cmd_handlers[CommandType::CommandType_end];
+    IDatabase* amigo_db;
 };
