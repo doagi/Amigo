@@ -21,7 +21,8 @@ void Client::Run()
 
         string result;
         
-        // result = Do cmd process
+        // cmd.cmd_type은 enum에 맞게 변경 필요.
+        result = Commands[cmd.cmd_type]->Process(cmd);
 
         oStream.Output(result);
     }
