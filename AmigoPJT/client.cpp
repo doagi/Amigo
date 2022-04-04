@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "command.h"
 #include "client.h"
 
 Client::Client()
@@ -90,7 +89,6 @@ void Client::Run(const string& input_path_, const string& output_path_, const bo
             }
         }
     }
-}
 catch (const exception& ex)
 {
     cout << endl << "ERROR: " << ex.what() << endl;

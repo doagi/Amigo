@@ -139,10 +139,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="amigoDatabase.cpp" />
     <ClCompile Include="client.cpp" />
     <ClCompile Include="client.h" />
-    <ClCompile Include="command\mod.cpp" />
-    <ClCompile Include="command.cpp" />
     <ClCompile Include="InputStream.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="searchByBirthday.cpp" />
@@ -152,13 +151,11 @@
     <ClCompile Include="searchByCerti.cpp" />
     <ClCompile Include="searchByCl.cpp" />
     <ClCompile Include="searchByEmployeeNum.cpp" />
-    <ClCompile Include="txt_parser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="command\mod.h" />
-    <ClInclude Include="cmd_parser.h" />
-    <ClInclude Include="command.h" />
+    <ClInclude Include="amigoDatabase.h" />
     <ClInclude Include="common.h" />
+    <ClInclude Include="iDatabase.h" />
     <ClInclude Include="inputStream.h" />
     <ClInclude Include="search.h" />
     <ClInclude Include="searchByBirthday.h" />

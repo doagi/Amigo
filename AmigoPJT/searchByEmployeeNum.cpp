@@ -1,6 +1,6 @@
 #include "searchEtc.h"
 
-vector<unsigned int> searchByEmployeeNumber(string target, unordered_map<unsigned int, Employee2> data)
+vector<unsigned int> searchByEmployeeNumber(string target, unordered_map<unsigned int, Employee> data)
 {
 	int entry_year = stoi(target.substr(0, 2));
 	if (target.length() != 8)

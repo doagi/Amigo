@@ -1,11 +1,4 @@
-#include <iostream>
-
-#include "client.h"
-#include "common.h"
-
 using namespace std;
-
-unordered_map<unsigned int, Employee2> map_employees;
 
 int main(int argc, char** argv)
 {

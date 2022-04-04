@@ -1,6 +1,6 @@
 #include "searchEtc.h"
 
-vector<unsigned int> searchByCerti(string target, unordered_map<unsigned int, Employee2> data)
+vector<unsigned int> searchByCerti(string target, unordered_map<unsigned int, Employee> data)
 {
 	if (target != "ADV" && target != "PRO" && target != "EX")
 	{

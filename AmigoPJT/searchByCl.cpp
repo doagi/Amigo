@@ -1,6 +1,6 @@
 #include "searchEtc.h"
 
-vector<unsigned int> searchByCl(string target, unordered_map<unsigned int, Employee2> data)
+vector<unsigned int> searchByCl(string target, unordered_map<unsigned int, Employee> data)
 {
 	if (target != "CL1" && target != "CL2" && target != "CL3" && target != "CL4")
 	{
