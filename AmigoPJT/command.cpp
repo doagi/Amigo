@@ -19,43 +19,11 @@ vector<unsigned int> Sch(string op1, string op2, string column, string value)
     }
     else if (column == "name")
     {
-        if (op2 == " ")
-        {
-            employees = searchByName(value, map_employees);
-        }
-        else if (op2 == "-f")
-        {
-            employees = searchByFirstName(value, map_employees);
-        }
-        else if (op2 == "-l")
-        {
-            employees = searchByLastName(value, map_employees);
-        }
-        else
-        {
-            printf("Invalid name option. Only -l or -f are available\n");
-            exit(EXIT_FAILURE);
-        }
+        employees = searchByName(op2, value, map_employees);
     }
     else if (column == "phoneNum")
     {
-        if (op2 == " ")
-        {
-            employees = searchByPhoneNumber(value, map_employees);
-        }
-        else if (op2 == "-m")
-        {
-            employees = searchByMiddlePhoneNumber(stoi(value), map_employees);
-        }
-        else if (op2 == "-l")
-        {
-            employees = searchByLastPhoneNumber(stoi(value), map_employees);
-        }
-        else
-        {
-            printf("Invalid PhoneNum option. Only -m or -l are available\n");
-            exit(EXIT_FAILURE);
-        }
+        employees = searchByPhoneNumber(op2, value, map_employees);
     }
     else if (column == "employeeNum")
     {
