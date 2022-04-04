@@ -7,12 +7,19 @@ class OutputStream
 {
 public:
     OutputStream() {}
+
+    OutputStream(string path)
+    {
+        SetOutputPath(path);
+    }
+
     ~OutputStream()
     {
         output_stream.close();
     }
 
-    void SetOutputTxt(string src_txt_path);
+    void SetOutputPath(string file_path);
+
     void Output(string str);
 
 private:

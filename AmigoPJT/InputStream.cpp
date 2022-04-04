@@ -1,8 +1,14 @@
+#include "common.h"
 #include "inputStream.h"
 
-void InputStream::SetInputTxt(string src_txt_path)
+void InputStream::SetInputPath(const string& path)
 {
-    input_stream.open(src_txt_path);
+    input_stream.open(path);
+
+    if (!input_stream.is_open())
+    {
+        throw invalid_argument("Can't open input stream");
+    }
 }
 
 Command InputStream::Input()
@@ -23,22 +29,16 @@ Command InputStream::Input()
         return Command();
     }
 
-    string delimiter = ",";
+    int index = 0;
+    Command result;
 
-    size_t pos = 0;
-    string token;
-    int idx = 0;
-    Command cur_cmd;
-
-    while ((pos = str_line.find(delimiter)) != string::npos) {
-        token = str_line.substr(0, pos);
-        str_line.erase(0, pos + delimiter.length());
-        cur_cmd.param[idx] = token;
-        idx++;
+    auto tokens = split(str_line, ',');
+    for (const string& token : tokens)
+    {
+        result.param[index++] = token;
     }
 
-    cur_cmd.param[idx] = str_line;
-    cur_cmd.is_valid = true;
+    result.is_valid = true;
 
-    return cur_cmd;
+    return result;
 }

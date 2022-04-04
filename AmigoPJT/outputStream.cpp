@@ -1,8 +1,13 @@
 #include "outputStream.h"
 
-void OutputStream::SetOutputTxt(string src_txt_path)
+void OutputStream::SetOutputPath(string path)
 {
-    output_stream.open(src_txt_path);
+    output_stream.open(path);
+
+    if (!output_stream.is_open())
+    {
+        throw invalid_argument("Can't open output stream");
+    }
 }
 
 void OutputStream::Output(string str)

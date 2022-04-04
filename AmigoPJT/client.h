@@ -181,43 +181,19 @@ class ModCommandHandler : public ICommandHandler
 class Client
 {
 public:
-    Client()
-    {
-        amigo_db = new AmigoDatabase();
+    Client();
 
-        map<string, int> supported_cmds_amigo_db = amigo_db->GetSupportedCmds();
+    Client(const string& input_path, const string& output_path);
 
-        for (auto value : supported_cmds_amigo_db)
-        {
-            switch (value.second)
-            {
-            case AddCommand:
-                cmd_handlers[value.second] = new AddCommandHandler();
-                cmd_handlers[value.second]->SetDatabase(amigo_db);
-                break;
-            case DelCommand:
-                cmd_handlers[value.second] = new DelCommandHandler();
-                cmd_handlers[value.second]->SetDatabase(amigo_db);
-                break;
-            case ModCommand:
-                cmd_handlers[value.second] = new ModCommandHandler();
-                cmd_handlers[value.second]->SetDatabase(amigo_db);
-                break;
-            case SchCommand:
-                cmd_handlers[value.second] = new SchCommandHandler();
-                cmd_handlers[value.second]->SetDatabase(amigo_db);
-                break;
-            default:
-                break;
-            }
-        }
-    }
-    ~Client() {}
-    void Run();
-private:
-    InputStream iStream;
-    OutputStream oStream;
-    
+    ~Client() = default;
+
+    void Run(const bool& debug_print = false);
+
+    void Run(const string & input_path, const string & output_path, const bool& debug_print = false);
+
+private:    
     ICommandHandler* cmd_handlers[CommandType::CommandType_count];
     IDatabase* amigo_db;
+    string input_path;
+    string output_path;
 };
