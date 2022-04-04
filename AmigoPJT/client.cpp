@@ -11,7 +11,7 @@ void Client::Run()
     // Txt output 시에 설정. 표준 출력시에 주석 필요
     oStream.SetOutputTxt("../AmigoPJT/output_20_20.txt");
 
-    map<string, int> SupportedCmdsFromAmigoDB = amigo_db->GetSupportedCmds();
+    map<string, int> supported_cmds_amigo_db = amigo_db->GetSupportedCmds();
 
     while (1)
     {
@@ -22,9 +22,9 @@ void Client::Run()
             break;
         }
 
-        int cmdHandlerIdx = SupportedCmdsFromAmigoDB[cmd.param[Command::cmd_type]];
+        int cmd_handler_index = supported_cmds_amigo_db[cmd.param[Command::cmd_type]];
 
-        string result = cmd_handlers[cmdHandlerIdx]->Process(cmd);
+        string result = cmd_handlers[cmd_handler_index]->Process(cmd);
 
         oStream.Output(result);
     }
