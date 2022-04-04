@@ -3,7 +3,7 @@
 #include "client.h"
 
 template <typename T>
-bool AmigoDatabase::isMatch(const std::pair<int, Employee>& employee, T target, SearchType type) {
+bool AmigoDatabase::IsMatch(const std::pair<int, Employee>& employee, T target, SearchType type) {
     switch (type)
     {
         case EMPLOYEE_NUM:
@@ -32,14 +32,17 @@ bool AmigoDatabase::isMatch(const std::pair<int, Employee>& employee, T target, 
             return employee.second.day_birthday == stoi(target);
         case CERTI:
             return employee.second.certi == target;
+
+        default:
+            return false;
     }
 }
 
-vector<unsigned int> AmigoDatabase::searchByType(string target, SearchType type) {
+vector<unsigned int> AmigoDatabase::SearchByType(string& target, SearchType type) {
     vector<unsigned int> result;
     for (const auto& an_employee : map_employees)
     {
-        if (isMatch(an_employee, target, type))
+        if (IsMatch(an_employee, target, type))
         {
             result.push_back(an_employee.second.employee_num);
         }
@@ -47,7 +50,7 @@ vector<unsigned int> AmigoDatabase::searchByType(string target, SearchType type)
     return result;
 }
 
-SearchType AmigoDatabase::getSearchType(string option, string column) 
+SearchType AmigoDatabase::GetSearchType(string option, string column) 
 {
     if (column == "employeeNum") 
     {
@@ -71,6 +74,10 @@ SearchType AmigoDatabase::getSearchType(string option, string column)
         {
             return BIRTHDAY_DAY;
         }
+        else
+        {
+            throw invalid_argument("Invalid Column");
+        }
     }
     else if (column == "name")
     {
@@ -85,6 +92,10 @@ SearchType AmigoDatabase::getSearchType(string option, string column)
         else if (option == "-l")
         {
             return LAST_NAME;
+        }
+        else
+        {
+            throw invalid_argument("Invalid Column");
         }
     }
     else if (column == "phoneNum")
@@ -101,6 +112,10 @@ SearchType AmigoDatabase::getSearchType(string option, string column)
         {
             return LAST_PHONE_NUMBER;
         }
+        else
+        {
+            throw invalid_argument("Invalid Column");
+        }
     }
     else if (column == "certi")
     {
@@ -109,6 +124,10 @@ SearchType AmigoDatabase::getSearchType(string option, string column)
     else if (column == "cl")
     {
         return CL;
+    }
+    else
+    {
+        throw invalid_argument("Invalid Column");
     }
 }
 
