@@ -12,11 +12,11 @@ public:
     virtual string Query() = 0;
     map<string, int> GetSupportedCmds()
     {
-        return SupportedCmds;
+        return supported_cmds;
     }
 
 protected:
-    map<string, int> SupportedCmds;
+    map<string, int> supported_cmds;
 };
 
 class AmigoDatabase : public IDatabase
@@ -24,11 +24,11 @@ class AmigoDatabase : public IDatabase
 public:
     AmigoDatabase()
     {
-        SupportedCmds.clear();
-        SupportedCmds["ADD"] = (int)(CommandType::AddCommand);
-        SupportedCmds["DEL"] = (int)(CommandType::DelCommand);
-        SupportedCmds["MOD"] = (int)(CommandType::ModCommand);
-        SupportedCmds["SCH"] = (int)(CommandType::SchCommand);
+        supported_cmds.clear();
+        supported_cmds["ADD"] = (int)(CommandType::AddCommand);
+        supported_cmds["DEL"] = (int)(CommandType::DelCommand);
+        supported_cmds["MOD"] = (int)(CommandType::ModCommand);
+        supported_cmds["SCH"] = (int)(CommandType::SchCommand);
     }
 
     virtual string Query() override
