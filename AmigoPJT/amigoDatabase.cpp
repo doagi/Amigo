@@ -18,13 +18,13 @@ string AmigoDatabase::Query(Command cmd)
     }
     else if (command == "SCH")
     {
-        search_result = Sch(cmd.param[1], cmd.param[2], cmd.param[4], cmd.param[5]);
+        search_result = Search(cmd.param[2], cmd.param[4], cmd.param[5]);
 
         result = GenerateCommandRecord(command, (option1 == "-p"), search_result);
     }
     else if (command == "DEL")
     {
-        search_result = Sch(cmd.param[1], cmd.param[2], cmd.param[4], cmd.param[5]);
+        search_result = Search(cmd.param[2], cmd.param[4], cmd.param[5]);
 
         result = GenerateCommandRecord(command, (option1 == "-p"), search_result);
 
@@ -32,7 +32,7 @@ string AmigoDatabase::Query(Command cmd)
     }
     else if (command == "MOD")
     {
-        search_result = Sch(cmd.param[1], cmd.param[2], cmd.param[4], cmd.param[5]);
+        search_result = Search(cmd.param[2], cmd.param[4], cmd.param[5]);
 
         result = GenerateCommandRecord(command, (option1 == "-p"), search_result);
 
@@ -54,39 +54,10 @@ int AmigoDatabase::Add(string employee_num, string name, string cl, string phone
     return map_employees.size();
 }
 
-vector<unsigned int> AmigoDatabase::Sch(string op1, string op2, string column, string value)
+vector<unsigned int> AmigoDatabase::Search(string option, string column, string value)
 {
-    vector<unsigned int> employees;
-    if (column == "birthday")
-    {
-        employees = SearchByBirthday(op2, value);
-    }
-    else if (column == "name")
-    {
-        employees = searchByName(op2, value);
-    }
-    else if (column == "phoneNum")
-    {
-        employees = searchByPhoneNumber(op2, value);
-    }
-    else if (column == "employeeNum")
-    {
-        employees = searchByEmployeeNumber(value);
-    }
-    else if (column == "certi")
-    {
-        employees = searchByCerti(value);
-    }
-    else if (column == "cl")
-    {
-        employees = searchByCl(value);
-    }
-    else
-    {
-        printf("Invalid column name\n");
-        exit(EXIT_FAILURE);
-    }
-    return employees;
+    //isValidSearch(value, getSearchType(option, column));
+    return searchByType(value, getSearchType(option, column));
 }
 
 string AmigoDatabase::Del(unordered_map<unsigned int, Employee>& employee, vector<unsigned int> deleteList)

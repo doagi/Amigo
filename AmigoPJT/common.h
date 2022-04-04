@@ -139,6 +139,25 @@ enum CommandType
     CommandType_count = CommandType_end - CommandType_start
 };
 
+enum SearchType
+{
+    SearchType_start = 0,
+    EMPLOYEE_NUM = SearchType_start,
+    NAME,
+    FIRST_NAME,
+    LAST_NAME,
+    CL,
+    PHONE_NUMBER,
+    MIDDLE_PHONE_NUMBER,
+    LAST_PHONE_NUMBER,
+    BIRTHDAY,
+    BIRTHDAY_YEAR,
+    BIRTHDAY_MONTH,
+    BIRTHDAY_DAY,
+    CERTI,
+    SearchType_end
+};
+
 struct Command
 {
     enum

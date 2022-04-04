@@ -603,7 +603,7 @@ namespace SeachTest
     {
         makeDataforSearch();
         vector<unsigned int> answer = { map_employees[2015123099].employee_num };
-        vector<unsigned int> ret = searchByName("VXIHXOTH JHOP", map_employees);
+        vector<unsigned int> ret = searchByName(" ", "VXIHXOTH JHOP", map_employees);
         EXPECT_EQ(answer.size(), ret.size());
         for (size_t i = 0; i < ret.size(); i++)
         {
@@ -634,11 +634,17 @@ namespace SeachTest
         }
     }
 
+    TEST(AmigoSearchTest, NameException)
+    {
+        makeDataforSearch();
+        EXPECT_ANY_THROW(searchByName(" ", "VXIHXOTH JHOPVDNFJLDNFDDD", map_employees));
+    }
+
     TEST(AmigoSearchTest, PhoneNumber)
     {
         makeDataforSearch();
         vector<unsigned int> answer = { map_employees[2017112609].employee_num };
-        vector<unsigned int> ret = searchByPhoneNumber("010-5645-6122", map_employees);
+        vector<unsigned int> ret = searchByPhoneNumber(" ", "010-5645-6122", map_employees);
         EXPECT_EQ(answer.size(), ret.size());
         for (size_t i = 0; i < ret.size(); i++)
         {
@@ -649,7 +655,7 @@ namespace SeachTest
     TEST(AmigoSearchTest, optionM_Phone) {
         makeDataforSearch();
         vector<unsigned int> answer = { map_employees[1988114052].employee_num, map_employees[2014130827].employee_num };
-        vector<unsigned int> ret = searchByMiddlePhoneNumber(4528, map_employees);
+        vector<unsigned int> ret = searchByMiddlePhoneNumber("4528", map_employees);
         EXPECT_EQ(answer.size(), ret.size());
         for (size_t i = 0; i < ret.size(); i++)
         {
@@ -660,12 +666,30 @@ namespace SeachTest
     TEST(AmigoSearchTest, optionL_Phone) {
         makeDataforSearch();
         vector<unsigned int> answer = { map_employees[2008123556].employee_num };
-        vector<unsigned int> ret = searchByLastPhoneNumber(5047, map_employees);
+        vector<unsigned int> ret = searchByLastPhoneNumber("5047", map_employees);
         EXPECT_EQ(answer.size(), ret.size());
         for (size_t i = 0; i < ret.size(); i++)
         {
             EXPECT_EQ(answer[i], ret[i]);
         }
+    }
+
+    TEST(AmigoSearchTest, PhoneNumException1)
+    {
+        makeDataforSearch();
+        EXPECT_ANY_THROW(searchByPhoneNumber(" ", "016-0442-4050", map_employees));
+    }
+
+    TEST(AmigoSearchTest, PhoneNumException2)
+    {
+        makeDataforSearch();
+        EXPECT_ANY_THROW(searchByPhoneNumber(" ", "010-442-4050", map_employees));
+    }
+
+    TEST(AmigoSearchTest, PhoneNumException3)
+    {
+        makeDataforSearch();
+        EXPECT_ANY_THROW(searchByPhoneNumber(" ", "01014424050", map_employees));
     }
 
     TEST(AmigoSearchTest, Certi) {
@@ -684,6 +708,12 @@ namespace SeachTest
         }
     }
 
+    TEST(AmigoSearchTest, CertiException)
+    {
+        makeDataforSearch();
+        EXPECT_ANY_THROW(searchByCerti("IM", map_employees));
+    }
+
     TEST(AmigoSearchTest, Cl) {
         makeDataforSearch();
         vector<unsigned int> answer = { 
@@ -698,6 +728,12 @@ namespace SeachTest
         }
     }
 
+    TEST(AmigoSearchTest, ClException)
+    {
+        makeDataforSearch();
+        EXPECT_ANY_THROW(searchByCl("CL5", map_employees));
+    }
+
     TEST(AmigoSearchTest, EmployeeNumber) {
         makeDataforSearch();
         vector<unsigned int> answer = { map_employees[2001122329].employee_num };
@@ -707,5 +743,21 @@ namespace SeachTest
         {
             EXPECT_EQ(answer[i], ret[i]);
         }
+    }
+
+    TEST(AmigoSearchTest, EmployeeNumberException1)
+    {
+        makeDataforSearch();
+        EXPECT_ANY_THROW(searchByCerti("22122329", map_employees));
+    }
+    TEST(AmigoSearchTest, EmployeeNumberException2)
+    {
+        makeDataforSearch();
+        EXPECT_ANY_THROW(searchByCerti("50122329", map_employees));
+    }
+    TEST(AmigoSearchTest, EmployeeNumberException3)
+    {
+        makeDataforSearch();
+        EXPECT_ANY_THROW(searchByCerti("21129", map_employees));
     }
 }
