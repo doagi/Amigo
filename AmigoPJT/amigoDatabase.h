@@ -27,8 +27,10 @@ private:
 
     void Del(const vector<unsigned int>& deleteList);
 
+    /*
     vector<string> Mod(unordered_map<unsigned int, Employee>& map_employees,
         const vector<unsigned int>& found_data, const ModificationInfo& condition);
+        */
 
     void ModifyColumnData(Employee& employee, const ModificationInfo& mod_info);
 
