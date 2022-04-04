@@ -22,4 +22,4 @@ string GenerateCommandRecord(const std::string& command, const bool& detail_prin
 string GenerateDetailRecord(const std::string& command, const vector<unsigned int>& result);
 
 vector<string> CommandRun(vector<Command> commands);
-string Del(unordered_map<unsigned int, Employee2>& employee, vector<unsigned int> deleteList);
+string Del(vector<unsigned int> deleteList);

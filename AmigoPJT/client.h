@@ -56,7 +56,7 @@ public:
 
             result = GenerateCommandRecord(command, (option1 == "-p"), search_result);
 
-            Del(map_employees, search_result);
+            Del(search_result);
         }
         else if (command == "MOD")
         {

@@ -133,7 +133,7 @@ vector<string>  CommandRun(vector<Command> commands)
 
             output_records.emplace_back(GenerateCommandRecord(command, (option1 == "-p"), search_result));
 
-            Del(map_employees, search_result);
+            Del(search_result);
         }
         else if (command == "MOD")
         {
@@ -157,13 +157,13 @@ vector<string>  CommandRun(vector<Command> commands)
 }
 // from DelCommand.cpp
 
-string Del(unordered_map<unsigned int, Employee2>& employee, vector<unsigned int> deleteList)
+string Del(vector<unsigned int> deleteList)
 {
 
     int numTarget = 0;
     for (int i = 0; i < deleteList.size(); i++)
     {
-        employee.erase(deleteList[i]);
+        map_employees.erase(deleteList[i]);
     }
 
     if (deleteList.size() == 0)
