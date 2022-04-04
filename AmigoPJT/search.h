@@ -56,6 +56,12 @@ vector<unsigned int> AmigoDatabase::SearchByFullBirthday(string target)
 
 vector<unsigned int> AmigoDatabase::SearchByBirthday(string op2, string target)
 {
+    if (target.length() != 8)
+    {
+        printf("Invalid birthday length.\n");
+        exit(EXIT_FAILURE);
+    }
+
     if (op2 == "-y")
     {
         return SearchByYear(target);
@@ -68,9 +74,14 @@ vector<unsigned int> AmigoDatabase::SearchByBirthday(string op2, string target)
     {
         return SearchByDate(target);
     }
-    else
+    else if(op2 == " ")
     {
         return SearchByFullBirthday(target);
+    }
+    else
+    {
+        printf("Invalid birthday option. Only -d, -y or -m are available\n");
+        exit(EXIT_FAILURE);
     }
 }
 
