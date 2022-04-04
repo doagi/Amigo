@@ -1,6 +1,11 @@
 #include "searchByName.h"
 
 vector <unsigned int> searchByName(string op2, string target, unordered_map<unsigned int, Employee2> data) {
+	if (target.length() > 13)
+	{
+		printf("Too long name.\n");
+		exit(EXIT_FAILURE);
+	}
 	vector<unsigned int> employees;
 	if (op2 == " ")
 	{
