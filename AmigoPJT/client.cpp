@@ -2,6 +2,7 @@
 #include "command.h"
 #include "client.h"
 
+
 void Client::Run()
 {
     // Txt input 시에 설정. 표준 입력시에 주석 필요
@@ -21,8 +22,11 @@ void Client::Run()
 
         string result;
         
-        // cmd.cmd_type은 enum에 맞게 변경 필요.
-        result = Commands[cmd.cmd_type]->Process(cmd);
+        map<string, int> SupportedCmdsFromAmigoDB = AmigoDB->GetSupportedCmds();
+        
+        int cmdHandlerIdx = SupportedCmdsFromAmigoDB[cmd.param[Command::cmd_type]];
+
+        result = cmdHandlers[cmdHandlerIdx]->Process(cmd);
 
         oStream.Output(result);
     }

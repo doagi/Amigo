@@ -138,6 +138,17 @@ struct Employee2
     string certi;
 };
 
+
+enum CommandType
+{
+    CommandType_start = 0,
+    AddCommand = CommandType_start,
+    DelCommand,
+    SchCommand,
+    ModCommand,
+    CommandType_end,
+};
+
 struct Command
 {
     enum
