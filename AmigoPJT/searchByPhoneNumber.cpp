@@ -27,18 +27,15 @@ vector<unsigned int> searchByFullPhoneNumber(string target, unordered_map<unsign
 {
 	if (target.length() != 13)
 	{
-		printf("Invalid Phone Number length.\n");
-		exit(EXIT_FAILURE);
+		throw std::length_error("Invalid Phone Number length.\n");
 	}
 	if (target.substr(0, 4) != "010-")
 	{
-		printf("Invalid Phone Number. Phone Number must start with 010-.\n");
-		exit(EXIT_FAILURE);
+		throw std::out_of_range("Invalid Phone Number. Phone Number must start with 010-.\n");
 	}
 	if (target.substr(8, 1) != "-")
 	{
-		printf("Invalid Phone Number. Phone Number format must be 010-XXXX-XXXX.\n");
-		exit(EXIT_FAILURE);
+		throw std::out_of_range("Invalid Phone Number. Phone Number format must be 010-XXXX-XXXX.\n");
 	}
 	vector<unsigned int> result;
 	for (auto aData : data)

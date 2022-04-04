@@ -3,7 +3,7 @@
 vector <unsigned int> searchByName(string op2, string target, unordered_map<unsigned int, Employee2> data) {
 	if (target.length() > 13)
 	{
-		printf("Too long name.\n");
+		throw std::length_error("Too long name.\n");
 		exit(EXIT_FAILURE);
 	}
 	vector<unsigned int> employees;
@@ -21,8 +21,7 @@ vector <unsigned int> searchByName(string op2, string target, unordered_map<unsi
 	}
 	else
 	{
-		printf("Invalid name option. Only -l or -f are available\n");
-		exit(EXIT_FAILURE);
+		throw std::out_of_range("Invalid name option. Only -l or -f are available\n");
 	}
 	return employees;
 }

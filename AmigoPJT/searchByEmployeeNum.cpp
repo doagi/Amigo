@@ -5,13 +5,11 @@ vector<unsigned int> searchByEmployeeNumber(string target, unordered_map<unsigne
 	int entry_year = stoi(target.substr(0, 2));
 	if (target.length() != 8)
 	{
-		printf("Invalid Employee Number length.\n");
-		exit(EXIT_FAILURE);
+		throw std::length_error("Invalid Employee Number length.\n");
 	}
 	if (entry_year > 21 && entry_year < 69)
 	{
-		printf("Invalid Employee Number. Entry year should be between 1969 and 2021.\n");
-		exit(EXIT_FAILURE);
+		throw std::out_of_range("Invalid Employee Number. Entry year should be between 1969 and 2021.\n");
 	}
 	vector<unsigned int> result;
 	unsigned int find_key = entry_year > 68 ? stoi("19" + target) : stoi("20" + target);

@@ -4,8 +4,7 @@ vector<unsigned int> searchByCl(string target, unordered_map<unsigned int, Emplo
 {
 	if (target != "CL1" && target != "CL2" && target != "CL3" && target != "CL4")
 	{
-		printf("Invalid CL.\n");
-		exit(EXIT_FAILURE);
+		throw std::out_of_range("Invalid CL.\n");
 	}
 	vector<unsigned int> result;
 	for (auto aData : data)

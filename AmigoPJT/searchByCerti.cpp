@@ -4,8 +4,7 @@ vector<unsigned int> searchByCerti(string target, unordered_map<unsigned int, Em
 {
 	if (target != "ADV" && target != "PRO" && target != "EX")
 	{
-		printf("Invalid CL.\n");
-		exit(EXIT_FAILURE);
+		throw std::out_of_range("Invalid CL.\n");
 	}
 	vector<unsigned int> result;
 	for (auto aData : data)
