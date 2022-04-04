@@ -71,7 +71,64 @@ namespace IntergrationTest
 
 namespace CommandTest
 {
-    TEST(AmigoCommandTest, Unsupported_Command)
+    class AmigoCommandTest : public ::testing::Test
+    {
+    protected:
+        static const int MAX_COUNT = 500;
+        char RAND_STR_LIST[MAX_COUNT][8] = { 0, };
+        char RAND_NUM_LIST[MAX_COUNT][5] = { 0, };
+
+        void make_string()
+        {
+            srand((unsigned int)time(NULL));
+            for (int i = 0; i < MAX_COUNT; i++)
+            {
+                const unsigned int len = 1 + rand() % 6;
+                for (int c = 0; c < len; c++)
+                {
+                    RAND_STR_LIST[i][c] = 'A' + rand() % 26;
+                }
+                RAND_STR_LIST[i][len] = NULL;
+            }
+        }
+
+        void make_number()
+        {
+            srand((unsigned int)time(NULL));
+            for (int i = 0; i < MAX_COUNT; i++)
+            {
+                for (int c = 0; c < 4; c++)
+                {
+                    RAND_NUM_LIST[i][c] = '0' + rand() % 10;
+                }
+                RAND_NUM_LIST[i][5] = NULL;
+            }
+        }
+
+        string make_date(const int max)
+        {
+            unsigned int XX = rand() % max + 1;
+            if (XX < 10)
+            {
+                return "0" + to_string(XX);
+            }
+            return to_string(XX);
+        }
+
+        string make_employee_num()
+        {
+            char front[5] = { 0, };
+            unsigned int YY = rand() % 100;
+            if (YY > 21 && YY < 69)
+            {
+                YY = 21;
+            }
+            sprintf(front, "%02d%02d", YY, rand() % 100);
+            return string(front) + RAND_NUM_LIST[rand() % MAX_COUNT];
+        }
+    };
+
+    TEST_F(AmigoCommandTest, Unsupported_Command)
     {
         vector<string> raw_command
         {
@@ -90,16 +147,16 @@ namespace CommandTest
         EXPECT_THROW(CommandRun(commands), runtime_error);
     }
 
-    TEST(AmigoCommandTest, Supported_All_Command)
+    TEST_F(AmigoCommandTest, Supported_All_Command)
     {
         vector<vector<string>> raw_commands
         {
-            { "ADD", "", "", "", "15123099", "VXIHXOTH JHOP", "CL3", "010-3112-2609", "19771211", "ADV" },
-            { "ADD", "", "", "", "17112609", "FB NTAWR", "CL4", "010-5645-6122", "19861203", "PRO" },
-            { "ADD", "", "", "", "18115040", "TTETHU HBO", "CL3", "010-4581-2050", "20080718", "ADV" },
-            { "SCH", "-p", "-d", "", "birthday", "04" },
-            { "MOD", "-p", "", "", "name", "FB NTAWR", "birthday", "20050520" },
-            { "DEL", "", "", "", "employeeNum", "18115040" }
+            { "ADD", " ", " ", " ", "15123099", "VXIHXOTH JHOP", "CL3", "010-3112-2609", "19771211", "ADV" },
+            { "ADD", " ", " ", " ", "17112609", "FB NTAWR", "CL4", "010-5645-6122", "19861203", "PRO" },
+            { "ADD", " ", " ", " ", "18115040", "TTETHU HBO", "CL3", "010-4581-2050", "20080718", "ADV" },
+            { "SCH", "-p", "-d", " ", "birthday", "04" },
+            { "MOD", "-p", " ", " ", "name", "FB NTAWR", "birthday", "20050520" },
+            { "DEL", " ", " ", " ", "employeeNum", "18115040" }
         };
 
         vector<Command> commands;
@@ -117,6 +174,132 @@ namespace CommandTest
         }
 
         EXPECT_NO_THROW(CommandRun(commands));
+    }    
+
+    TEST_F(AmigoCommandTest, DISABLED_Heavy_Command_List)
+    {
+        const unsigned int add_count = 200000;
+        const unsigned int cmd_count = 100000;
+
+        vector<Command> commands;
+        commands.reserve(add_count + cmd_count);
+
+        make_string();
+        make_number();
+
+        const string certi[] = { "ADV", "PRO", "EX" };
+        //const string cmd_list[] = { "SCH","DEL","MOD" };  // DEL로 자료가 너무 금방 지워져서
+        const string cmd_list[] = { "SCH","SCH","MOD" };    // SCH로 대체
+        const string col_list[] = { "employeeNum", "name", "cl", "phoneNum", "birthday", "certi" };
+        const string op2_list[][4]
+        {
+            { " ",  " ",  " ",  " "},
+            { "-f", "-l", " ",  " "},
+            { " ",  " ",  " ",  " "},
+            { "-m", "-l", " ",  " "},
+            { "-y", "-m", "-d", " "},
+            { " ",  " ",  " ",  " "}
+        };
+
+        srand((unsigned int)time(NULL));
+
+        auto PickRandomData = [&](const int& col, const int& op2 = 0) {
+            switch (col)
+            {
+            case 0:
+                return make_employee_num();
+            case 1:
+                if (op2 >= 2) // Full name
+                {
+                    return RAND_STR_LIST[rand() % MAX_COUNT] + string(" ") + RAND_STR_LIST[rand() % MAX_COUNT];
+                }
+                return RAND_STR_LIST[rand() % MAX_COUNT] + string("");
+            case 2:
+                return "CL" + to_string(rand() % 4 + 1);
+            case 3:
+                if (op2 >= 2) // Full number
+                {
+                    return string("010-") + RAND_NUM_LIST[rand() % MAX_COUNT] + string("-") + RAND_NUM_LIST[rand() % MAX_COUNT];
+                }
+                return RAND_NUM_LIST[rand() % MAX_COUNT] + string("");
+            case 4:
+                if (op2 >= 3) // Full date
+                {
+                    return to_string(1960 + rand() % 100) + make_date(12) + make_date(31);
+                }
+                return (op2 == 0) ? to_string(1960 + rand() % 100) : (op2 == 1) ? make_date(12) : make_date(31);
+            case 5:
+                return certi[rand() % 3];
+            }
+            return string(" ");
+        };
+
+        for (int i = 0; i < add_count; i++)
+        {
+            Command command;
+            command.param[0] = "ADD";
+            command.param[1] = " ";
+            command.param[2] = " ";
+            command.param[3] = " ";
+            command.param[4] = PickRandomData(0);
+            command.param[5] = PickRandomData(1, 2);
+            command.param[6] = PickRandomData(2);
+            command.param[7] = PickRandomData(3, 2);
+            command.param[8] = PickRandomData(4, 3);
+            command.param[9] = PickRandomData(5);
+            command.is_valid = true;
+            commands.emplace_back(command);
+        }
+
+        for (int i = 0; i < cmd_count; i++)
+        {
+            Command command;
+            unsigned int cmd = rand() % 3;
+            unsigned int op2 = rand() % 3;
+            unsigned int col = rand() % 6;
+            command.param[0] = cmd_list[cmd];
+            command.param[1] = (i % 2) == 0 ? " " : "-p";
+            command.param[2] = op2_list[col][op2];
+            command.param[3] = " ";
+            command.param[4] = col_list[col];
+            command.param[5] = PickRandomData(col, op2);
+            if (cmd == 2)
+            {
+                unsigned int op2 = rand() % 3;
+                unsigned int col = rand() % 5 + 1;
+                command.param[6] = col_list[col];
+                command.param[7] = PickRandomData(col, op2);
+            }
+            command.is_valid = true;
+            commands.emplace_back(command);
+        }
+
+        /**
+        * const unsigned int add_count = 2000;
+        * const unsigned int cmd_count = 1000; 
+        * 
+        * (case1) 25785 ms, 25548 ms
+        * (case2) 29490 ms, 29764 ms
+        * 
+        * Result를 모아서 출력하는게 더 빠름
+        */
+
+        // (Case1)
+        EXPECT_NO_THROW(CommandRun(commands));
+
+        // (Case2)
+        //EXPECT_NO_THROW(
+        //{
+        //    auto amigo_db = new AmigoDatabase();
+        //    for (size_t i = 0; i < commands.size(); i++)
+        //    {
+        //        string result = amigo_db->Query(commands[i]);
+        //        if (result.length() > 1)
+        //        {
+        //            cout << result << endl;
+        //        }
+        //    }
+        //});
     }
 }
 
