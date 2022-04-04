@@ -2,10 +2,6 @@
 #include <map>
 #include "amigoDatabase.h"
 #include "search.h"
-#include "searchByName.h"
-#include "searchByPhoneNumber.h"
-#include "searchEtc.h"
-
 
 string AmigoDatabase::Query(Command cmd)
 {

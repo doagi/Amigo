@@ -144,13 +144,7 @@
     <ClCompile Include="client.h" />
     <ClCompile Include="InputStream.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="searchByBirthday.cpp" />
     <ClCompile Include="outputStream.cpp" />
-    <ClCompile Include="searchByName.cpp" />
-    <ClCompile Include="searchByPhoneNumber.cpp" />
-    <ClCompile Include="searchByCerti.cpp" />
-    <ClCompile Include="searchByCl.cpp" />
-    <ClCompile Include="searchByEmployeeNum.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="amigoDatabase.h" />
@@ -158,11 +152,7 @@
     <ClInclude Include="iDatabase.h" />
     <ClInclude Include="inputStream.h" />
     <ClInclude Include="search.h" />
-    <ClInclude Include="searchByBirthday.h" />
     <ClInclude Include="outputStream.h" />
-    <ClInclude Include="searchByName.h" />
-    <ClInclude Include="searchByPhoneNumber.h" />
-    <ClInclude Include="searchEtc.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
