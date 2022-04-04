@@ -19,17 +19,17 @@ bool AmigoDatabase::isMatch(const std::pair<int, Employee>& employee, T target, 
         case PHONE_NUMBER:
             return employee.second.full_phone_number == target;
         case MIDDLE_PHONE_NUMBER:
-            return employee.second.middle_phone_num == target;
+            return employee.second.middle_phone_num == stoi(target);
         case LAST_PHONE_NUMBER:
-            return employee.second.last_phone_num == target;
+            return employee.second.last_phone_num == stoi(target);
         case BIRTHDAY:
             return employee.second.full_birthday == target;
         case BIRTHDAY_YEAR:
-            return employee.second.year_birthday == target;
+            return employee.second.year_birthday == stoi(target);
         case BIRTHDAY_MONTH:
-            return employee.second.month_birthday == target;
+            return employee.second.month_birthday == stoi(target);
         case BIRTHDAY_DAY:
-            return employee.second.day_birthday == target;
+            return employee.second.day_birthday == stoi(target);
         case CERTI:
             return employee.second.certi == target;
     }

@@ -56,37 +56,7 @@ int AmigoDatabase::Add(string employee_num, string name, string cl, string phone
 
 vector<unsigned int> AmigoDatabase::Sch(string op1, string op2, string column, string value)
 {
-    vector<unsigned int> employees;
-    if (column == "birthday")
-    {
-        employees = SearchByBirthday(op2, value);
-    }
-    else if (column == "name")
-    {
-        employees = searchByName(op2, value);
-    }
-    else if (column == "phoneNum")
-    {
-        employees = searchByPhoneNumber(op2, value);
-    }
-    else if (column == "employeeNum")
-    {
-        employees = searchByEmployeeNumber(value);
-    }
-    else if (column == "certi")
-    {
-        employees = searchByCerti(value);
-    }
-    else if (column == "cl")
-    {
-        employees = searchByCl(value);
-    }
-    else
-    {
-        printf("Invalid column name\n");
-        exit(EXIT_FAILURE);
-    }
-    return employees;
+    return searchByType(value, getSearchType(op2, column));
 }
 
 string AmigoDatabase::Del(unordered_map<unsigned int, Employee>& employee, vector<unsigned int> deleteList)
