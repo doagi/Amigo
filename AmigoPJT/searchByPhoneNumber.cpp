@@ -17,8 +17,7 @@ vector<unsigned int> searchByPhoneNumber(string op2, string target, unordered_ma
 	}
 	else
 	{
-		printf("Invalid PhoneNum option. Only -m or -l are available\n");
-		exit(EXIT_FAILURE);
+		throw std::out_of_range("Invalid PhoneNum option. Only -m or -l are available\n");
 	}
 	return employees;
 }
@@ -53,8 +52,7 @@ vector<unsigned int> searchByMiddlePhoneNumber(string target, unordered_map<unsi
 {
 	if (target.length() != 4)
 	{
-		printf("Invalid Middle Phone Number length.\n");
-		exit(EXIT_FAILURE);
+		throw std::length_error("Invalid Middle Phone Number length.\n");
 	}
 	int target_int = stoi(target);
 	vector<unsigned int> result;
@@ -73,8 +71,7 @@ vector<unsigned int> searchByLastPhoneNumber(string target, unordered_map<unsign
 {
 	if (target.length() != 4)
 	{
-		printf("Invalid Middle Phone Number length.\n");
-		exit(EXIT_FAILURE);
+		throw std::length_error("Invalid Last Phone Number length.\n");
 	}
 	int target_int = stoi(target);
 	vector<unsigned int> result;

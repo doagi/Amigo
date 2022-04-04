@@ -90,18 +90,15 @@ vector<unsigned int> AmigoDatabase::searchByFullPhoneNumber(string target)
 {
     if (target.length() != 13)
     {
-        printf("Invalid Phone Number length.\n");
-        exit(EXIT_FAILURE);
+        throw std::length_error("Invalid Phone Number length.\n");
     }
     if (target.substr(0, 4) != "010-")
     {
-        printf("Invalid Phone Number. Phone Number must start with 010-.\n");
-        exit(EXIT_FAILURE);
+        throw std::out_of_range("Invalid Phone Number. Phone Number must start with 010-.\n");
     }
     if (target.substr(8, 1) != "-")
     {
-        printf("Invalid Phone Number. Phone Number format must be 010-XXXX-XXXX.\n");
-        exit(EXIT_FAILURE);
+        throw std::out_of_range("Invalid Phone Number. Phone Number format must be 010-XXXX-XXXX.\n");
     }
     vector<unsigned int> result;
     for (auto aData : map_employees)
@@ -116,8 +113,7 @@ vector<unsigned int> AmigoDatabase::searchByMiddlePhoneNumber(string target)
 {
     if (target.length() != 4)
     {
-        printf("Invalid Middle Phone Number length.\n");
-        exit(EXIT_FAILURE);
+        throw std::length_error("Invalid Middle Phone Number length.\n");
     }
     int target_int = stoi(target);
     vector<unsigned int> result;
@@ -133,8 +129,7 @@ vector<unsigned int> AmigoDatabase::searchByLastPhoneNumber(string target)
 {
     if (target.length() != 4)
     {
-        printf("Invalid Middle Phone Number length.\n");
-        exit(EXIT_FAILURE);
+        throw std::length_error("Invalid Last Phone Number length.\n");
     }
     int target_int = stoi(target);
     vector<unsigned int> result;
@@ -162,8 +157,7 @@ vector<unsigned int> AmigoDatabase::searchByPhoneNumber(string op2, string targe
     }
     else
     {
-        printf("Invalid PhoneNum option. Only -m or -l are available\n");
-        exit(EXIT_FAILURE);
+        throw std::out_of_range("Invalid PhoneNum option. Only -m or -l are available\n");
     }
     return employees;
 }
@@ -203,8 +197,7 @@ vector<unsigned int> AmigoDatabase::searchByLastName(string target)
 vector <unsigned int> AmigoDatabase::searchByName(string op2, string target) {
     if (target.length() > 13)
     {
-        printf("Too long name.\n");
-        exit(EXIT_FAILURE);
+        throw std::length_error("Too long name.\n");
     }
     vector<unsigned int> employees;
     if (op2 == " ")
@@ -236,8 +229,7 @@ vector<unsigned int> AmigoDatabase::searchByEmployeeNumber(string target)
     }
     if (entry_year > 21 && entry_year < 69)
     {
-        printf("Invalid Employee Number. Entry year should be between 1969 and 2021.\n");
-        exit(EXIT_FAILURE);
+        throw std::out_of_range("Invalid name option. Only -l or -f are available\n");
     }
     vector<unsigned int> result;
     unsigned int find_key = entry_year > 68 ? stoi("19" + target) : stoi("20" + target);
@@ -252,8 +244,7 @@ vector<unsigned int> AmigoDatabase::searchByCerti(string target)
 {
     if (target != "ADV" && target != "PRO" && target != "EX")
     {
-        printf("Invalid CL.\n");
-        exit(EXIT_FAILURE);
+        throw std::out_of_range("Invalid CL.\n");
     }
     vector<unsigned int> result;
     for (auto aData : map_employees)
@@ -267,8 +258,7 @@ vector<unsigned int> AmigoDatabase::searchByCl(string target)
 {
     if (target != "CL1" && target != "CL2" && target != "CL3" && target != "CL4")
     {
-        printf("Invalid CL.\n");
-        exit(EXIT_FAILURE);
+        throw std::out_of_range("Invalid CL.\n");
     }
     vector<unsigned int> result;
     for (auto aData : map_employees)

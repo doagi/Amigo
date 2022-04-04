@@ -4,7 +4,6 @@ vector <unsigned int> searchByName(string op2, string target, unordered_map<unsi
 	if (target.length() > 13)
 	{
 		throw std::length_error("Too long name.\n");
-		exit(EXIT_FAILURE);
 	}
 	vector<unsigned int> employees;
 	if (op2 == " ")
