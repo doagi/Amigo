@@ -111,11 +111,6 @@ SearchType AmigoDatabase::getSearchType(string option, string column)
         return CL;
     }
 }
-vector<unsigned int> AmigoDatabase::Search(string option, string column, string value)
-{
-    //isValidSearch(value, getSearchType(option, column));
-    return searchByType(value, getSearchType(option, column));
-}
 
 //void AmigoDatabase::isValidSearch(string target, SearchType type) {
 //    switch (type)

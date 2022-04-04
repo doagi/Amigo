@@ -20,7 +20,6 @@ public:
 
 private:
     int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi);
-    vector<unsigned int> Sch(string op1, string op2, string column, string value);
     int Mod(const vector<unsigned int>& founds, string column, string value);
 
     string GenerateCommandRecord(const std::string& command, const bool& detail_print, const vector<unsigned int>& targets);
@@ -34,7 +33,6 @@ private:
     void ModifyColumnData(Employee& employee, const ModificationInfo& mod_info);
 
     //Search option에 따른 함수들 
-   //TODO : 중복코드 제거, 다형성 적용 등 필요할 듯...
     vector<unsigned int> Search(string option2, string column, string target);
     vector<unsigned int> searchByType(string target, SearchType type);
     template <typename T> bool isMatch(const std::pair<int, Employee>& employee, T target, SearchType type);
