@@ -2,7 +2,7 @@
 #include <iostream>
 #include <unordered_map>
 #include "common.h"
-#include "search1.h"
+#include "searchByBirthday.h"
 #include "command/mod.h"
 #include "searchByName.h"
 #include "searchByPhoneNumber.h"
