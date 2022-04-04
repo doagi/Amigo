@@ -3,7 +3,7 @@
 #include "client.h"
 
 template <typename T>
-bool AmigoDatabase::isMatch(const std::pair<int, Employee2>& employee, T target, SearchType type) {
+bool AmigoDatabase::isMatch(const std::pair<int, Employee>& employee, T target, SearchType type) {
     switch (type)
     {
         case EMPLOYEE_NUM:

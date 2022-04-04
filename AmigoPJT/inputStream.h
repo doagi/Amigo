@@ -1,7 +1,11 @@
 #pragma once
 
 #include <fstream>
-#include "Command.h"
+#include <iostream>
+#include <string>
+#include "common.h"
+
+using namespace std;
 
 class InputStream
 {
