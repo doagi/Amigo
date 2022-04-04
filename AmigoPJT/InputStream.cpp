@@ -38,6 +38,7 @@ Command InputStream::Input()
     }
 
     cur_cmd.param[idx] = str_line;
+    cur_cmd.is_valid = true;
 
     return cur_cmd;
 }
