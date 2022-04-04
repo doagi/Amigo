@@ -1,6 +1,6 @@
 #include "searchByPhoneNumber.h"
 
-vector<unsigned int> searchByPhoneNumber(string op2, string target, unordered_map<unsigned int, Employee2> data)
+vector<unsigned int> searchByPhoneNumber(string op2, string target, unordered_map<unsigned int, Employee> data)
 {
 	vector<unsigned int> employees;
 	if (op2 == " ")
@@ -23,7 +23,7 @@ vector<unsigned int> searchByPhoneNumber(string op2, string target, unordered_ma
 	return employees;
 }
 
-vector<unsigned int> searchByFullPhoneNumber(string target, unordered_map<unsigned int, Employee2> data)
+vector<unsigned int> searchByFullPhoneNumber(string target, unordered_map<unsigned int, Employee> data)
 {
 	if (target.length() != 13)
 	{
@@ -52,7 +52,7 @@ vector<unsigned int> searchByFullPhoneNumber(string target, unordered_map<unsign
 	return result;
 }
 
-vector<unsigned int> searchByMiddlePhoneNumber(string target, unordered_map<unsigned int, Employee2> data)
+vector<unsigned int> searchByMiddlePhoneNumber(string target, unordered_map<unsigned int, Employee> data)
 {
 	if (target.length() != 4)
 	{
@@ -72,7 +72,7 @@ vector<unsigned int> searchByMiddlePhoneNumber(string target, unordered_map<unsi
 	return result;
 }
 
-vector<unsigned int> searchByLastPhoneNumber(string target, unordered_map<unsigned int, Employee2> data)
+vector<unsigned int> searchByLastPhoneNumber(string target, unordered_map<unsigned int, Employee> data)
 {
 	if (target.length() != 4)
 	{

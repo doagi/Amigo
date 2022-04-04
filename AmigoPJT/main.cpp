@@ -1,5 +1,7 @@
 using namespace std;
 
+#include "client.h"
+
 int main(int argc, char** argv)
 {
     string input_path;

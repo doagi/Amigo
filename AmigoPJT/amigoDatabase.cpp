@@ -1,7 +1,7 @@
 
 #include <map>
 #include "amigoDatabase.h"
-#include "search1.h"
+#include "search.h"
 #include "searchByName.h"
 #include "searchByPhoneNumber.h"
 #include "searchEtc.h"
@@ -63,49 +63,32 @@ vector<unsigned int> AmigoDatabase::Sch(string op1, string op2, string column, s
     vector<unsigned int> employees;
     if (column == "birthday")
     {
-        employees = SearchByBirthday(op2, value, map_employees);
+        employees = SearchByBirthday(op2, value);
     }
     else if (column == "name")
     {
-        if (op2 == "-f")
-        {
-            employees = searchByFirstName(value, map_employees);
-        }
-        else if (op2 == "-l")
-        {
-            employees = searchByLastName(value, map_employees);
-        }
-        else
-        {
-            employees = searchByName(value, map_employees);
-        }
+        employees = searchByName(op2, value);
     }
     else if (column == "phoneNum")
     {
-        if (op2 == "-m")
-        {
-            employees = searchByMiddlePhoneNumber(stoi(value), map_employees);
-        }
-        else if (op2 == "-l")
-        {
-            employees = searchByLastPhoneNumber(stoi(value), map_employees);
-        }
-        else
-        {
-            employees = searchByPhoneNumber(value, map_employees);
-        }
+        employees = searchByPhoneNumber(op2, value);
     }
     else if (column == "employeeNum")
     {
-        employees = searchByEmployeeNumber(value, map_employees);
+        employees = searchByEmployeeNumber(value);
     }
     else if (column == "certi")
     {
-        employees = searchByCerti(value, map_employees);
+        employees = searchByCerti(value);
     }
     else if (column == "cl")
     {
-        employees = searchByCl(value, map_employees);
+        employees = searchByCl(value);
+    }
+    else
+    {
+        printf("Invalid column name\n");
+        exit(EXIT_FAILURE);
     }
     return employees;
 }

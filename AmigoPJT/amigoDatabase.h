@@ -33,6 +33,29 @@ private:
 
     void ModifyColumnData(Employee& employee, const ModificationInfo& mod_info);
 
+    //Search option에 따른 함수들 
+   //TODO : 중복코드 제거, 다형성 적용 등 필요할 듯...
+    vector<unsigned int> Search(string option2, string column, string target);
+    vector<unsigned int> searchByCl(string target);
+    vector<unsigned int> searchByCerti(string target);
+    vector<unsigned int> searchByEmployeeNumber(string target);
+
+    vector<unsigned int> searchByName(string option2, string target);
+    vector<unsigned int> searchByFirstName(string target);
+    vector<unsigned int> searchByLastName(string target);
+    vector<unsigned int> searchByFullName(string target);
+
+    vector<unsigned int> SearchByBirthday(string option2, string target);
+    vector<unsigned int> SearchByYear(string target);
+    vector<unsigned int> SearchByMonth(string target);
+    vector<unsigned int> SearchByDate(string target);
+    vector<unsigned int> SearchByFullBirthday(string target);
+
+    vector<unsigned int> searchByPhoneNumber(string option2, string target);
+    vector<unsigned int> searchByMiddlePhoneNumber(string target);
+    vector<unsigned int> searchByLastPhoneNumber(string target);
+    vector<unsigned int> searchByFullPhoneNumber(string target);
+
     unordered_map<unsigned int, Employee> map_employees;
 };
 

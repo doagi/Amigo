@@ -1,6 +1,6 @@
 #include "searchByName.h"
 
-vector <unsigned int> searchByName(string op2, string target, unordered_map<unsigned int, Employee2> data) {
+vector <unsigned int> searchByName(string op2, string target, unordered_map<unsigned int, Employee> data) {
 	if (target.length() > 13)
 	{
 		printf("Too long name.\n");
@@ -27,7 +27,7 @@ vector <unsigned int> searchByName(string op2, string target, unordered_map<unsi
 	return employees;
 }
 
-vector<unsigned int> searchByFullName(string target, unordered_map<unsigned int, Employee2> data)
+vector<unsigned int> searchByFullName(string target, unordered_map<unsigned int, Employee> data)
 {
 	vector<unsigned int> result;
 	for (auto aData : data)
@@ -41,7 +41,7 @@ vector<unsigned int> searchByFullName(string target, unordered_map<unsigned int,
 	return result;
 }
 
-vector<unsigned int> searchByFirstName(string target, unordered_map<unsigned int, Employee2> data)
+vector<unsigned int> searchByFirstName(string target, unordered_map<unsigned int, Employee> data)
 {
 	vector<unsigned int> result;
 	for (auto aData : data)
@@ -55,7 +55,7 @@ vector<unsigned int> searchByFirstName(string target, unordered_map<unsigned int
 	return result;
 }
 
-vector<unsigned int> searchByLastName(string target, unordered_map<unsigned int, Employee2> data)
+vector<unsigned int> searchByLastName(string target, unordered_map<unsigned int, Employee> data)
 {
 	vector<unsigned int> result;
 	for (auto aData : data)
