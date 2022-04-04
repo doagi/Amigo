@@ -18,7 +18,7 @@ unordered_map<unsigned int, Employee2> map_employees;
 
 int main(int argc, char** argv)
 {
-#if 0
+#if 1
     // Will enable to the code of client app
     Client amigo_client;
 
