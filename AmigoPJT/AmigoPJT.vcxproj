@@ -160,6 +160,7 @@
     <ClInclude Include="command.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="inputStream.h" />
+    <ClInclude Include="search.h" />
     <ClInclude Include="searchByBirthday.h" />
     <ClInclude Include="outputStream.h" />
     <ClInclude Include="searchByName.h" />
