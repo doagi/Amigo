@@ -9,7 +9,7 @@
 class IDatabase
 {
 public:
-    virtual string Query() = 0;
+    virtual string Query(Command cmd) = 0;
     map<string, int> GetSupportedCmds()
     {
         return supported_cmds;
@@ -31,9 +31,47 @@ public:
         supported_cmds["SCH"] = (int)(CommandType::SchCommand);
     }
 
-    virtual string Query() override
+    virtual string Query(Command cmd) override
     {
-        return "";
+        string command = cmd.param[0];
+        string option1 = cmd.param[1];
+        string option2 = cmd.param[2];
+        vector<unsigned int> search_result;
+        string result;
+
+        if (command == "ADD")
+        {
+            Add(cmd.param[4], cmd.param[5], cmd.param[6],
+                cmd.param[7], cmd.param[8], cmd.param[9]);
+        }
+        else if (command == "SCH")
+        {
+            search_result = Sch(cmd.param[1], cmd.param[2], cmd.param[4], cmd.param[5]);
+
+            result = GenerateCommandRecord(command, (option1 == "-p"), search_result);
+        }
+        else if (command == "DEL")
+        {
+            search_result = Sch(cmd.param[1], cmd.param[2], cmd.param[4], cmd.param[5]);
+
+            result = GenerateCommandRecord(command, (option1 == "-p"), search_result);
+
+            Del(map_employees, search_result);
+        }
+        else if (command == "MOD")
+        {
+            search_result = Sch(cmd.param[1], cmd.param[2], cmd.param[4], cmd.param[5]);
+
+            result = GenerateCommandRecord(command, (option1 == "-p"), search_result);
+
+            Mod(search_result, cmd.param[6], cmd.param[7]);
+        }
+        else
+        {
+            throw runtime_error("Unsupported Command : " + command);
+        }
+
+        return result;
     }
 
 protected:
@@ -73,7 +111,7 @@ private:
 class AmigoDatabase2 : public AmigoDatabase
 {
 public:
-    virtual string Query() override
+    virtual string Query(Command cmd) override
     {
         // 기존 cmd는 AmigoDatabase::add() 요런식으로 처리.
 
@@ -103,7 +141,7 @@ class NewCmdHandler : public ICommandHandler
 {
     virtual string Process(Command cmd) override
     {
-        return database->Query(); // newFunc 함수구현에 맞는 param setting 필요
+        return database->Query(cmd); // newFunc 함수구현에 맞는 param setting 필요
     }
 };
 
@@ -111,7 +149,7 @@ class AddCommandHandler : public ICommandHandler
 {
     virtual string Process(Command cmd) override
     {
-        return database->Query(); // add 함수구현에 맞는 param setting 필요
+        return database->Query(cmd); // add 함수구현에 맞는 param setting 필요
     }
 };
 
@@ -119,7 +157,7 @@ class DelCommandHandler : public ICommandHandler
 {
     virtual string Process(Command cmd) override
     {
-        return database->Query(); // del 함수구현에 맞는 param setting 필요
+        return database->Query(cmd); // del 함수구현에 맞는 param setting 필요
     }
 };
 
@@ -127,7 +165,7 @@ class SchCommandHandler : public ICommandHandler
 {
     virtual string Process(Command cmd) override
     {
-        return database->Query(); // sch 함수구현에 맞는 param setting 필요
+        return database->Query(cmd); // sch 함수구현에 맞는 param setting 필요
     }
 };
 
@@ -135,7 +173,7 @@ class ModCommandHandler : public ICommandHandler
 {
     virtual string Process(Command cmd) override
     {
-        return database->Query(); // mod 함수구현에 맞는 param setting 필요
+        return database->Query(cmd); // mod 함수구현에 맞는 param setting 필요
     }
 };
 
@@ -147,9 +185,9 @@ public:
     {
         amigo_db = new AmigoDatabase();
 
-        map<string, int> SupportedCmdsFromAmigoDB = amigo_db->GetSupportedCmds();
+        map<string, int> supported_cmds_amigo_db = amigo_db->GetSupportedCmds();
 
-        for (auto value : SupportedCmdsFromAmigoDB)
+        for (auto value : supported_cmds_amigo_db)
         {
             switch (value.second)
             {
@@ -180,6 +218,6 @@ private:
     InputStream iStream;
     OutputStream oStream;
     
-    ICommandHandler* cmd_handlers[CommandType::CommandType_end];
+    ICommandHandler* cmd_handlers[CommandType::CommandType_count];
     IDatabase* amigo_db;
 };

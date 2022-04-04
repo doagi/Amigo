@@ -9,9 +9,9 @@ void Client::Run()
     iStream.SetInputTxt("../AmigoPJT/input_20_20.txt");
 
     // Txt output 시에 설정. 표준 출력시에 주석 필요
-    oStream.SetOutputTxt("../AmigoPJT/amigo_output_20_20.txt");
+    oStream.SetOutputTxt("../AmigoPJT/output_20_20.txt");
 
-    map<string, int> supported_cmds_amigo_db = amigo_db->GetSupportedCmds();
+    //map<string, int> supported_cmds_amigo_db = amigo_db->GetSupportedCmds();
 
     while (1)
     {
@@ -22,12 +22,22 @@ void Client::Run()
             break;
         }
 
-        int cmd_handler_index = supported_cmds_amigo_db[cmd.param[Command::cmd_type]];
+#if 0
+        int cmd_handler_index = supported_cmds_amigo_db[cmd.GetCommandType()];
+
+        if (CommandType_count <= cmd_handler_index)
+        {
+            // exception
+            break;
+        }
 
         string result = cmd_handlers[cmd_handler_index]->Process(cmd);
+#endif
+        string result = amigo_db->Query(cmd);
 
-        oStream.Output(result);
+        if (result.length() > 1)
+        {
+            oStream.Output(result);
+        }
     }
-
-    // sample 정답지와 amigo 답안지와 비교하여 pass / fail 확인 필요.
 }

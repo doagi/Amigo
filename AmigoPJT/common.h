@@ -147,6 +147,7 @@ enum CommandType
     SchCommand,
     ModCommand,
     CommandType_end,
+    CommandType_count = CommandType_end - CommandType_start
 };
 
 struct Command
@@ -170,6 +171,7 @@ struct Command
 
     Command()
     {
+        is_valid = false;
         for (auto entry : param)
         {
             entry = "";
@@ -178,10 +180,16 @@ struct Command
 
     bool IsValid()
     {
-        return param[0] != "";
+        return is_valid;
+    }
+
+    string GetCommandType()
+    {
+        return param[cmd_type];
     }
 
     string param[param_count];
+    bool is_valid;
 };
 
 enum class Column : unsigned int
