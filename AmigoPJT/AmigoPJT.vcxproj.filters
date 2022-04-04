@@ -60,6 +60,12 @@
     <ClCompile Include="InputStream.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="client.h">
+      <Filter>헤더 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="outputStream.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="input_20_20.txt">
@@ -71,9 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cmd_parser.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="client.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="command.h">
@@ -98,6 +101,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="inputStream.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="outputStream.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
