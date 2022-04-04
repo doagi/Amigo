@@ -1,6 +1,7 @@
 #pragma once
 
 #include "inputStream.h"
+#include "outputStream.h"
 
 class Client
 {
@@ -10,5 +11,5 @@ public:
     void Run();
 private:
     InputStream iStream;
-
+    OutputStream oStream;
 };
