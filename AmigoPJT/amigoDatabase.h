@@ -24,19 +24,12 @@ public:
 
 private:
     int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi);
-    int Mod(const vector<unsigned int>& founds, string column, string value);
+    void Del(const vector<unsigned int>& deleteList);
+    void Mod(const vector<unsigned int>& founds, string column, string value);
+    void ModifyColumnData(Employee& employee, const ModificationInfo& mod_info);
 
     string GenerateCommandRecord(const std::string& command, const bool& detail_print, const vector<unsigned int>& targets);
     string GenerateDetailRecord(const std::string& command, const vector<unsigned int>& result);
-
-    void Del(const vector<unsigned int>& deleteList);
-
-    /*
-    vector<string> Mod(unordered_map<unsigned int, Employee>& map_employees,
-        const vector<unsigned int>& found_data, const ModificationInfo& condition);
-        */
-
-    void ModifyColumnData(Employee& employee, const ModificationInfo& mod_info);
 
     //Search option에 따른 함수들 
     vector<unsigned int> Search(string option2, string column, string target);
@@ -57,6 +50,7 @@ private:
     void checkIsValidBirthdayMonth(string target);
     void checkIsValidBirthdayDay(string target);
     void checkIsValidCerti(string target);
+
     unordered_map<unsigned int, Employee> map_employees;
 };
 

@@ -67,18 +67,8 @@ void AmigoDatabase::Del(const vector<unsigned int>& deleteList)
     }
 }
 
-int AmigoDatabase::Mod(const vector<unsigned int>& founds, string column, string value)
+void AmigoDatabase::Mod(const vector<unsigned int>& founds, string column, string value)
 {
-    static map<string, Column> column_map
-    {
-        {"employeeNum", Column::EMPLOYEENUM},
-        {"name",        Column::NAME},
-        {"cl",          Column::CL},
-        {"phoneNum",    Column::PHONENUM},
-        {"birthday",    Column::BIRTHDAY},
-        {"certi",       Column::CERTI}
-    };
-
     if (column == "employeeNum")
     {
         throw invalid_argument("Can't modify Column::EMPLOYEENUM");
@@ -87,10 +77,41 @@ int AmigoDatabase::Mod(const vector<unsigned int>& founds, string column, string
     for (const auto& employee_num : founds)
     {
         auto& employee = map_employees[employee_num];
-        ModifyColumnData(employee, ModificationInfo{ column_map[column], value });
+        ModifyColumnData(employee, ModificationInfo{ kColumnMap[column], value });
+    }
+}
+
+void AmigoDatabase::ModifyColumnData(Employee& employee, const ModificationInfo& mod_info)
+{
+    switch (mod_info.column)
+    {
+    case Column::EMPLOYEENUM:
+        employee.SetEmployeeNumber(mod_info.value);
+        return;
+    case Column::NAME:
+        employee.SetName(mod_info.value);
+        return;
+    case Column::CL:
+        employee.SetCareerLevel(mod_info.value);
+        return;
+    case Column::PHONENUM:
+        employee.SetPhoneNumber(mod_info.value);
+        return;
+    case Column::BIRTHDAY:
+        employee.SetBirthDay(mod_info.value);
+        return;
+    case Column::CERTI:
+        employee.SetCerti(mod_info.value);
+        return;
     }
 
-    return founds.size();
+    throw invalid_argument("Unknown Column");
+}
+
+// ToDo(jbjempire): extract to other file or class
+static string GenerateRecord(const std::string& cmd, Employee& employee)
+{
+    return (cmd + "," + employee.ToString(','));
 }
 
 string AmigoDatabase::GenerateCommandRecord(const std::string& command, const bool& is_print_list, const vector<unsigned int>& targets)
@@ -133,56 +154,4 @@ string AmigoDatabase::GenerateDetailRecord(const std::string& command, const vec
     }
 
     return result;
-}
-
-/* 없애도 될 것 같음 : 위에 있는 Mod 함수에서 처리 하도록 함
-vector<string> AmigoDatabase::Mod(unordered_map<unsigned int, Employee>& map_employees,
-    const vector<unsigned int>& found_data, const ModificationInfo& mod_info)
-{
-    if (mod_info.column == Column::EMPLOYEENUM)
-    {
-        throw invalid_argument("Can't modify Column::EMPLOYEENUM");
-    }
-
-    const string kTag = "MOD";
-
-    vector<string> result;
-    result.reserve(found_data.size());
-
-    for (const auto& employee_num : found_data)
-    {
-        auto& employee = map_employees[employee_num];
-        result.emplace_back(GenerateRecord(kTag, employee));
-        ModifyColumnData(employee, mod_info);
-    }
-
-    return result;
-}
-*/
-
-void AmigoDatabase::ModifyColumnData(Employee& employee, const ModificationInfo& mod_info)
-{
-    switch (mod_info.column)
-    {
-    case Column::EMPLOYEENUM:
-        employee.SetEmployeeNumber(mod_info.value);
-        return;
-    case Column::NAME:
-        employee.SetName(mod_info.value);
-        return;
-    case Column::CL:
-        employee.SetCareerLevel(mod_info.value);
-        return;
-    case Column::PHONENUM:
-        employee.SetPhoneNumber(mod_info.value);
-        return;
-    case Column::BIRTHDAY:
-        employee.SetBirthDay(mod_info.value);
-        return;
-    case Column::CERTI:
-        employee.SetCerti(mod_info.value);
-        return;
-    }
-
-    throw invalid_argument("Unknown Column : " + to_string((size_t)mod_info.column));
 }

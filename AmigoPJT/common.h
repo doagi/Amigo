@@ -1,5 +1,6 @@
 #pragma once
 
+#include <unordered_map>
 #include <string>
 #include "employee.h"
 #include "command.h"
@@ -27,6 +28,7 @@ enum SearchType
 
 enum class Column : unsigned int
 {
+    UNKNOWN,
     EMPLOYEENUM,
     NAME,
     CL,
@@ -36,13 +38,19 @@ enum class Column : unsigned int
     SIZE
 };
 
+static unordered_map<string, Column> kColumnMap
+{
+    {"",            Column::UNKNOWN},
+    {"employeeNum", Column::EMPLOYEENUM},
+    {"name",        Column::NAME},
+    {"cl",          Column::CL},
+    {"phoneNum",    Column::PHONENUM},
+    {"birthday",    Column::BIRTHDAY},
+    {"certi",       Column::CERTI}
+};
+
 struct ModificationInfo
 {
     Column column;
     string value;
 };
-
-static string GenerateRecord(const std::string& cmd, Employee& employee)
-{
-    return (cmd + "," + employee.ToString(','));
-}
