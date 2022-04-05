@@ -13,12 +13,6 @@
 
 vector<Employee> employees;
 
-//void Init()
-//{
-//    map_employees.clear();
-//}
-
-
 namespace IntergrationTest
 {
     TEST(AmigoIntergtaionTest, Sample_TC_Test)
