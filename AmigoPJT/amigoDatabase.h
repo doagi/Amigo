@@ -13,16 +13,10 @@ class AmigoDatabase : public IDatabase
 public:
     AmigoDatabase()
     {
-        supported_cmds.clear();
-        supported_cmds["ADD"] = Command::Type::AddCommand;
-        supported_cmds["DEL"] = Command::Type::DelCommand;
-        supported_cmds["MOD"] = Command::Type::ModCommand;
-        supported_cmds["SCH"] = Command::Type::SchCommand;
-
-        cmd_func_ptrs[Command::Type::AddCommand] = &AmigoDatabase::_Add;
-        cmd_func_ptrs[Command::Type::DelCommand] = &AmigoDatabase::_Del;
-        cmd_func_ptrs[Command::Type::ModCommand] = &AmigoDatabase::_Mod;
-        cmd_func_ptrs[Command::Type::SchCommand] = &AmigoDatabase::_Sch;
+        supported_cmds_funcs["ADD"] = &AmigoDatabase::_Add;
+        supported_cmds_funcs["DEL"] = &AmigoDatabase::_Del;
+        supported_cmds_funcs["MOD"] = &AmigoDatabase::_Mod;
+        supported_cmds_funcs["SCH"] = &AmigoDatabase::_Sch;
 
         amigo_search_engine = new AmigoSearchEngine(map_employees);
     }
@@ -46,6 +40,8 @@ private:
     
     function<string(AmigoDatabase&, Command&)> cmd_func_ptrs[Command::Type::CommandType_count];
     unordered_map<string, Command::Type> supported_cmds;
+
+    unordered_map<string, function<string(AmigoDatabase&, Command&)>> supported_cmds_funcs;
 
     unordered_map<unsigned int, Employee> map_employees;
     ISearchEngine* amigo_search_engine;

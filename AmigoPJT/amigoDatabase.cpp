@@ -6,11 +6,11 @@ string AmigoDatabase::Query(Command cmd)
 {
     string command = cmd.GetCommandType();
 
-    auto cmd_type = supported_cmds.find(command);
+    auto cmd_func = supported_cmds_funcs.find(command);
 
-    if (cmd_type != supported_cmds.end())
+    if (cmd_func != supported_cmds_funcs.end())
     {
-        return cmd_func_ptrs[cmd_type->second](*this, cmd);
+        return cmd_func->second(*this, cmd);
     }
     else
     {
