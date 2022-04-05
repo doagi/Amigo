@@ -4,6 +4,7 @@
 #include "../AmigoPJT/inputStream.cpp"
 #include "../AmigoPJT/outputStream.cpp"
 #include "../AmigoPJT/amigoDatabase.cpp"
+#include "../AmigoPJT/util.h"
 
 #include "../AmigoPJT/command.cpp"
 #include "../AmigoPJT/txt_parser.cpp"
@@ -67,7 +68,7 @@ namespace IntergrationTest
         Client amigo_client{ input_path, output_path };
         amigo_client.Run(true);
 
-        EXPECT_EQ(0, Compare(refer_path, output_path));
+        EXPECT_EQ(0, Util::Compare(refer_path, output_path));
     }
 }
 

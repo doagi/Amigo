@@ -1,6 +1,11 @@
 using namespace std;
 
+#include <iostream>
+#include <string>
 #include "client.h"
+#include "util.h"
+
+using namespace std;
 
 int main(int argc, char** argv)
 {
@@ -27,7 +32,7 @@ int main(int argc, char** argv)
 #if _DEBUG
     if (argc != 3)
     {
-        Compare("output_20_20_ref.txt", output_path);
+        Util::Compare("output_20_20_ref.txt", output_path);
     }
 #endif
 

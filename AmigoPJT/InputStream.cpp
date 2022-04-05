@@ -1,5 +1,5 @@
-#include "common.h"
 #include "inputStream.h"
+#include "util.h"
 
 void InputStream::SetInputPath(const string& path)
 {
@@ -32,7 +32,7 @@ Command InputStream::Input()
     int index = 0;
     Command result;
 
-    auto tokens = split(str_line, ',');
+    auto tokens = Util::split(str_line, ',');
     for (const string& token : tokens)
     {
         result.param[index++] = token;
