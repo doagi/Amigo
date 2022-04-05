@@ -73,13 +73,7 @@ string AmigoDatabase::Sch(Command& cmd)
 void AmigoDatabase::AddImpl(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
 {
     Employee newEmployee = Employee(employee_num, name, cl, phoneNum, birthday, certi);
-
-    auto ret = map_employees.insert(unordered_map<unsigned int, Employee>::value_type(newEmployee.employee_num, newEmployee));
-
-    if (ret.second == false)
-    {
-        throw runtime_error("AnigoDB Add failed : " + newEmployee.ToString(','));
-    }
+    map_employees[newEmployee.employee_num] = newEmployee;
 }
 
 vector<unsigned int> AmigoDatabase::SearchImpl(string option, string column, string value)
