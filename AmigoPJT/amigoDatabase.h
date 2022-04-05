@@ -25,32 +25,34 @@ private:
     string GenerateCommandRecord(const std::string& command, const bool& detail_print, const vector<unsigned int>& targets);
     string GenerateDetailRecord(const std::string& command, const vector<unsigned int>& result);
 
-    string Del(unordered_map<unsigned int, Employee>& employee, vector<unsigned int> deleteList);
+    void Del(const vector<unsigned int>& deleteList);
 
+    /*
     vector<string> Mod(unordered_map<unsigned int, Employee>& map_employees,
         const vector<unsigned int>& found_data, const ModificationInfo& condition);
+        */
 
     void ModifyColumnData(Employee& employee, const ModificationInfo& mod_info);
 
-    //Search option¿¡ µû¸¥ ÇÔ¼öµé 
+    //Search optionì— ë”°ë¥¸ í•¨ìˆ˜ë“¤ 
     vector<unsigned int> Search(string option2, string column, string target);
-    vector<unsigned int> searchByType(string target, SearchType type);
-    template <typename T> bool isMatch(const std::pair<int, Employee>& employee, T target, SearchType type);
-    SearchType getSearchType(string option, string column);
-    //void isValidSearch(string target, SearchType type);
-    //void checkIsValidEmployeeNumber(string target);
-    //void checkIsValidName(string target);
-    //void checkIsValidFirstName(string target);
-    //void checkIsValidLastName(string target);
-    //void checkIsValidCL(string target);
-    //void checkIsValidPhoneNumber(string target);
-    //void checkIsValidMiddlePhoneNumber(string target);
-    //void checkIsValidLastPhoneNumber(string target);
-    //void checkIsValidBirthday(string target);
-    //void checkIsValidBirthdayYear(string target);
-    //void checkIsValidBirthdayMonth(string target);
-    //void checkIsValidBirthdayDay(string target);
-    //void checkIsValidCerti(string target);
+    vector<unsigned int> SearchByType(string& target, SearchType type);
+    template <typename T> bool IsMatch(const std::pair<int, Employee>& employee, T target, SearchType type);
+    SearchType GetSearchType(string option, string column);
+    void isValidSearch(string target, SearchType type);
+    void checkIsValidEmployeeNumber(string target);
+    void checkIsValidName(string target);
+    void checkIsValidFirstName(string target);
+    void checkIsValidLastName(string target);
+    void checkIsValidCL(string target);
+    void checkIsValidPhoneNumber(string target);
+    void checkIsValidMiddlePhoneNumber(string target);
+    void checkIsValidLastPhoneNumber(string target);
+    void checkIsValidBirthday(string target);
+    void checkIsValidBirthdayYear(string target);
+    void checkIsValidBirthdayMonth(string target);
+    void checkIsValidBirthdayDay(string target);
+    void checkIsValidCerti(string target);
     unordered_map<unsigned int, Employee> map_employees;
 };
 
@@ -59,12 +61,12 @@ class AmigoDatabase2 : public AmigoDatabase
 public:
     virtual string Query(Command cmd) override
     {
-        // ±âÁ¸ cmd´Â AmigoDatabase::add() ¿ä·±½ÄÀ¸·Î Ã³¸®.
+        // ê¸°ì¡´ cmdëŠ” AmigoDatabase::add() ìš”ëŸ°ì‹ìœ¼ë¡œ ì²˜ë¦¬.
 
         return newFunc();
     }
 
 private:
-    // ±â±¸ÇöµÈ funcµé ¿Å±â¸é µÉµí.
+    // ê¸°êµ¬í˜„ëœ funcë“¤ ì˜®ê¸°ë©´ ë ë“¯.
     string newFunc();
 };
