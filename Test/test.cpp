@@ -256,18 +256,45 @@ namespace CommandTest
     }
 }
 
-//namespace AddTest 
-//{
-//    TEST(AmigoADDTest, ADD_Test) {
-//        // employees √ ±‚»≠
-//        Init();
-//        // ADD
-//        EXPECT_EQ(1, Add("15123099", "VXIHXOTH JHOP", "CL3", "010-3112-2609", "19771211", "ADV"));
-//        EXPECT_EQ(2, Add("17112609", "FB NTAWR", "CL4", "010-5645-6122", "19861203", "PRO"));
-//        EXPECT_EQ(3, Add("18115040", "TTETHU HBO", "CL3", "010-4581-2050", "20080718", "ADV"));
-//        EXPECT_EQ(4, Add("88114052", "NQ LVARW", "CL4", "010-4528-3059", "19911021", "PRO"));
-//    }
-//}
+namespace AddTest 
+{
+    class AmigoADDTest : public ::testing::Test
+    {
+    protected:
+        Command GenerateCommand(const vector<string>& raw_command)
+        {
+            int i = 0;
+            Command command;
+            for (const string param : raw_command)
+            {
+                command.param[i++] = param;
+            }
+            command.is_valid = true;
+            return command;
+        }
+
+        AmigoDatabase amigo_db;
+
+        vector<vector<string>> raw_commands
+        {
+            { "ADD", " ", " ", " ", "17112609", "FB NTAWR",       "CL4", "010-5645-6122", "19861203", "PRO" },
+            { "ADD", " ", " ", " ", "02117175", "SBILHUT LDEXRI", "CL4", "010-2814-1699", "19950704", "ADV" },
+            { "ADD", " ", " ", " ", "08123556", "WN XV",          "CL1", "010-7986-5047", "20100614", "PRO" },
+            { "ADD", " ", " ", " ", "85125741", "FBAH RTIJ",      "CL1", "010-8900-1478", "19780228", "ADV" },
+            { "ADD", " ", " ", " ", "11109136", "QKAHCEX LTODDO", "CL4", "010-2627-8566", "19640130", "PRO" },
+            { "ADD", " ", " ", " ", "08108827", "RTAH VNUP",      "CL4", "010-9031-2726", "19780417", "ADV" },
+            { "ADD", " ", " ", " ", "05101762", "VCUHLE HMU",     "CL4", "010-3988-9289", "20030819", "PRO" }
+        };
+    };
+
+    TEST_F(AmigoADDTest, ADD_Test)
+    {
+        for (const auto& raw_command : raw_commands)
+        {
+            EXPECT_NO_THROW(amigo_db.Query(GenerateCommand(raw_command)));
+        }
+    }
+}
 
 namespace DelTest
 {
@@ -294,7 +321,6 @@ namespace DelTest
         command.is_valid = true;
         return command;
     }
-
 
     TEST(AmigoDelTest, DelCLTest)
     {
@@ -326,7 +352,7 @@ namespace DelTest
             newdata2.Query(GenerateCommand(rawData));
         }
         Command command1 = GenerateCommand({ "DEL", " ", " ", " ", "name", "TWU QSOLT" });
-        Command command2 = GenerateCommand({ "DEL", " ", " ", " ", "name", "ASDF" });
+        Command command2 = GenerateCommand({ "DEL", " ", " ", " ", "name", "ASDF QWER" });
 
         EXPECT_EQ("DEL,1", newdata1.Query(command1));
         EXPECT_EQ("DEL,NONE", newdata2.Query(command2));
@@ -371,7 +397,7 @@ namespace DelTest
             newdata2.Query(GenerateCommand(rawData));
         }
         Command command1 = GenerateCommand({ "DEL", " ", " ", " ", "birthday", "19640910" });
-        Command command2 = GenerateCommand({ "DEL", " ", " ", " ", "birthday", "10101010" });
+        Command command2 = GenerateCommand({ "DEL", " ", " ", " ", "birthday", "20101010" });
 
         EXPECT_EQ("DEL,1", newdata1.Query(command1));
         EXPECT_EQ("DEL,NONE", newdata2.Query(command2));
@@ -398,41 +424,16 @@ namespace DelTest
 
 namespace ModTest
 {
-    class AmigoModTest : public ::testing::Test
+    class AmigoModTest : public AddTest::AmigoADDTest
     {
     protected:
         void SetUp()
         {
-            vector<vector<string>> raw_commands
-            {
-                { "ADD", " ", " ", " ", "17112609", "FB NTAWR",       "CL4", "010-5645-6122", "19861203", "PRO" },
-                { "ADD", " ", " ", " ", "02117175", "SBILHUT LDEXRI", "CL4", "010-2814-1699", "19950704", "ADV" },
-                { "ADD", " ", " ", " ", "08123556", "WN XV",          "CL1", "010-7986-5047", "20100614", "PRO" },
-                { "ADD", " ", " ", " ", "85125741", "FBAH RTIJ",      "CL1", "010-8900-1478", "19780228", "ADV" },
-                { "ADD", " ", " ", " ", "11109136", "QKAHCEX LTODDO", "CL4", "010-2627-8566", "19640130", "PRO" },
-                { "ADD", " ", " ", " ", "08108827", "RTAH VNUP",      "CL4", "010-9031-2726", "19780417", "ADV" },
-                { "ADD", " ", " ", " ", "05101762", "VCUHLE HMU",     "CL4", "010-3988-9289", "20030819", "PRO" }
-            };
-
             for (const auto& raw_command : raw_commands)
             {
                 amigo_db.Query(GenerateCommand(raw_command));
             }
         }
-
-        Command GenerateCommand(const vector<string>& raw_command)
-        {
-            int i = 0;
-            Command command;
-            for (const string param : raw_command)
-            {
-                command.param[i++] = param;
-            }
-            command.is_valid = true;
-            return command;
-        }
-
-        AmigoDatabase amigo_db;
     };
 
     TEST_F(AmigoModTest, Found_0_Record_0_Modify_Nothing)
@@ -582,7 +583,7 @@ namespace ModTest
 
 namespace SeachTest
 {
-    class AmigoSchTest : public ::testing::Test
+    class AmigoSchTest : public AddTest::AmigoADDTest
     {
     protected:
         void SetUp()
@@ -605,7 +606,6 @@ namespace SeachTest
                 { "ADD", " ", " ", " ", "03113260", "HH LTUPF"      , "CL2", "010-5798-5383", "19781018", "PRO" },
                 { "ADD", " ", " ", " ", "14130827", "RPO JK"        , "CL4", "010-4528-1698", "20090201", "ADV" },
                 { "ADD", " ", " ", " ", "01122329", "TWU WD"        , "CL4", "010-7174-5680", "20071117", "PRO" }
-
             };
 
             for (const auto& raw_command : raw_commands)
@@ -613,20 +613,6 @@ namespace SeachTest
                 amigo_db.Query(GenerateCommand(raw_command));
             }
         }
-
-        Command GenerateCommand(const vector<string>& raw_command)
-        {
-            int i = 0;
-            Command command;
-            for (const string param : raw_command)
-            {
-                command.param[i++] = param;
-            }
-            command.is_valid = true;
-            return command;
-        }
-
-        AmigoDatabase amigo_db;
     };
 
     TEST_F(AmigoSchTest, TestByFullBirth_Pass)
