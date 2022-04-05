@@ -5,47 +5,74 @@
 string AmigoDatabase::Query(Command cmd)
 {
     string command = cmd.GetCommandType();
-    string option1 = cmd.param[1];
-    string option2 = cmd.param[2];
-    vector<unsigned int> search_result;
-    string result;
 
-    if (command == "ADD")
+    auto cmd_func = supported_cmds_funcs.find(command);
+
+    if (cmd_func != supported_cmds_funcs.end())
     {
-        Add(cmd.param[4], cmd.param[5], cmd.param[6],
-            cmd.param[7], cmd.param[8], cmd.param[9]);
-    }
-    else if (command == "SCH")
-    {
-        search_result = Search(option2, cmd.param[4], cmd.param[5]);
-
-        result = GenerateCommandRecord(command, (option1 == "-p"), search_result);
-    }
-    else if (command == "DEL")
-    {
-        search_result = Search(option2, cmd.param[4], cmd.param[5]);
-
-        result = GenerateCommandRecord(command, (option1 == "-p"), search_result);
-
-        Del(search_result);
-    }
-    else if (command == "MOD")
-    {
-        search_result = Search(option2, cmd.param[4], cmd.param[5]);
-
-        result = GenerateCommandRecord(command, (option1 == "-p"), search_result);
-
-        Mod(search_result, cmd.param[6], cmd.param[7]);
+        return cmd_func->second(*this, cmd);
     }
     else
     {
         throw runtime_error("Unsupported Command : " + command);
     }
+}
+
+string AmigoDatabase::Add(Command& cmd)
+{
+    AddImpl(cmd.param[4], cmd.param[5], cmd.param[6],
+        cmd.param[7], cmd.param[8], cmd.param[9]);
+
+    return string();
+}
+
+string AmigoDatabase::Del(Command& cmd)
+{
+    string option1 = cmd.param[1];
+    string option2 = cmd.param[2];
+    vector<unsigned int> search_result;
+    string result;
+
+    search_result = SearchImpl(option2, cmd.param[4], cmd.param[5]);
+
+    result = GenerateCommandRecord("DEL", (option1 == "-p"), search_result);
+
+    DelImpl(search_result);
 
     return result;
 }
 
-int AmigoDatabase::Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
+string AmigoDatabase::Mod(Command& cmd)
+{
+    string option1 = cmd.param[1];
+    string option2 = cmd.param[2];
+    vector<unsigned int> search_result;
+    string result;
+
+    search_result = SearchImpl(option2, cmd.param[4], cmd.param[5]);
+
+    result = GenerateCommandRecord("MOD", (option1 == "-p"), search_result);
+
+    ModImpl(search_result, cmd.param[6], cmd.param[7]);
+
+    return result;
+}
+
+string AmigoDatabase::Sch(Command& cmd)
+{
+    string option1 = cmd.param[1];
+    string option2 = cmd.param[2];
+    vector<unsigned int> search_result;
+    string result;
+
+    search_result = SearchImpl(option2, cmd.param[4], cmd.param[5]);
+
+    result = GenerateCommandRecord("SCH", (option1 == "-p"), search_result);
+
+    return result;
+}
+
+int AmigoDatabase::AddImpl(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
 {
     Employee newEmployee = Employee(employee_num, name, cl, phoneNum, birthday, certi);
     map_employees[newEmployee.employee_num] = newEmployee;
@@ -53,13 +80,13 @@ int AmigoDatabase::Add(string employee_num, string name, string cl, string phone
     return map_employees.size();
 }
 
-vector<unsigned int> AmigoDatabase::Search(string option, string column, string value)
+vector<unsigned int> AmigoDatabase::SearchImpl(string option, string column, string value)
 {
     return amigo_search_engine->Search(option, column, value);
 }
 
 
-void AmigoDatabase::Del(const vector<unsigned int>& deleteList)
+void AmigoDatabase::DelImpl(const vector<unsigned int>& deleteList)
 {
     for (int i = 0; i < deleteList.size(); i++)
     {
@@ -67,7 +94,7 @@ void AmigoDatabase::Del(const vector<unsigned int>& deleteList)
     }
 }
 
-void AmigoDatabase::Mod(const vector<unsigned int>& founds, string column, string value)
+void AmigoDatabase::ModImpl(const vector<unsigned int>& founds, string column, string value)
 {
     if (column == "employeeNum")
     {
