@@ -23,16 +23,16 @@ struct Command
         param_count = param_end - param_start
     };
 
-    //enum Type
-    //{
-    //    CommandType_start = 0,
-    //    AddCommand = CommandType_start,
-    //    DelCommand,
-    //    SchCommand,
-    //    ModCommand,
-    //    CommandType_end,
-    //    CommandType_count = CommandType_end - CommandType_start
-    //};
+    enum Type
+    {
+        CommandType_start = 0,
+        AddCommand = CommandType_start,
+        DelCommand,
+        SchCommand,
+        ModCommand,
+        CommandType_end,
+        CommandType_count = CommandType_end - CommandType_start
+    };
 
     Command()
     {
