@@ -1,9 +1,8 @@
 #pragma once
 
 #include <fstream>
-#include <iostream>
 #include <string>
-#include "common.h"
+#include "command.h"
 
 using namespace std;
 

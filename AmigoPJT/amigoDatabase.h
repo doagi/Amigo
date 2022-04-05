@@ -1,6 +1,10 @@
 #pragma once
 
+#include <unordered_map>
 #include "IDatabase.h"
+#include "command.h"
+#include "employee.h"
+#include "common.h"
 #include "amigoSearchEngine.h"
 
 class AmigoDatabase : public IDatabase
@@ -10,10 +14,10 @@ public:
     {
 #if 0
         supported_cmds.clear();
-        supported_cmds["ADD"] = (int)(CommandType::AddCommand);
-        supported_cmds["DEL"] = (int)(CommandType::DelCommand);
-        supported_cmds["MOD"] = (int)(CommandType::ModCommand);
-        supported_cmds["SCH"] = (int)(CommandType::SchCommand);
+        supported_cmds["ADD"] = (int)(Command::Type::AddCommand);
+        supported_cmds["DEL"] = (int)(Command::Type::DelCommand);
+        supported_cmds["MOD"] = (int)(Command::Type::ModCommand);
+        supported_cmds["SCH"] = (int)(Command::Type::SchCommand);
 #endif
         amigo_search_engine = new AmigoSearchEngine(map_employees);
     }
@@ -23,21 +27,13 @@ public:
 private:
     int Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi);
     vector<unsigned int> Search(string option, string column, string value);
-    int Mod(const vector<unsigned int>& founds, string column, string value);
-    void ModifyColumnData(Employee& employee, const ModificationInfo& mod_info);
     void Del(const vector<unsigned int>& deleteList);
-
+    void Mod(const vector<unsigned int>& founds, string column, string value);
+    void ModifyColumnData(Employee& employee, const ModificationInfo& mod_info);
 
     string GenerateCommandRecord(const std::string& command, const bool& detail_print, const vector<unsigned int>& targets);
     string GenerateDetailRecord(const std::string& command, const vector<unsigned int>& result);
 
-
-    /*
-    vector<string> Mod(unordered_map<unsigned int, Employee>& map_employees,
-        const vector<unsigned int>& found_data, const ModificationInfo& condition);
-        */
-
-        
     unordered_map<unsigned int, Employee> map_employees;
     ISearchEngine* amigo_search_engine;
 };
