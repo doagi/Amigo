@@ -38,11 +38,7 @@ private:
     string __GenerateCommandRecord(const std::string& command, const bool& detail_print, const vector<unsigned int>& targets);
     string __GenerateDetailRecord(const std::string& command, const vector<unsigned int>& result);
     
-    function<string(AmigoDatabase&, Command&)> cmd_func_ptrs[Command::Type::CommandType_count];
-    unordered_map<string, Command::Type> supported_cmds;
-
     unordered_map<string, function<string(AmigoDatabase&, Command&)>> supported_cmds_funcs;
-
     unordered_map<unsigned int, Employee> map_employees;
     ISearchEngine* amigo_search_engine;
 };
