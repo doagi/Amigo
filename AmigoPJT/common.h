@@ -6,7 +6,7 @@
 #include "command.h"
 
 using namespace std;
-
+/*
 enum SearchType
 {
     SearchType_start = 0,
@@ -25,7 +25,7 @@ enum SearchType
     CERTI,
     SearchType_end
 };
-
+*/
 enum class Column : unsigned int
 {
     UNKNOWN,

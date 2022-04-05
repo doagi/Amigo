@@ -23,15 +23,15 @@ public:
         return result;
     }
 
-    static vector<unsigned int> split_date(const string& input)
+    static vector<string> split_date(const string& input)
     {
-        vector<unsigned int> result;
+        vector<string> result;
         if (input.size() == 8)
         {
             result.reserve(3);
-            result.emplace_back(stoi(input.substr(0, 4)));
-            result.emplace_back(stoi(input.substr(4, 2)));
-            result.emplace_back(stoi(input.substr(6, 2)));
+            result.emplace_back(input.substr(0, 4));
+            result.emplace_back(input.substr(4, 2));
+            result.emplace_back(input.substr(6, 2));
         }
         return result;
     }
