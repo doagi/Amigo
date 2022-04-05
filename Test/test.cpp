@@ -3,6 +3,8 @@
 #include "../AmigoPJT/client.cpp"
 #include "../AmigoPJT/inputStream.cpp"
 #include "../AmigoPJT/outputStream.cpp"
+#include "../AmigoPJT/amigoDatabase.cpp"
+
 #include "../AmigoPJT/command.cpp"
 #include "../AmigoPJT/txt_parser.cpp"
 #include "../AmigoPJT/command/mod.cpp"
@@ -126,6 +128,32 @@ namespace CommandTest
             sprintf(front, "%02d%02d", YY, rand() % 100);
             return string(front) + RAND_NUM_LIST[rand() % MAX_COUNT];
         }
+
+        void QueryCommand(const vector<Command>& commands)
+        {
+            auto amigo_db = new AmigoDatabase();
+            for (size_t i = 0; i < commands.size(); i++)
+            {
+                string result = amigo_db->Query(commands[i]);
+                if (result.length() > 1)
+                {
+                    cout << result << endl;
+                }
+            }
+            delete amigo_db;
+        }
+
+        Command GenerateCommand(const vector<string>& raw_command)
+        {
+            int i = 0;
+            Command command;
+            for (const string param : raw_command)
+            {
+                command.param[i++] = param;
+            }
+            command.is_valid = true;
+            return command;
+        }
     };
 
     TEST_F(AmigoCommandTest, Unsupported_Command)
@@ -135,16 +163,9 @@ namespace CommandTest
             "SWAP","op1","op2","op3","employeeNum", "name", "cl", "phoneNum", "birthday", "certi"
         };
 
-        int i = 0;
-        Command command;
-        for (const string param : raw_command)
-        {
-            command.param[i++] = param;
-        }
+        vector<Command> commands{ GenerateCommand(raw_command) };
 
-        vector<Command> commands{ command };
-
-        EXPECT_THROW(CommandRun(commands), runtime_error);
+        EXPECT_THROW(QueryCommand(commands), runtime_error);
     }
 
     TEST_F(AmigoCommandTest, Supported_All_Command)
@@ -173,7 +194,7 @@ namespace CommandTest
             commands.emplace_back(command);
         }
 
-        EXPECT_NO_THROW(CommandRun(commands));
+        EXPECT_NO_THROW(QueryCommand(commands));
     }    
 
     TEST_F(AmigoCommandTest, DISABLED_Heavy_Command_List)
@@ -274,32 +295,7 @@ namespace CommandTest
             commands.emplace_back(command);
         }
 
-        /**
-        * const unsigned int add_count = 2000;
-        * const unsigned int cmd_count = 1000; 
-        * 
-        * (case1) 25785 ms, 25548 ms
-        * (case2) 29490 ms, 29764 ms
-        * 
-        * Result를 모아서 출력하는게 더 빠름
-        */
-
-        // (Case1)
-        EXPECT_NO_THROW(CommandRun(commands));
-
-        // (Case2)
-        //EXPECT_NO_THROW(
-        //{
-        //    auto amigo_db = new AmigoDatabase();
-        //    for (size_t i = 0; i < commands.size(); i++)
-        //    {
-        //        string result = amigo_db->Query(commands[i]);
-        //        if (result.length() > 1)
-        //        {
-        //            cout << result << endl;
-        //        }
-        //    }
-        //});
+        EXPECT_NO_THROW(QueryCommand(commands));
     }
 }
 
@@ -521,7 +517,6 @@ namespace DelTest
     }
 }
 
-
 namespace ModTest
 {
     class AmigoModTest : public ::testing::Test
@@ -529,207 +524,180 @@ namespace ModTest
     protected:
         void SetUp()
         {
-            string raw_data[][6]
+            vector<vector<string>> raw_commands
             {
-                { "17112609", "FB NTAWR",       "CL4", "010-5645-6122", "19861203", "PRO" },
-                { "02117175", "SBILHUT LDEXRI", "CL4", "010-2814-1699", "19950704", "ADV" },
-                { "08123556", "WN XV",          "CL1", "010-7986-5047", "20100614", "PRO" },
-                { "85125741", "FBAH RTIJ",      "CL1", "010-8900-1478", "19780228", "ADV" },
-                { "11109136", "QKAHCEX LTODDO", "CL4", "010-2627-8566", "19640130", "PRO" }
+                { "ADD", " ", " ", " ", "17112609", "FB NTAWR",       "CL4", "010-5645-6122", "19861203", "PRO" },
+                { "ADD", " ", " ", " ", "02117175", "SBILHUT LDEXRI", "CL4", "010-2814-1699", "19950704", "ADV" },
+                { "ADD", " ", " ", " ", "08123556", "WN XV",          "CL1", "010-7986-5047", "20100614", "PRO" },
+                { "ADD", " ", " ", " ", "85125741", "FBAH RTIJ",      "CL1", "010-8900-1478", "19780228", "ADV" },
+                { "ADD", " ", " ", " ", "11109136", "QKAHCEX LTODDO", "CL4", "010-2627-8566", "19640130", "PRO" },
+                { "ADD", " ", " ", " ", "08108827", "RTAH VNUP",      "CL4", "010-9031-2726", "19780417", "ADV" },
+                { "ADD", " ", " ", " ", "05101762", "VCUHLE HMU",     "CL4", "010-3988-9289", "20030819", "PRO" }
             };
 
-            mod_test_db.reserve(5);
-            found_5_data.reserve(5);
-
-            for (int i = 0; i < 5; i++)
+            for (const auto& raw_command : raw_commands)
             {
-                Employee2 employee = Employee2(raw_data[i][0], raw_data[i][1], raw_data[i][2],
-                    raw_data[i][3], raw_data[i][4], raw_data[i][5]);
-                mod_test_db[employee.employee_num] = employee;
-                found_5_data.emplace_back(employee.employee_num);
+                amigo_db.Query(GenerateCommand(raw_command));
             }
-
-            found_1_data.emplace_back(found_5_data[0]);
         }
 
-        void TearDown()
+        Command GenerateCommand(const vector<string>& raw_command)
         {
-            found_1_data.clear();
-            found_5_data.clear();
-            mod_test_db.clear();
+            int i = 0;
+            Command command;
+            for (const string param : raw_command)
+            {
+                command.param[i++] = param;
+            }
+            command.is_valid = true;
+            return command;
         }
 
-        vector<unsigned int> found_0_data;
-        vector<unsigned int> found_1_data;
-        vector<unsigned int> found_5_data;
-
-        unordered_map<unsigned int, Employee2> mod_test_db;
+        AmigoDatabase amigo_db;
     };
 
     TEST_F(AmigoModTest, Found_0_Record_0_Modify_Nothing)
     {
-        vector<string> result = Mod(mod_test_db, found_0_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
+        Command command = GenerateCommand({ "MOD", "-p", " ", " ", "name", "NO ONE", "birthday", "20050520" });
 
-        EXPECT_EQ(0, result.size());
+        string result = amigo_db.Query(command);
+
+        EXPECT_STREQ("MOD,NONE", result.c_str());
     }
 
     TEST_F(AmigoModTest, Found_1_Throw_Exception_Unknown_Column)
     {
-        EXPECT_THROW(
-        {
-            vector<string> result = Mod(mod_test_db, found_1_data, ModificationInfo{ Column::SIZE, "20050520" });
-        }, invalid_argument);
+        Command command = GenerateCommand({ "MOD", "-p", " ", " ", "name", "FB NTAWR", "holiday", "20050520" });
+
+        EXPECT_THROW(amigo_db.Query(command), invalid_argument);
     }
 
     TEST_F(AmigoModTest, Found_1_Throw_Exception_Modify_EmployeeNum)
     {
-        EXPECT_THROW(
-        {
-            vector<string> result = Mod(mod_test_db, found_1_data, ModificationInfo{ Column::EMPLOYEENUM, "88114052" });
-        }, invalid_argument);
+        Command command = GenerateCommand({ "MOD", "-p", " ", " ", "name", "FB NTAWR", "employeeNum", "88114052" });
+
+        EXPECT_THROW(amigo_db.Query(command), invalid_argument);
     }
 
     TEST_F(AmigoModTest, Found_1_Record_1_Modify_Birthday)
     {
-        vector<string> result = Mod(mod_test_db, found_1_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
+        Command command = GenerateCommand({ "MOD", "-p", " ", " ", "name", "FB NTAWR", "birthday", "20050520" });
 
         const string expect_result = "MOD,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO";
 
-        EXPECT_EQ(1, result.size());
-        EXPECT_STREQ(expect_result.c_str(), result[0].c_str());
+        const string actual_result = amigo_db.Query(command);
+
+        EXPECT_STREQ(expect_result.c_str(), actual_result.c_str());
     }
 
     TEST_F(AmigoModTest, Found_1_Record_1_Modify_Birthday_Updated)
     {
-        // 1st try and then updated
-        Mod(mod_test_db, found_1_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
+        Command command = GenerateCommand({ "MOD", "-p", " ", " ", "name", "FB NTAWR", "birthday", "20050520" });
 
-        vector<string> result = Mod(mod_test_db, found_1_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
+        // 1st try and then updated
+        amigo_db.Query(command);
 
         const string expect_result = "MOD,17112609,FB NTAWR,CL4,010-5645-6122,20050520,PRO";
 
-        EXPECT_EQ(1, result.size());
-        EXPECT_STREQ(expect_result.c_str(), result[0].c_str());
+        const string actual_result = amigo_db.Query(command);
+
+        EXPECT_STREQ(expect_result.c_str(), actual_result.c_str());
     }
 
     TEST_F(AmigoModTest, Found_5_Record_5_Modify_Name_Updated)
     {
+        Command command = GenerateCommand({ "MOD", "-p", " ", " ", "cl", "CL4", "name", "Anonymous" });
+
         // 1st try and then updated
-        Mod(mod_test_db, found_5_data, ModificationInfo{ Column::NAME, "Anonymous" });
+        amigo_db.Query(command);
 
-        vector<string> result = Mod(mod_test_db, found_5_data, ModificationInfo{ Column::NAME, "Anonymous" });
-
-        const string expect_result[]
+        const string expect_result
         {
-            "MOD,17112609,Anonymous,CL4,010-5645-6122,19861203,PRO",
-            "MOD,02117175,Anonymous,CL4,010-2814-1699,19950704,ADV",
-            "MOD,08123556,Anonymous,CL1,010-7986-5047,20100614,PRO",
-            "MOD,85125741,Anonymous,CL1,010-8900-1478,19780228,ADV",
-            "MOD,11109136,Anonymous,CL4,010-2627-8566,19640130,PRO"
+            "MOD,02117175,Anonymous,CL4,010-2814-1699,19950704,ADV\n"\
+            "MOD,05101762,Anonymous,CL4,010-3988-9289,20030819,PRO\n"\
+            "MOD,08108827,Anonymous,CL4,010-9031-2726,19780417,ADV\n"\
+            "MOD,11109136,Anonymous,CL4,010-2627-8566,19640130,PRO\n"\
+            "MOD,17112609,Anonymous,CL4,010-5645-6122,19861203,PRO"
         };
 
-        EXPECT_EQ(5, result.size());
+        const string actual_result = amigo_db.Query(command);
 
-        for (int i = 0; i < 5; i++)
-        {
-            EXPECT_STREQ(expect_result[i].c_str(), result[i].c_str());
-        }
+        EXPECT_STREQ(expect_result.c_str(), actual_result.c_str());
     }
 
     TEST_F(AmigoModTest, Found_5_Record_5_Modify_CL_Updated)
     {
+        Command command = GenerateCommand({ "MOD", "-p", " ", " ", "cl", "CL4", "cl", "CL3" });
+
         // 1st try and then updated
-        Mod(mod_test_db, found_5_data, ModificationInfo{ Column::CL, "CL3" });
+        amigo_db.Query(command);
 
-        vector<string> result = Mod(mod_test_db, found_5_data, ModificationInfo{ Column::CL, "CL3" });
+        const string actual_result = amigo_db.Query(command);
 
-        const string expect_result[]
-        {
-            "MOD,17112609,FB NTAWR,CL3,010-5645-6122,19861203,PRO",
-            "MOD,02117175,SBILHUT LDEXRI,CL3,010-2814-1699,19950704,ADV",
-            "MOD,08123556,WN XV,CL3,010-7986-5047,20100614,PRO",
-            "MOD,85125741,FBAH RTIJ,CL3,010-8900-1478,19780228,ADV",
-            "MOD,11109136,QKAHCEX LTODDO,CL3,010-2627-8566,19640130,PRO"
-        };
-
-        EXPECT_EQ(5, result.size());
-
-        for (int i = 0; i < 5; i++)
-        {
-            EXPECT_STREQ(expect_result[i].c_str(), result[i].c_str());
-        }
+        EXPECT_STREQ("MOD,NONE", actual_result.c_str());
     }
 
     TEST_F(AmigoModTest, Found_5_Record_5_Modify_PhoneNum_Updated)
     {
+        Command command = GenerateCommand({ "MOD", "-p", " ", " ", "cl", "CL4", "phoneNum", "010-1234-0000" });
+
         // 1st try and then updated
-        Mod(mod_test_db, found_5_data, ModificationInfo{ Column::PHONENUM, "010-1234-0000" });
+        amigo_db.Query(command);
 
-        vector<string> result = Mod(mod_test_db, found_5_data, ModificationInfo{ Column::PHONENUM, "010-1234-0000" });
-
-        const string expect_result[]
+        const string expect_result
         {
-            "MOD,17112609,FB NTAWR,CL4,010-1234-0000,19861203,PRO",
-            "MOD,02117175,SBILHUT LDEXRI,CL4,010-1234-0000,19950704,ADV",
-            "MOD,08123556,WN XV,CL1,010-1234-0000,20100614,PRO",
-            "MOD,85125741,FBAH RTIJ,CL1,010-1234-0000,19780228,ADV",
-            "MOD,11109136,QKAHCEX LTODDO,CL4,010-1234-0000,19640130,PRO"
+            "MOD,02117175,SBILHUT LDEXRI,CL4,010-1234-0000,19950704,ADV\n"\
+            "MOD,05101762,VCUHLE HMU,CL4,010-1234-0000,20030819,PRO\n"\
+            "MOD,08108827,RTAH VNUP,CL4,010-1234-0000,19780417,ADV\n"\
+            "MOD,11109136,QKAHCEX LTODDO,CL4,010-1234-0000,19640130,PRO\n"\
+            "MOD,17112609,FB NTAWR,CL4,010-1234-0000,19861203,PRO"
         };
 
-        EXPECT_EQ(5, result.size());
+        const string actual_result = amigo_db.Query(command);
 
-        for (int i = 0; i < 5; i++)
-        {
-            EXPECT_STREQ(expect_result[i].c_str(), result[i].c_str());
-        }
+        EXPECT_STREQ(expect_result.c_str(), actual_result.c_str());
     }
 
     TEST_F(AmigoModTest, Found_5_Record_5_Modify_Birthday_Updated)
     {
+        Command command = GenerateCommand({ "MOD", "-p", " ", " ", "cl", "CL4", "birthday", "20050520" });
+
         // 1st try and then updated
-        Mod(mod_test_db, found_5_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
+        amigo_db.Query(command);
 
-        vector<string> result = Mod(mod_test_db, found_5_data, ModificationInfo{ Column::BIRTHDAY, "20050520" });
-
-        const string expect_result[]
+        const string expect_result
         {
-            "MOD,17112609,FB NTAWR,CL4,010-5645-6122,20050520,PRO",
-            "MOD,02117175,SBILHUT LDEXRI,CL4,010-2814-1699,20050520,ADV",
-            "MOD,08123556,WN XV,CL1,010-7986-5047,20050520,PRO",
-            "MOD,85125741,FBAH RTIJ,CL1,010-8900-1478,20050520,ADV",
-            "MOD,11109136,QKAHCEX LTODDO,CL4,010-2627-8566,20050520,PRO"
+            "MOD,02117175,SBILHUT LDEXRI,CL4,010-2814-1699,20050520,ADV\n"\
+            "MOD,05101762,VCUHLE HMU,CL4,010-3988-9289,20050520,PRO\n"\
+            "MOD,08108827,RTAH VNUP,CL4,010-9031-2726,20050520,ADV\n"\
+            "MOD,11109136,QKAHCEX LTODDO,CL4,010-2627-8566,20050520,PRO\n"\
+            "MOD,17112609,FB NTAWR,CL4,010-5645-6122,20050520,PRO"
         };
 
-        EXPECT_EQ(5, result.size());
+        const string actual_result = amigo_db.Query(command);
 
-        for (int i = 0; i < 5; i++)
-        {
-            EXPECT_STREQ(expect_result[i].c_str(), result[i].c_str());
-        }
+        EXPECT_STREQ(expect_result.c_str(), actual_result.c_str());
     }
 
     TEST_F(AmigoModTest, Found_5_Record_5_Modify_Certi_Updated)
     {
+        Command command = GenerateCommand({ "MOD", "-p", " ", " ", "cl", "CL4", "certi", "EX" });
+
         // 1st try and then updated
-        Mod(mod_test_db, found_5_data, ModificationInfo{ Column::CERTI, "EX" });
+        amigo_db.Query(command);
 
-        vector<string> result = Mod(mod_test_db, found_5_data, ModificationInfo{ Column::CERTI, "EX" });
-
-        const string expect_result[]
+        const string expect_result
         {
-            "MOD,17112609,FB NTAWR,CL4,010-5645-6122,19861203,EX",
-            "MOD,02117175,SBILHUT LDEXRI,CL4,010-2814-1699,19950704,EX",
-            "MOD,08123556,WN XV,CL1,010-7986-5047,20100614,EX",
-            "MOD,85125741,FBAH RTIJ,CL1,010-8900-1478,19780228,EX",
-            "MOD,11109136,QKAHCEX LTODDO,CL4,010-2627-8566,19640130,EX"
+            "MOD,02117175,SBILHUT LDEXRI,CL4,010-2814-1699,19950704,EX\n"\
+            "MOD,05101762,VCUHLE HMU,CL4,010-3988-9289,20030819,EX\n"\
+            "MOD,08108827,RTAH VNUP,CL4,010-9031-2726,19780417,EX\n"\
+            "MOD,11109136,QKAHCEX LTODDO,CL4,010-2627-8566,19640130,EX\n"\
+            "MOD,17112609,FB NTAWR,CL4,010-5645-6122,19861203,EX"
         };
 
-        EXPECT_EQ(5, result.size());
+        const string actual_result = amigo_db.Query(command);
 
-        for (int i = 0; i < 5; i++)
-        {
-            EXPECT_STREQ(expect_result[i].c_str(), result[i].c_str());
-        }
+        EXPECT_STREQ(expect_result.c_str(), actual_result.c_str());
     }
 }
 
