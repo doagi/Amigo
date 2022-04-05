@@ -49,10 +49,9 @@ public:
     {
         // 기존 cmd는 AmigoDatabase::add() 요런식으로 처리.
 
-        return newFunc();
+        return Swap();
     }
 
 private:
-    // 기구현된 func들 옮기면 될듯.
-    string newFunc();
+    string Swap() { return ""; }
 };
