@@ -29,7 +29,7 @@ private:
     string Mod(Command& cmd);
     string Sch(Command& cmd);
 
-    int AddImpl(string employee_num, string name, string cl, string phoneNum, string birthday, string certi);
+    void AddImpl(string employee_num, string name, string cl, string phoneNum, string birthday, string certi);
     vector<unsigned int> SearchImpl(string option, string column, string value);
     void DelImpl(const vector<unsigned int>& deleteList);
     void ModImpl(const vector<unsigned int>& founds, string column, string value);

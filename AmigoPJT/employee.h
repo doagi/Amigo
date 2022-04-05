@@ -116,7 +116,6 @@ public:
         return sstream.str();
     }
 
-    unsigned int employee_num;  // 앞 2자리 년도 포함
-
+    unsigned int employee_num;
     string data[SearchType_end];
 };
