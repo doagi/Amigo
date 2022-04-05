@@ -73,7 +73,11 @@ string AmigoDatabase::Sch(Command& cmd)
 void AmigoDatabase::AddImpl(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
 {
     Employee newEmployee = Employee(employee_num, name, cl, phoneNum, birthday, certi);
-    map_employees[newEmployee.employee_num] = newEmployee;
+    auto ret = map_employees.insert(AmigoDB::value_type(newEmployee.employee_num, newEmployee));
+    if (ret.second == false)
+    {
+        throw invalid_argument("ERROR: Already existed employee_num : " + employee_num);
+    }
 }
 
 vector<unsigned int> AmigoDatabase::SearchImpl(string option, string column, string value)

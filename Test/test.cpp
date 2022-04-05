@@ -36,6 +36,12 @@ namespace CommandTest
         static const int MAX_COUNT = 500;
         char RAND_STR_LIST[MAX_COUNT][8] = { 0, };
         char RAND_NUM_LIST[MAX_COUNT][5] = { 0, };
+        set<string> used_emp_num;
+
+        void SetUp()
+        {
+            used_emp_num.clear();
+        }
 
         void make_string()
         {
@@ -76,14 +82,20 @@ namespace CommandTest
 
         string make_employee_num()
         {
-            char front[5] = { 0, };
-            unsigned int YY = rand() % 100;
-            if (YY > 21 && YY < 69)
+            string result;
+            do
             {
-                YY = 21;
-            }
-            sprintf(front, "%02d%02d", YY, rand() % 100);
-            return string(front) + RAND_NUM_LIST[rand() % MAX_COUNT];
+                char front[5] = { 0, };
+                unsigned int YY = rand() % 100;
+                if (YY > 21 && YY < 69)
+                {
+                    YY = YY % 22;
+                }
+                sprintf(front, "%02d%02d", YY, rand() % 100);
+                result = string(front) + RAND_NUM_LIST[rand() % MAX_COUNT];
+            } while (used_emp_num.find(result) != used_emp_num.end());
+            used_emp_num.insert(result);
+            return result;
         }
 
         void QueryCommand(const vector<Command>& commands)
@@ -287,12 +299,26 @@ namespace AddTest
         };
     };
 
-    TEST_F(AmigoADDTest, ADD_Test)
+    TEST_F(AmigoADDTest, ADD_Unique_Key_Data)
     {
         for (const auto& raw_command : raw_commands)
         {
             EXPECT_NO_THROW(amigo_db.Query(GenerateCommand(raw_command)));
         }
+    }
+
+    TEST_F(AmigoADDTest, ADD_Duplicate_Key_Data)
+    {
+        for (const auto& raw_command : raw_commands)
+        {
+            EXPECT_NO_THROW(amigo_db.Query(GenerateCommand(raw_command)));
+        }
+
+        vector<string> duplicate
+        {
+            "ADD", " ", " ", " ", "02117175", "SBILHUT HMU", "CL4", "010-2814-2627", "19750904", "ADV"
+        };
+        EXPECT_THROW(amigo_db.Query(GenerateCommand(duplicate)), invalid_argument);
     }
 }
 
