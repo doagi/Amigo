@@ -55,9 +55,9 @@ int AmigoDatabase::Add(string employee_num, string name, string cl, string phone
 
 vector<unsigned int> AmigoDatabase::Search(string option, string column, string value)
 {
-    //isValidSearch(value, getSearchType(option, column));
-    return SearchByType(value, GetSearchType(option, column));
+    return amigo_search_engine->Search(option, column, value);
 }
+
 
 void AmigoDatabase::Del(const vector<unsigned int>& deleteList)
 {
