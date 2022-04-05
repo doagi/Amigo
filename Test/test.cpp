@@ -304,206 +304,128 @@ namespace AddTest
 
 namespace DelTest
 {
-    Employee2 testdata[8] =
+    vector<vector<string>> testData =
     {
-        {"15123099", "VXIHXOTH JHOP" , "CL3", "010-3112-2609", "19771211", "ADV"},
-        {"17112609", "FB NTAWR"      , "CL4", "010-5645-6122", "19861203", "PRO"},
-        {"18115040", "TTETHU HBO"    , "CL3", "010-4581-2050", "20080718", "ADV"},
-        {"88114052", "NQ LVARW"      , "CL4", "010-4528-3059", "19911021", "PRO"},
-        {"19129568", "SRERLALH HMEF" , "CL2", "010-3091-9521", "19640910", "PRO"},
-        {"17111236", "VSID TVO"      , "CL1", "010-3669-1077", "20120718", "PRO"},
-        {"18117906", "TWU QSOLT"     , "CL4", "010-6672-7186", "20030413", "PRO"},
-        {"08123556", "WN XV"         , "CL1", "010-7986-5047", "20100614", "PRO"}
+        { "ADD", " ", " ", " ", "15123099", "VXIHXOTH JHOP" , "CL3", "010-3112-2609", "19771211", "ADV"},
+        { "ADD", " ", " ", " ", "17112609", "FB NTAWR"      , "CL4", "010-5645-6122", "19861203", "PRO"},
+        { "ADD", " ", " ", " ", "18115040", "TTETHU HBO"    , "CL3", "010-4581-2050", "20080718", "ADV"},
+        { "ADD", " ", " ", " ", "88114052", "NQ LVARW"      , "CL4", "010-4528-3059", "19911021", "PRO"},
+        { "ADD", " ", " ", " ", "19129568", "SRERLALH HMEF" , "CL2", "010-3091-9521", "19640910", "PRO"},
+        { "ADD", " ", " ", " ", "17111236", "VSID TVO"      , "CL1", "010-3669-1077", "20120718", "PRO"},
+        { "ADD", " ", " ", " ", "18117906", "TWU QSOLT"     , "CL4", "010-6672-7186", "20030413", "EX"},
+        { "ADD", " ", " ", " ", "08123556", "WN XV"         , "CL1", "010-7986-5047", "20100614", "PRO"}
     };
-    
+
+    Command GenerateCommand(const vector<string>& raw_command)
+    {
+        int i = 0;
+        Command command;
+        for (const string param : raw_command)
+        {
+            command.param[i++] = param;
+        }
+        command.is_valid = true;
+        return command;
+    }
+
+
     TEST(AmigoDelTest, DelCLTest)
     {
-        unordered_map<unsigned int, Employee2> test1, test2, test3, test4, test5;
-        vector<unsigned int> deleteVecCL1, deleteVecCL2, deleteVecCL3, deleteVecCL4, deleteVecNone;
-        for (int i = 0; i < 8; i++) {
-            test1[(unsigned int)testdata[i].employee_num] = testdata[i];
-            test2[(unsigned int)testdata[i].employee_num] = testdata[i];
-            test3[(unsigned int)testdata[i].employee_num] = testdata[i];
-            test4[(unsigned int)testdata[i].employee_num] = testdata[i];
-            test5[(unsigned int)testdata[i].employee_num] = testdata[i];
-        }
-        deleteVecCL4 = { testdata[1].employee_num,  testdata[3].employee_num, testdata[6].employee_num };
-        deleteVecCL3 = { testdata[0].employee_num,  testdata[2].employee_num };
-        deleteVecCL2 = { testdata[4].employee_num };
-        deleteVecCL1 = { testdata[5].employee_num,  testdata[7].employee_num };
-        deleteVecNone = {};
-        EXPECT_EQ("DEL,3", Del(test1, deleteVecCL4));
-        EXPECT_EQ("DEL,2", Del(test2, deleteVecCL3));
-        EXPECT_EQ("DEL,1", Del(test3, deleteVecCL2));
-        EXPECT_EQ("DEL,2", Del(test4, deleteVecCL1));
-        EXPECT_EQ("DEL,NONE", Del(test5, deleteVecNone));
-
-        EXPECT_EQ(5, test1.size());
-        EXPECT_EQ(6, test2.size());
-        EXPECT_EQ(7, test3.size());
-        EXPECT_EQ(6, test4.size());
-        EXPECT_EQ(8, test5.size());
-
-        for (int i = 0; i < 8; i++)
+        AmigoDatabase newdata1, newdata2, newdata3, newdata4;
+        for (const auto& rawData : testData)
         {
-            if (i == 1 || i == 3 || i == 6)
-            {
-                EXPECT_NE(testdata[i].str_employee_num, test1[testdata[i].employee_num].str_employee_num);
-                EXPECT_NE(testdata[i].full_name, test1[testdata[i].employee_num].full_name);
-                EXPECT_NE(testdata[i].full_phone_number, test1[testdata[i].employee_num].full_phone_number);
-                EXPECT_NE(testdata[i].full_birthday, test1[testdata[i].employee_num].full_birthday);
-                EXPECT_NE(testdata[i].cl, test1[testdata[i].employee_num].cl);
-                EXPECT_NE(testdata[i].first_name, test1[testdata[i].employee_num].first_name);
-                EXPECT_NE(testdata[i].last_name, test1[testdata[i].employee_num].last_name);
-                EXPECT_NE(testdata[i].middle_phone_num, test1[testdata[i].employee_num].middle_phone_num);
-                EXPECT_NE(testdata[i].last_phone_num, test1[testdata[i].employee_num].last_phone_num);
-                EXPECT_NE(testdata[i].year_birthday, test1[testdata[i].employee_num].year_birthday);
-                EXPECT_NE(testdata[i].month_birthday, test1[testdata[i].employee_num].month_birthday);
-                EXPECT_NE(testdata[i].day_birthday, test1[testdata[i].employee_num].day_birthday);
-                EXPECT_NE(testdata[i].certi, test1[testdata[i].employee_num].certi);
-            }
-            else
-            {
-                EXPECT_EQ(testdata[i].str_employee_num, test1[testdata[i].employee_num].str_employee_num);
-                EXPECT_EQ(testdata[i].full_name, test1[testdata[i].employee_num].full_name);
-                EXPECT_EQ(testdata[i].full_phone_number, test1[testdata[i].employee_num].full_phone_number);
-                EXPECT_EQ(testdata[i].full_birthday, test1[testdata[i].employee_num].full_birthday);
-                EXPECT_EQ(testdata[i].cl, test1[testdata[i].employee_num].cl);
-                EXPECT_EQ(testdata[i].first_name, test1[testdata[i].employee_num].first_name);
-                EXPECT_EQ(testdata[i].last_name, test1[testdata[i].employee_num].last_name);
-                EXPECT_EQ(testdata[i].middle_phone_num, test1[testdata[i].employee_num].middle_phone_num);
-                EXPECT_EQ(testdata[i].last_phone_num, test1[testdata[i].employee_num].last_phone_num);
-                EXPECT_EQ(testdata[i].year_birthday, test1[testdata[i].employee_num].year_birthday);
-                EXPECT_EQ(testdata[i].month_birthday, test1[testdata[i].employee_num].month_birthday);
-                EXPECT_EQ(testdata[i].day_birthday, test1[testdata[i].employee_num].day_birthday);
-                EXPECT_EQ(testdata[i].certi, test1[testdata[i].employee_num].certi);
-            }
+            newdata1.Query(GenerateCommand(rawData));
+            newdata2.Query(GenerateCommand(rawData));
+            newdata3.Query(GenerateCommand(rawData));
+            newdata4.Query(GenerateCommand(rawData));
         }
+        Command command1 = GenerateCommand({ "DEL", " ", " ", " ", "cl", "CL4" });
+        Command command2 = GenerateCommand({ "DEL", " ", " ", " ", "cl", "CL3" });
+        Command command3 = GenerateCommand({ "DEL", " ", " ", " ", "cl", "CL2" });
+        Command command4 = GenerateCommand({ "DEL", " ", " ", " ", "cl", "CL1" });
 
-        for (int i = 0; i < 8; i++)
-        {
-            if (i == 0 || i == 2)
-            {
-                EXPECT_NE(testdata[i].str_employee_num, test2[testdata[i].employee_num].str_employee_num);
-                EXPECT_NE(testdata[i].full_name, test2[testdata[i].employee_num].full_name);
-                EXPECT_NE(testdata[i].full_phone_number, test2[testdata[i].employee_num].full_phone_number);
-                EXPECT_NE(testdata[i].full_birthday, test2[testdata[i].employee_num].full_birthday);
-                EXPECT_NE(testdata[i].cl, test2[testdata[i].employee_num].cl);
-                EXPECT_NE(testdata[i].first_name, test2[testdata[i].employee_num].first_name);
-                EXPECT_NE(testdata[i].last_name, test2[testdata[i].employee_num].last_name);
-                EXPECT_NE(testdata[i].middle_phone_num, test2[testdata[i].employee_num].middle_phone_num);
-                EXPECT_NE(testdata[i].last_phone_num, test2[testdata[i].employee_num].last_phone_num);
-                EXPECT_NE(testdata[i].year_birthday, test2[testdata[i].employee_num].year_birthday);
-                EXPECT_NE(testdata[i].month_birthday, test2[testdata[i].employee_num].month_birthday);
-                EXPECT_NE(testdata[i].day_birthday, test2[testdata[i].employee_num].day_birthday);
-                EXPECT_NE(testdata[i].certi, test2[testdata[i].employee_num].certi);
-            }
-            else
-            {
-                EXPECT_EQ(testdata[i].str_employee_num, test2[testdata[i].employee_num].str_employee_num);
-                EXPECT_EQ(testdata[i].full_name, test2[testdata[i].employee_num].full_name);
-                EXPECT_EQ(testdata[i].full_phone_number, test2[testdata[i].employee_num].full_phone_number);
-                EXPECT_EQ(testdata[i].full_birthday, test2[testdata[i].employee_num].full_birthday);
-                EXPECT_EQ(testdata[i].cl, test2[testdata[i].employee_num].cl);
-                EXPECT_EQ(testdata[i].first_name, test2[testdata[i].employee_num].first_name);
-                EXPECT_EQ(testdata[i].last_name, test2[testdata[i].employee_num].last_name);
-                EXPECT_EQ(testdata[i].middle_phone_num, test2[testdata[i].employee_num].middle_phone_num);
-                EXPECT_EQ(testdata[i].last_phone_num, test2[testdata[i].employee_num].last_phone_num);
-                EXPECT_EQ(testdata[i].year_birthday, test2[testdata[i].employee_num].year_birthday);
-                EXPECT_EQ(testdata[i].month_birthday, test2[testdata[i].employee_num].month_birthday);
-                EXPECT_EQ(testdata[i].day_birthday, test2[testdata[i].employee_num].day_birthday);
-                EXPECT_EQ(testdata[i].certi, test2[testdata[i].employee_num].certi);
-            }
-        }
+        EXPECT_EQ("DEL,3", newdata1.Query(command1));
+        EXPECT_EQ("DEL,2", newdata2.Query(command2));
+        EXPECT_EQ("DEL,1", newdata3.Query(command3));
+        EXPECT_EQ("DEL,2", newdata4.Query(command4));
+    }
 
-        for (int i = 0; i < 8; i++)
+    TEST(AmigoDelTest, DelNameTest)
+    {
+        AmigoDatabase newdata1, newdata2;
+        for (const auto& rawData : testData)
         {
-            if (i == 4)
-            {
-                EXPECT_NE(testdata[i].str_employee_num, test3[testdata[i].employee_num].str_employee_num);
-                EXPECT_NE(testdata[i].full_name, test3[testdata[i].employee_num].full_name);
-                EXPECT_NE(testdata[i].full_phone_number, test3[testdata[i].employee_num].full_phone_number);
-                EXPECT_NE(testdata[i].full_birthday, test3[testdata[i].employee_num].full_birthday);
-                EXPECT_NE(testdata[i].cl, test3[testdata[i].employee_num].cl);
-                EXPECT_NE(testdata[i].first_name, test3[testdata[i].employee_num].first_name);
-                EXPECT_NE(testdata[i].last_name, test3[testdata[i].employee_num].last_name);
-                EXPECT_NE(testdata[i].middle_phone_num, test3[testdata[i].employee_num].middle_phone_num);
-                EXPECT_NE(testdata[i].last_phone_num, test3[testdata[i].employee_num].last_phone_num);
-                EXPECT_NE(testdata[i].year_birthday, test3[testdata[i].employee_num].year_birthday);
-                EXPECT_NE(testdata[i].month_birthday, test3[testdata[i].employee_num].month_birthday);
-                EXPECT_NE(testdata[i].day_birthday, test3[testdata[i].employee_num].day_birthday);
-                EXPECT_NE(testdata[i].certi, test3[testdata[i].employee_num].certi);
-            }
-            else
-            {
-                EXPECT_EQ(testdata[i].str_employee_num, test3[testdata[i].employee_num].str_employee_num);
-                EXPECT_EQ(testdata[i].full_name, test3[testdata[i].employee_num].full_name);
-                EXPECT_EQ(testdata[i].full_phone_number, test3[testdata[i].employee_num].full_phone_number);
-                EXPECT_EQ(testdata[i].full_birthday, test3[testdata[i].employee_num].full_birthday);
-                EXPECT_EQ(testdata[i].cl, test3[testdata[i].employee_num].cl);
-                EXPECT_EQ(testdata[i].first_name, test3[testdata[i].employee_num].first_name);
-                EXPECT_EQ(testdata[i].last_name, test3[testdata[i].employee_num].last_name);
-                EXPECT_EQ(testdata[i].middle_phone_num, test3[testdata[i].employee_num].middle_phone_num);
-                EXPECT_EQ(testdata[i].last_phone_num, test3[testdata[i].employee_num].last_phone_num);
-                EXPECT_EQ(testdata[i].year_birthday, test3[testdata[i].employee_num].year_birthday);
-                EXPECT_EQ(testdata[i].month_birthday, test3[testdata[i].employee_num].month_birthday);
-                EXPECT_EQ(testdata[i].day_birthday, test3[testdata[i].employee_num].day_birthday);
-                EXPECT_EQ(testdata[i].certi, test3[testdata[i].employee_num].certi);
-            }
+            newdata1.Query(GenerateCommand(rawData));
+            newdata2.Query(GenerateCommand(rawData));
         }
+        Command command1 = GenerateCommand({ "DEL", " ", " ", " ", "name", "TWU QSOLT" });
+        Command command2 = GenerateCommand({ "DEL", " ", " ", " ", "name", "ASDF" });
 
-        for (int i = 0; i < 8; i++)
-        {
-            if (i == 5 || i == 7)
-            {
-                EXPECT_NE(testdata[i].str_employee_num, test4[testdata[i].employee_num].str_employee_num);
-                EXPECT_NE(testdata[i].full_name, test4[testdata[i].employee_num].full_name);
-                EXPECT_NE(testdata[i].full_phone_number, test4[testdata[i].employee_num].full_phone_number);
-                EXPECT_NE(testdata[i].full_birthday, test4[testdata[i].employee_num].full_birthday);
-                EXPECT_NE(testdata[i].cl, test4[testdata[i].employee_num].cl);
-                EXPECT_NE(testdata[i].first_name, test4[testdata[i].employee_num].first_name);
-                EXPECT_NE(testdata[i].last_name, test4[testdata[i].employee_num].last_name);
-                EXPECT_NE(testdata[i].middle_phone_num, test4[testdata[i].employee_num].middle_phone_num);
-                EXPECT_NE(testdata[i].last_phone_num, test4[testdata[i].employee_num].last_phone_num);
-                EXPECT_NE(testdata[i].year_birthday, test4[testdata[i].employee_num].year_birthday);
-                EXPECT_NE(testdata[i].month_birthday, test4[testdata[i].employee_num].month_birthday);
-                EXPECT_NE(testdata[i].day_birthday, test4[testdata[i].employee_num].day_birthday);
-                EXPECT_NE(testdata[i].certi, test4[testdata[i].employee_num].certi);
-            }
-            else
-            {
-                EXPECT_EQ(testdata[i].str_employee_num, test4[testdata[i].employee_num].str_employee_num);
-                EXPECT_EQ(testdata[i].full_name, test4[testdata[i].employee_num].full_name);
-                EXPECT_EQ(testdata[i].full_phone_number, test4[testdata[i].employee_num].full_phone_number);
-                EXPECT_EQ(testdata[i].full_birthday, test4[testdata[i].employee_num].full_birthday);
-                EXPECT_EQ(testdata[i].cl, test4[testdata[i].employee_num].cl);
-                EXPECT_EQ(testdata[i].first_name, test4[testdata[i].employee_num].first_name);
-                EXPECT_EQ(testdata[i].last_name, test4[testdata[i].employee_num].last_name);
-                EXPECT_EQ(testdata[i].middle_phone_num, test4[testdata[i].employee_num].middle_phone_num);
-                EXPECT_EQ(testdata[i].last_phone_num, test4[testdata[i].employee_num].last_phone_num);
-                EXPECT_EQ(testdata[i].year_birthday, test4[testdata[i].employee_num].year_birthday);
-                EXPECT_EQ(testdata[i].month_birthday, test4[testdata[i].employee_num].month_birthday);
-                EXPECT_EQ(testdata[i].day_birthday, test4[testdata[i].employee_num].day_birthday);
-                EXPECT_EQ(testdata[i].certi, test4[testdata[i].employee_num].certi);
-            }
-        }
+        EXPECT_EQ("DEL,1", newdata1.Query(command1));
+        EXPECT_EQ("DEL,NONE", newdata2.Query(command2));
+    }
 
-        for (int i = 0; i < 8; i++)
+    TEST(AmigoDelTest, DelEmployNumTest)
+    {
+        AmigoDatabase newdata1, newdata2;
+        for (const auto& rawData : testData)
         {
-            EXPECT_EQ(testdata[i].str_employee_num, test5[testdata[i].employee_num].str_employee_num);
-            EXPECT_EQ(testdata[i].full_name, test5[testdata[i].employee_num].full_name);
-            EXPECT_EQ(testdata[i].full_phone_number, test5[testdata[i].employee_num].full_phone_number);
-            EXPECT_EQ(testdata[i].full_birthday, test5[testdata[i].employee_num].full_birthday);
-            EXPECT_EQ(testdata[i].cl, test5[testdata[i].employee_num].cl);
-            EXPECT_EQ(testdata[i].first_name, test5[testdata[i].employee_num].first_name);
-            EXPECT_EQ(testdata[i].last_name, test5[testdata[i].employee_num].last_name);
-            EXPECT_EQ(testdata[i].middle_phone_num, test5[testdata[i].employee_num].middle_phone_num);
-            EXPECT_EQ(testdata[i].last_phone_num, test5[testdata[i].employee_num].last_phone_num);
-            EXPECT_EQ(testdata[i].year_birthday, test5[testdata[i].employee_num].year_birthday);
-            EXPECT_EQ(testdata[i].month_birthday, test5[testdata[i].employee_num].month_birthday);
-            EXPECT_EQ(testdata[i].day_birthday, test5[testdata[i].employee_num].day_birthday);
-            EXPECT_EQ(testdata[i].certi, test5[testdata[i].employee_num].certi);
+            newdata1.Query(GenerateCommand(rawData));
+            newdata2.Query(GenerateCommand(rawData));
         }
+        Command command1 = GenerateCommand({ "DEL", " ", " ", " ", "employeeNum", "17112609" });
+        Command command2 = GenerateCommand({ "DEL", " ", " ", " ", "employeeNum", "12312312" });
+
+        EXPECT_EQ("DEL,1", newdata1.Query(command1));
+        EXPECT_EQ("DEL,NONE", newdata2.Query(command2));
+    }
+
+    TEST(AmigoDelTest, DelPhoneNumTest)
+    {
+        AmigoDatabase newdata1, newdata2;
+        for (const auto& rawData : testData)
+        {
+            newdata1.Query(GenerateCommand(rawData));
+            newdata2.Query(GenerateCommand(rawData));
+        }
+        Command command1 = GenerateCommand({ "DEL", " ", " ", " ", "phoneNum", "010-4528-3059" });
+        Command command2 = GenerateCommand({ "DEL", " ", " ", " ", "phoneNum", "010-1111-0000" });
+
+        EXPECT_EQ("DEL,1", newdata1.Query(command1));
+        EXPECT_EQ("DEL,NONE", newdata2.Query(command2));
+    }
+
+    TEST(AmigoDelTest, DelBirthdayTest)
+    {
+        AmigoDatabase newdata1, newdata2;
+        for (const auto& rawData : testData)
+        {
+            newdata1.Query(GenerateCommand(rawData));
+            newdata2.Query(GenerateCommand(rawData));
+        }
+        Command command1 = GenerateCommand({ "DEL", " ", " ", " ", "birthday", "19640910" });
+        Command command2 = GenerateCommand({ "DEL", " ", " ", " ", "birthday", "10101010" });
+
+        EXPECT_EQ("DEL,1", newdata1.Query(command1));
+        EXPECT_EQ("DEL,NONE", newdata2.Query(command2));
+    }
+
+    TEST(AmigoDelTest, DelCertiTest)
+    {
+        AmigoDatabase newdata1, newdata2, newdata3;
+        for (const auto& rawData : testData)
+        {
+            newdata1.Query(GenerateCommand(rawData));
+            newdata2.Query(GenerateCommand(rawData));
+            newdata3.Query(GenerateCommand(rawData));
+        }
+        Command command1 = GenerateCommand({ "DEL", " ", " ", " ", "certi", "ADV" });
+        Command command2 = GenerateCommand({ "DEL", " ", " ", " ", "certi", "PRO" });
+        Command command3 = GenerateCommand({ "DEL", " ", " ", " ", "certi", "EX" });
+
+        EXPECT_EQ("DEL,2", newdata1.Query(command1));
+        EXPECT_EQ("DEL,5", newdata2.Query(command2));
+        EXPECT_EQ("DEL,1", newdata3.Query(command3));
     }
 }
 
