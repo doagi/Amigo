@@ -7,10 +7,9 @@ vector<unsigned int> AmigoSearchEngine::Search(string option, string column, str
     return SearchByType(value, GetSearchType(option, column));
 }
 
-template <typename T>
-bool AmigoSearchEngine::IsMatch(const Employee& employee, T target, SearchType type)
+bool AmigoSearchEngine::IsMatch(Employee employee, string target, SearchType type)
 {
-    return (target == employee.data[type]);
+    return (target == employee.GetFieldValue(type));
 }
 
 vector<unsigned int> AmigoSearchEngine::SearchByType(string& target, SearchType type) {
