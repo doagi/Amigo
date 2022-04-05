@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "iSearchEngine.h"
+#include "employee.h"
 
 
 class AmigoSearchEngine : public ISearchEngine
