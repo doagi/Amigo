@@ -8,44 +8,10 @@ vector<unsigned int> AmigoSearchEngine::Search(string option, string column, str
 }
 
 template <typename T>
-bool AmigoSearchEngine::IsMatch(const Employee& employee, T target, SearchType type) 
+bool AmigoSearchEngine::IsMatch(const Employee& employee, T target, SearchType type)
 {
     return (target == employee.data[type]);
-    //switch (type)
-    //{
-    //case EMPLOYEE_NUM:
-    //    return employee.second.str_employee_num == target;
-    //case NAME:
-    //    return employee.second.full_name == target;
-    //case FIRST_NAME:
-    //    return employee.second.first_name == target;
-    //case LAST_NAME:
-    //    return employee.second.last_name == target;
-    //case CL:
-    //    return employee.second.cl == target;
-    //case PHONE_NUMBER:
-    //    return employee.second.full_phone_number == target;
-    //case MIDDLE_PHONE_NUMBER:
-    //    return employee.second.middle_phone_num == stoi(target);
-    //case LAST_PHONE_NUMBER:
-    //    return employee.second.last_phone_num == stoi(target);
-    //case BIRTHDAY:
-    //    return employee.second.full_birthday == target;
-    //case BIRTHDAY_YEAR:
-    //    return employee.second.year_birthday == stoi(target);
-    //case BIRTHDAY_MONTH:
-    //    return employee.second.month_birthday == stoi(target);
-    //case BIRTHDAY_DAY:
-    //    return employee.second.day_birthday == stoi(target);
-    //case CERTI:
-    //    return employee.second.certi == target;
-
-    //default:
-    //    return false;
-    //}
 }
-
-
 
 vector<unsigned int> AmigoSearchEngine::SearchByType(string& target, SearchType type) {
     vector<unsigned int> result;
