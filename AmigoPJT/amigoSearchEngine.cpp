@@ -1,44 +1,51 @@
-#pragma once
+#include "amigoSearchEngine.h"
 
-#include "client.h"
+
+vector<unsigned int> AmigoSearchEngine::Search(string option, string column, string value)
+{
+    //isValidSearch(value, getSearchType(option, column));
+    return SearchByType(value, GetSearchType(option, column));
+}
 
 template <typename T>
-bool AmigoDatabase::IsMatch(const std::pair<int, Employee>& employee, T target, SearchType type) {
+bool AmigoSearchEngine::IsMatch(const std::pair<int, Employee>& employee, T target, SearchType type) {
     switch (type)
     {
-        case EMPLOYEE_NUM:
-            return employee.second.str_employee_num == target;
-        case NAME:
-            return employee.second.full_name == target;
-        case FIRST_NAME:
-            return employee.second.first_name == target;
-        case LAST_NAME:
-            return employee.second.last_name == target;
-        case CL:
-            return employee.second.cl == target;
-        case PHONE_NUMBER:
-            return employee.second.full_phone_number == target;
-        case MIDDLE_PHONE_NUMBER:
-            return employee.second.middle_phone_num == stoi(target);
-        case LAST_PHONE_NUMBER:
-            return employee.second.last_phone_num == stoi(target);
-        case BIRTHDAY:
-            return employee.second.full_birthday == target;
-        case BIRTHDAY_YEAR:
-            return employee.second.year_birthday == stoi(target);
-        case BIRTHDAY_MONTH:
-            return employee.second.month_birthday == stoi(target);
-        case BIRTHDAY_DAY:
-            return employee.second.day_birthday == stoi(target);
-        case CERTI:
-            return employee.second.certi == target;
+    case EMPLOYEE_NUM:
+        return employee.second.str_employee_num == target;
+    case NAME:
+        return employee.second.full_name == target;
+    case FIRST_NAME:
+        return employee.second.first_name == target;
+    case LAST_NAME:
+        return employee.second.last_name == target;
+    case CL:
+        return employee.second.cl == target;
+    case PHONE_NUMBER:
+        return employee.second.full_phone_number == target;
+    case MIDDLE_PHONE_NUMBER:
+        return employee.second.middle_phone_num == stoi(target);
+    case LAST_PHONE_NUMBER:
+        return employee.second.last_phone_num == stoi(target);
+    case BIRTHDAY:
+        return employee.second.full_birthday == target;
+    case BIRTHDAY_YEAR:
+        return employee.second.year_birthday == stoi(target);
+    case BIRTHDAY_MONTH:
+        return employee.second.month_birthday == stoi(target);
+    case BIRTHDAY_DAY:
+        return employee.second.day_birthday == stoi(target);
+    case CERTI:
+        return employee.second.certi == target;
 
-        default:
-            return false;
+    default:
+        return false;
     }
 }
 
-vector<unsigned int> AmigoDatabase::SearchByType(string& target, SearchType type) {
+
+
+vector<unsigned int> AmigoSearchEngine::SearchByType(string& target, SearchType type) {
     vector<unsigned int> result;
     for (const auto& an_employee : map_employees)
     {
@@ -50,13 +57,13 @@ vector<unsigned int> AmigoDatabase::SearchByType(string& target, SearchType type
     return result;
 }
 
-SearchType AmigoDatabase::GetSearchType(string option, string column) 
+SearchType AmigoSearchEngine::GetSearchType(string option, string column)
 {
-    if (column == "employeeNum") 
+    if (column == "employeeNum")
     {
         return EMPLOYEE_NUM;
     }
-    else if (column == "birthday") 
+    else if (column == "birthday")
     {
         if (option == " ")
         {
@@ -131,7 +138,7 @@ SearchType AmigoDatabase::GetSearchType(string option, string column)
     }
 }
 
-void AmigoDatabase::isValidSearch(string target, SearchType type) {
+void AmigoSearchEngine::isValidSearch(string target, SearchType type) {
     switch (type)
     {
     case EMPLOYEE_NUM:
@@ -162,7 +169,7 @@ void AmigoDatabase::isValidSearch(string target, SearchType type) {
         checkIsValidCerti(target);
     }
 }
-void AmigoDatabase::checkIsValidEmployeeNumber(string target)
+void AmigoSearchEngine::checkIsValidEmployeeNumber(string target)
 {
     if (target.length() != 8)
     {
@@ -184,7 +191,7 @@ bool isAllCapitalLetter(string target)
         return true;
     }
 }
-void AmigoDatabase::checkIsValidName(string target) 
+void AmigoSearchEngine::checkIsValidName(string target)
 {
     if (target.length() > 13)
     {
@@ -195,28 +202,28 @@ void AmigoDatabase::checkIsValidName(string target)
         throw std::out_of_range("Name should be splitted by First name and Last name.\n");
     }
 }
-void AmigoDatabase::checkIsValidFirstName(string target)
+void AmigoSearchEngine::checkIsValidFirstName(string target)
 {
     if (isAllCapitalLetter(target))
     {
         throw std::out_of_range("Name should be capital letter.\n");
     }
 }
-void AmigoDatabase::checkIsValidLastName(string target)
+void AmigoSearchEngine::checkIsValidLastName(string target)
 {
     if (isAllCapitalLetter(target))
     {
         throw std::out_of_range("Name should be capital letter.\n");
     }
 }
-void AmigoDatabase::checkIsValidCL(string target)
+void AmigoSearchEngine::checkIsValidCL(string target)
 {
     if (target != "CL1" && target != "CL2" && target != "CL3" && target != "CL4")
     {
         throw std::out_of_range("Invalid CL.\n");
     }
 }
-void AmigoDatabase::checkIsValidPhoneNumber(string target)
+void AmigoSearchEngine::checkIsValidPhoneNumber(string target)
 {
     if (target.length() != 13)
     {
@@ -231,21 +238,21 @@ void AmigoDatabase::checkIsValidPhoneNumber(string target)
         throw std::out_of_range("Invalid Phone Number. Phone Number format must be 010-XXXX-XXXX.\n");
     }
 }
-void AmigoDatabase::checkIsValidMiddlePhoneNumber(string target)
+void AmigoSearchEngine::checkIsValidMiddlePhoneNumber(string target)
 {
     if (target.length() != 4)
     {
         throw std::length_error("Invalid Phone Number length.\n");
     }
 }
-void AmigoDatabase::checkIsValidLastPhoneNumber(string target)
+void AmigoSearchEngine::checkIsValidLastPhoneNumber(string target)
 {
     if (target.length() != 4)
     {
         throw std::length_error("Invalid Phone Number length.\n");
     }
 }
-void AmigoDatabase::checkIsValidBirthday(string target)
+void AmigoSearchEngine::checkIsValidBirthday(string target)
 {
     if (target.length() != 8)
     {
@@ -256,7 +263,7 @@ void AmigoDatabase::checkIsValidBirthday(string target)
         throw std::length_error("Invalid Birthday year.\n");
     }
 }
-void AmigoDatabase::checkIsValidBirthdayYear(string target)
+void AmigoSearchEngine::checkIsValidBirthdayYear(string target)
 {
     if (target.length() != 4)
     {
@@ -267,7 +274,7 @@ void AmigoDatabase::checkIsValidBirthdayYear(string target)
         throw std::length_error("Invalid Birthday year.\n");
     }
 }
-void AmigoDatabase::checkIsValidBirthdayMonth(string target)
+void AmigoSearchEngine::checkIsValidBirthdayMonth(string target)
 {
     if (target.length() != 2)
     {
@@ -278,7 +285,7 @@ void AmigoDatabase::checkIsValidBirthdayMonth(string target)
         throw std::length_error("Invalid Birthday month.\n");
     }
 }
-void AmigoDatabase::checkIsValidBirthdayDay(string target)
+void AmigoSearchEngine::checkIsValidBirthdayDay(string target)
 {
     if (target.length() != 2)
     {
@@ -289,7 +296,7 @@ void AmigoDatabase::checkIsValidBirthdayDay(string target)
         throw std::length_error("Invalid Birthday date.\n");
     }
 }
-void AmigoDatabase::checkIsValidCerti(string target)
+void AmigoSearchEngine::checkIsValidCerti(string target)
 {
     if (target != "ADV" && target != "PRO" && target != "EX")
     {

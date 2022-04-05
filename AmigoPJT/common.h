@@ -180,10 +180,6 @@ struct Command
     Command()
     {
         is_valid = false;
-        for (auto entry : param)
-        {
-            entry = "";
-        }
     }
 
     bool IsValid()

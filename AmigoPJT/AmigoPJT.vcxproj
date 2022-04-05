@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="amigoDatabase.cpp" />
+    <ClCompile Include="amigoSearchEngine.cpp" />
     <ClCompile Include="client.cpp" />
     <ClCompile Include="InputStream.cpp" />
     <ClCompile Include="main.cpp" />
@@ -150,7 +151,8 @@
     <ClInclude Include="common.h" />
     <ClInclude Include="iDatabase.h" />
     <ClInclude Include="inputStream.h" />
-    <ClInclude Include="search.h" />
+    <ClInclude Include="amigoSearchEngine.h" />
+    <ClInclude Include="iSearchEngine.h" />
     <ClInclude Include="outputStream.h" />
     <ClInclude Include="client.h" />
   </ItemGroup>
