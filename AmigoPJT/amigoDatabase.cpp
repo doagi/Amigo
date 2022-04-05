@@ -130,7 +130,6 @@ void AmigoDatabase::ModifyColumnData(Employee& employee, const ModificationInfo&
     throw invalid_argument("Unknown Column");
 }
 
-// ToDo(jbjempire): extract to other file or class
 static string GenerateRecord(const std::string& cmd, Employee& employee)
 {
     return (cmd + "," + employee.ToString(','));
