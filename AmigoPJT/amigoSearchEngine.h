@@ -13,7 +13,7 @@ public:
 
 private:
     vector<unsigned int> SearchByType(string& target, SearchType type);
-    template <typename T> bool IsMatch(const Employee& employee, T target, SearchType type);
+    bool IsMatch(Employee employee, string target, SearchType type);
     SearchType GetSearchType(string option, string column);
     void isValidSearch(string target, SearchType type);
     void checkIsValidEmployeeNumber(string target);
