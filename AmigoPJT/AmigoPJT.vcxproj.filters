@@ -33,9 +33,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="client.h">
-      <Filter>헤더 파일</Filter>
-    </ClCompile>
     <ClCompile Include="amigoDatabase.cpp">
       <Filter>소스 파일\Database</Filter>
     </ClCompile>
@@ -74,6 +71,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="iDatabase.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+	<ClInclude Include="client.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

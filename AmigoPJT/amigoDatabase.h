@@ -34,7 +34,6 @@ private:
 
     void ModifyColumnData(Employee& employee, const ModificationInfo& mod_info);
 
-    //Search option에 따른 함수들 
     vector<unsigned int> Search(string option2, string column, string target);
     vector<unsigned int> SearchByType(string& target, SearchType type);
     template <typename T> bool IsMatch(const std::pair<int, Employee>& employee, T target, SearchType type);
@@ -61,12 +60,12 @@ class AmigoDatabase2 : public AmigoDatabase
 public:
     virtual string Query(Command cmd) override
     {
-        // 기존 cmd는 AmigoDatabase::add() 요런식으로 처리.
+        //example : AmigoDatabase::add()
 
         return newFunc();
     }
 
 private:
-    // 기구현된 func들 옮기면 될듯.
+
     string newFunc();
 };

@@ -141,7 +141,6 @@
   <ItemGroup>
     <ClCompile Include="amigoDatabase.cpp" />
     <ClCompile Include="client.cpp" />
-    <ClCompile Include="client.h" />
     <ClCompile Include="InputStream.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="outputStream.cpp" />
@@ -153,6 +152,7 @@
     <ClInclude Include="inputStream.h" />
     <ClInclude Include="search.h" />
     <ClInclude Include="outputStream.h" />
+    <ClInclude Include="client.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
