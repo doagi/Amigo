@@ -22,7 +22,7 @@ int main(int argc, char** argv)
     }
 
     Client amigo_client{ input_path, output_path };
-    amigo_client.Run(true);
+    amigo_client.Run();
 
 #if _DEBUG
     if (argc != 3)

@@ -1,11 +1,10 @@
-
 #include <map>
 #include "amigoDatabase.h"
 #include "search.h"
 
 string AmigoDatabase::Query(Command cmd)
 {
-    string command = cmd.param[0];
+    string command = cmd.GetCommandType();
     string option1 = cmd.param[1];
     string option2 = cmd.param[2];
     vector<unsigned int> search_result;
@@ -18,21 +17,21 @@ string AmigoDatabase::Query(Command cmd)
     }
     else if (command == "SCH")
     {
-        search_result = Search(cmd.param[2], cmd.param[4], cmd.param[5]);
+        search_result = Search(option2, cmd.param[4], cmd.param[5]);
 
         result = GenerateCommandRecord(command, (option1 == "-p"), search_result);
     }
     else if (command == "DEL")
     {
-        search_result = Search(cmd.param[2], cmd.param[4], cmd.param[5]);
+        search_result = Search(option2, cmd.param[4], cmd.param[5]);
 
         result = GenerateCommandRecord(command, (option1 == "-p"), search_result);
 
-        Del(map_employees, search_result);
+        Del(search_result);
     }
     else if (command == "MOD")
     {
-        search_result = Search(cmd.param[2], cmd.param[4], cmd.param[5]);
+        search_result = Search(option2, cmd.param[4], cmd.param[5]);
 
         result = GenerateCommandRecord(command, (option1 == "-p"), search_result);
 
@@ -57,25 +56,14 @@ int AmigoDatabase::Add(string employee_num, string name, string cl, string phone
 vector<unsigned int> AmigoDatabase::Search(string option, string column, string value)
 {
     //isValidSearch(value, getSearchType(option, column));
-    return searchByType(value, getSearchType(option, column));
+    return SearchByType(value, GetSearchType(option, column));
 }
 
-string AmigoDatabase::Del(unordered_map<unsigned int, Employee>& employee, vector<unsigned int> deleteList)
+void AmigoDatabase::Del(const vector<unsigned int>& deleteList)
 {
-
-    int numTarget = 0;
     for (int i = 0; i < deleteList.size(); i++)
     {
-        employee.erase(deleteList[i]);
-    }
-
-    if (deleteList.size() == 0)
-    {
-        return "DEL,NONE";
-    }
-    else
-    {
-        return "DEL," + to_string(deleteList.size());
+        map_employees.erase(deleteList[i]);
     }
 }
 
@@ -91,9 +79,18 @@ int AmigoDatabase::Mod(const vector<unsigned int>& founds, string column, string
         {"certi",       Column::CERTI}
     };
 
-    auto result = Mod(map_employees, founds, ModificationInfo{ column_map[column], value });
+    if (column == "employeeNum")
+    {
+        throw invalid_argument("Can't modify Column::EMPLOYEENUM");
+    }
 
-    return result.size();
+    for (const auto& employee_num : founds)
+    {
+        auto& employee = map_employees[employee_num];
+        ModifyColumnData(employee, ModificationInfo{ column_map[column], value });
+    }
+
+    return founds.size();
 }
 
 string AmigoDatabase::GenerateCommandRecord(const std::string& command, const bool& is_print_list, const vector<unsigned int>& targets)
@@ -138,7 +135,7 @@ string AmigoDatabase::GenerateDetailRecord(const std::string& command, const vec
     return result;
 }
 
-
+/* 없애도 될 것 같음 : 위에 있는 Mod 함수에서 처리 하도록 함
 vector<string> AmigoDatabase::Mod(unordered_map<unsigned int, Employee>& map_employees,
     const vector<unsigned int>& found_data, const ModificationInfo& mod_info)
 {
@@ -161,6 +158,7 @@ vector<string> AmigoDatabase::Mod(unordered_map<unsigned int, Employee>& map_emp
 
     return result;
 }
+*/
 
 void AmigoDatabase::ModifyColumnData(Employee& employee, const ModificationInfo& mod_info)
 {
