@@ -20,9 +20,7 @@ string AmigoDatabase::Query(Command cmd)
 
 string AmigoDatabase::Add(Command& cmd)
 {
-    AddImpl(cmd.param[4], cmd.param[5], cmd.param[6],
-        cmd.param[7], cmd.param[8], cmd.param[9]);
-
+    AddImpl(cmd.param[4], cmd.param[5], cmd.param[6], cmd.param[7], cmd.param[8], cmd.param[9]);
     return string();
 }
 
@@ -72,19 +70,22 @@ string AmigoDatabase::Sch(Command& cmd)
     return result;
 }
 
-int AmigoDatabase::AddImpl(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
+void AmigoDatabase::AddImpl(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
 {
     Employee newEmployee = Employee(employee_num, name, cl, phoneNum, birthday, certi);
-    map_employees[newEmployee.employee_num] = newEmployee;
 
-    return map_employees.size();
+    auto ret = map_employees.insert(unordered_map<unsigned int, Employee>::value_type(newEmployee.employee_num, newEmployee));
+
+    if (ret.second == false)
+    {
+        throw runtime_error("AnigoDB Add failed : " + newEmployee.ToString(','));
+    }
 }
 
 vector<unsigned int> AmigoDatabase::SearchImpl(string option, string column, string value)
 {
     return amigo_search_engine->Search(option, column, value);
 }
-
 
 void AmigoDatabase::DelImpl(const vector<unsigned int>& deleteList)
 {
