@@ -1,6 +1,10 @@
 #pragma once
 
+#include <unordered_map>
 #include "IDatabase.h"
+#include "command.h"
+#include "employee.h"
+#include "common.h"
 
 class AmigoDatabase : public IDatabase
 {
@@ -9,10 +13,10 @@ public:
     {
 #if 0
         supported_cmds.clear();
-        supported_cmds["ADD"] = (int)(CommandType::AddCommand);
-        supported_cmds["DEL"] = (int)(CommandType::DelCommand);
-        supported_cmds["MOD"] = (int)(CommandType::ModCommand);
-        supported_cmds["SCH"] = (int)(CommandType::SchCommand);
+        supported_cmds["ADD"] = (int)(Command::Type::AddCommand);
+        supported_cmds["DEL"] = (int)(Command::Type::DelCommand);
+        supported_cmds["MOD"] = (int)(Command::Type::ModCommand);
+        supported_cmds["SCH"] = (int)(Command::Type::SchCommand);
 #endif
     }
 

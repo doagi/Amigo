@@ -1,13 +1,13 @@
 #pragma once
 
+#include "amigoDatabase.h"
 #include "inputStream.h"
 #include "outputStream.h"
-#include "common.h"
-#include "amigoDatabase.h"
 #include <string>
 
-
 #if 0
+#include "command.h"
+
 class ICommandHandler
 {
 public:
@@ -76,7 +76,7 @@ public:
     void Run(const string & input_path, const string & output_path, const bool& debug_print = false);
 
 private:    
-    //ICommandHandler* cmd_handlers[CommandType::CommandType_count];
+    //ICommandHandler* cmd_handlers[Command::Type::CommandType_count];
     IDatabase* amigo_db;
     string input_path;
     string output_path;
