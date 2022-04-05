@@ -677,6 +677,7 @@ namespace SeachTest
         const string expect_result
         {
             "SCH,85125741,FBAH RTIJ,CL1,010-8900-1478,19780228,ADV\n"\
+            "SCH,03113260,HH LTUPF,CL2,010-5798-5383,19781018,PRO\n"\
             "SCH,08108827,RTAH VNUP,CL4,010-9031-2726,19780417,ADV"
         };
 
@@ -726,6 +727,7 @@ namespace SeachTest
 
         const string expect_result
         {
+            "SCH,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV\n"\
             "SCH,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO"
         };
 
@@ -929,8 +931,7 @@ namespace SeachTest
                 "SCH,02117175,SBILHUT LDEXRI,CL4,010-2814-1699,19950704,ADV\n"\
                 "SCH,08108827,RTAH VNUP,CL4,010-9031-2726,19780417,ADV\n"\
                 "SCH,14130827,RPO JK,CL4,010-4528-1698,20090201,ADV\n"\
-                "SCH,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV\n"\
-                "SCH,18115040,TTETHU HBO,CL3,010-4581-2050,20080718,ADV"
+                "SCH,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV"
         };
 
         const string actual_result = amigo_db.Query(command);
@@ -949,7 +950,7 @@ namespace SeachTest
         const string expect_result
         {
                 "SCH,03113260,HH LTUPF,CL2,010-5798-5383,19781018,PRO\n"\
-                "19129568,SRERLALH HMEF,CL2,010-3091-9521,19640910,PRO"
+                "SCH,19129568,SRERLALH HMEF,CL2,010-3091-9521,19640910,PRO"
         };
 
         const string actual_result = amigo_db.Query(command);

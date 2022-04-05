@@ -3,7 +3,7 @@
 
 vector<unsigned int> AmigoSearchEngine::Search(string option, string column, string value)
 {
-    //isValidSearch(value, getSearchType(option, column));
+    isValidSearch(value, GetSearchType(option, column));
     return SearchByType(value, GetSearchType(option, column));
 }
 
@@ -143,30 +143,43 @@ void AmigoSearchEngine::isValidSearch(string target, SearchType type) {
     {
     case EMPLOYEE_NUM:
         checkIsValidEmployeeNumber(target);
+        break;
     case NAME:
         checkIsValidName(target);
+        break;
     case FIRST_NAME:
         checkIsValidFirstName(target);
+        break;
     case LAST_NAME:
         checkIsValidLastName(target);
+        break;
     case CL:
         checkIsValidCL(target);
+        break;
     case PHONE_NUMBER:
         checkIsValidPhoneNumber(target);
+        break;
     case MIDDLE_PHONE_NUMBER:
         checkIsValidMiddlePhoneNumber(target);
+        break;
     case LAST_PHONE_NUMBER:
         checkIsValidLastPhoneNumber(target);
+        break;
     case BIRTHDAY:
         checkIsValidBirthday(target);
+        break;
     case BIRTHDAY_YEAR:
         checkIsValidBirthdayYear(target);
+        break;
     case BIRTHDAY_MONTH:
         checkIsValidBirthdayMonth(target);
+        break;
     case BIRTHDAY_DAY:
         checkIsValidBirthdayDay(target);
+        break;
     case CERTI:
         checkIsValidCerti(target);
+        break;
     }
 }
 void AmigoSearchEngine::checkIsValidEmployeeNumber(string target)
@@ -188,8 +201,8 @@ bool isAllCapitalLetter(string target)
         {
             return false;
         }
-        return true;
     }
+    return true;
 }
 void AmigoSearchEngine::checkIsValidName(string target)
 {
@@ -201,17 +214,21 @@ void AmigoSearchEngine::checkIsValidName(string target)
     {
         throw std::out_of_range("Name should be splitted by First name and Last name.\n");
     }
+    if (!isAllCapitalLetter(target))
+    {
+        throw std::out_of_range("Name should be capital letter.\n");
+    }
 }
 void AmigoSearchEngine::checkIsValidFirstName(string target)
 {
-    if (isAllCapitalLetter(target))
+    if (!isAllCapitalLetter(target))
     {
         throw std::out_of_range("Name should be capital letter.\n");
     }
 }
 void AmigoSearchEngine::checkIsValidLastName(string target)
 {
-    if (isAllCapitalLetter(target))
+    if (!isAllCapitalLetter(target))
     {
         throw std::out_of_range("Name should be capital letter.\n");
     }
@@ -229,13 +246,18 @@ void AmigoSearchEngine::checkIsValidPhoneNumber(string target)
     {
         throw std::length_error("Invalid Phone Number length.\n");
     }
+
     if (target.substr(0, 4) != "010-")
     {
         throw std::out_of_range("Invalid Phone Number. Phone Number must start with 010-.\n");
     }
+    if (target.substr(3, 1) != "-")
+    {
+        throw std::out_of_range("Invalid Phone Number. Phone Number format must be 010-XXXX-****.\n");
+    }
     if (target.substr(8, 1) != "-")
     {
-        throw std::out_of_range("Invalid Phone Number. Phone Number format must be 010-XXXX-XXXX.\n");
+        throw std::out_of_range("Invalid Phone Number. Phone Number format must be 010-****-XXXX.\n");
     }
 }
 void AmigoSearchEngine::checkIsValidMiddlePhoneNumber(string target)
@@ -280,7 +302,7 @@ void AmigoSearchEngine::checkIsValidBirthdayMonth(string target)
     {
         throw std::length_error("Invalid Birthday Month length.\n");
     }
-    if (stoi(target.substr(0, 2)) > 0 && stoi(target.substr(0, 2)) < 13)
+    if (stoi(target.substr(0, 2)) == 0 || stoi(target.substr(0, 2)) > 13)
     {
         throw std::length_error("Invalid Birthday month.\n");
     }
@@ -291,7 +313,7 @@ void AmigoSearchEngine::checkIsValidBirthdayDay(string target)
     {
         throw std::length_error("Invalid Birthday Day length.\n");
     }
-    if (stoi(target.substr(0, 2)) > 0 && stoi(target.substr(0, 2)) < 13)
+    if (stoi(target.substr(0, 2)) == 0 || stoi(target.substr(0, 2)) > 31)
     {
         throw std::length_error("Invalid Birthday date.\n");
     }
@@ -300,6 +322,6 @@ void AmigoSearchEngine::checkIsValidCerti(string target)
 {
     if (target != "ADV" && target != "PRO" && target != "EX")
     {
-        throw std::out_of_range("Invalid CL.\n");
+        throw std::out_of_range("Invalid Certi.\n");
     }
 }
