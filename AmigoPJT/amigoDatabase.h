@@ -13,10 +13,10 @@ class AmigoDatabase : public IDatabase
 public:
     AmigoDatabase()
     {
-        supported_cmds_funcs["ADD"] = &AmigoDatabase::_Add;
-        supported_cmds_funcs["DEL"] = &AmigoDatabase::_Del;
-        supported_cmds_funcs["MOD"] = &AmigoDatabase::_Mod;
-        supported_cmds_funcs["SCH"] = &AmigoDatabase::_Sch;
+        supported_cmds_funcs["ADD"] = &AmigoDatabase::Add;
+        supported_cmds_funcs["DEL"] = &AmigoDatabase::Del;
+        supported_cmds_funcs["MOD"] = &AmigoDatabase::Mod;
+        supported_cmds_funcs["SCH"] = &AmigoDatabase::Sch;
 
         amigo_search_engine = new AmigoSearchEngine(map_employees);
     }
@@ -24,19 +24,19 @@ public:
     virtual string Query(Command cmd) override;
 
 private:
-    string _Add(Command& cmd);
-    string _Del(Command& cmd);
-    string _Mod(Command& cmd);
-    string _Sch(Command& cmd);
+    string Add(Command& cmd);
+    string Del(Command& cmd);
+    string Mod(Command& cmd);
+    string Sch(Command& cmd);
 
-    int __Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi);
-    vector<unsigned int> __Search(string option, string column, string value);
-    void __Del(const vector<unsigned int>& deleteList);
-    void __Mod(const vector<unsigned int>& founds, string column, string value);
-    void __ModifyColumnData(Employee& employee, const ModificationInfo& mod_info);
+    int AddImpl(string employee_num, string name, string cl, string phoneNum, string birthday, string certi);
+    vector<unsigned int> SearchImpl(string option, string column, string value);
+    void DelImpl(const vector<unsigned int>& deleteList);
+    void ModImpl(const vector<unsigned int>& founds, string column, string value);
+    void ModifyColumnData(Employee& employee, const ModificationInfo& mod_info);
 
-    string __GenerateCommandRecord(const std::string& command, const bool& detail_print, const vector<unsigned int>& targets);
-    string __GenerateDetailRecord(const std::string& command, const vector<unsigned int>& result);
+    string GenerateCommandRecord(const std::string& command, const bool& detail_print, const vector<unsigned int>& targets);
+    string GenerateDetailRecord(const std::string& command, const vector<unsigned int>& result);
     
     unordered_map<string, function<string(AmigoDatabase&, Command&)>> supported_cmds_funcs;
     unordered_map<unsigned int, Employee> map_employees;

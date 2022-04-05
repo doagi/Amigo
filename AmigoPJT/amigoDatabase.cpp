@@ -18,61 +18,61 @@ string AmigoDatabase::Query(Command cmd)
     }
 }
 
-string AmigoDatabase::_Add(Command& cmd)
+string AmigoDatabase::Add(Command& cmd)
 {
-    __Add(cmd.param[4], cmd.param[5], cmd.param[6],
+    AddImpl(cmd.param[4], cmd.param[5], cmd.param[6],
         cmd.param[7], cmd.param[8], cmd.param[9]);
 
     return string();
 }
 
-string AmigoDatabase::_Del(Command& cmd)
+string AmigoDatabase::Del(Command& cmd)
 {
     string option1 = cmd.param[1];
     string option2 = cmd.param[2];
     vector<unsigned int> search_result;
     string result;
 
-    search_result = __Search(option2, cmd.param[4], cmd.param[5]);
+    search_result = SearchImpl(option2, cmd.param[4], cmd.param[5]);
 
-    result = __GenerateCommandRecord("DEL", (option1 == "-p"), search_result);
+    result = GenerateCommandRecord("DEL", (option1 == "-p"), search_result);
 
-    __Del(search_result);
+    DelImpl(search_result);
 
     return result;
 }
 
-string AmigoDatabase::_Mod(Command& cmd)
+string AmigoDatabase::Mod(Command& cmd)
 {
     string option1 = cmd.param[1];
     string option2 = cmd.param[2];
     vector<unsigned int> search_result;
     string result;
 
-    search_result = __Search(option2, cmd.param[4], cmd.param[5]);
+    search_result = SearchImpl(option2, cmd.param[4], cmd.param[5]);
 
-    result = __GenerateCommandRecord("MOD", (option1 == "-p"), search_result);
+    result = GenerateCommandRecord("MOD", (option1 == "-p"), search_result);
 
-    __Mod(search_result, cmd.param[6], cmd.param[7]);
+    ModImpl(search_result, cmd.param[6], cmd.param[7]);
 
     return result;
 }
 
-string AmigoDatabase::_Sch(Command& cmd)
+string AmigoDatabase::Sch(Command& cmd)
 {
     string option1 = cmd.param[1];
     string option2 = cmd.param[2];
     vector<unsigned int> search_result;
     string result;
 
-    search_result = __Search(option2, cmd.param[4], cmd.param[5]);
+    search_result = SearchImpl(option2, cmd.param[4], cmd.param[5]);
 
-    result = __GenerateCommandRecord("SCH", (option1 == "-p"), search_result);
+    result = GenerateCommandRecord("SCH", (option1 == "-p"), search_result);
 
     return result;
 }
 
-int AmigoDatabase::__Add(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
+int AmigoDatabase::AddImpl(string employee_num, string name, string cl, string phoneNum, string birthday, string certi)
 {
     Employee newEmployee = Employee(employee_num, name, cl, phoneNum, birthday, certi);
     map_employees[newEmployee.employee_num] = newEmployee;
@@ -80,13 +80,13 @@ int AmigoDatabase::__Add(string employee_num, string name, string cl, string pho
     return map_employees.size();
 }
 
-vector<unsigned int> AmigoDatabase::__Search(string option, string column, string value)
+vector<unsigned int> AmigoDatabase::SearchImpl(string option, string column, string value)
 {
     return amigo_search_engine->Search(option, column, value);
 }
 
 
-void AmigoDatabase::__Del(const vector<unsigned int>& deleteList)
+void AmigoDatabase::DelImpl(const vector<unsigned int>& deleteList)
 {
     for (int i = 0; i < deleteList.size(); i++)
     {
@@ -94,7 +94,7 @@ void AmigoDatabase::__Del(const vector<unsigned int>& deleteList)
     }
 }
 
-void AmigoDatabase::__Mod(const vector<unsigned int>& founds, string column, string value)
+void AmigoDatabase::ModImpl(const vector<unsigned int>& founds, string column, string value)
 {
     if (column == "employeeNum")
     {
@@ -104,11 +104,11 @@ void AmigoDatabase::__Mod(const vector<unsigned int>& founds, string column, str
     for (const auto& employee_num : founds)
     {
         auto& employee = map_employees[employee_num];
-        __ModifyColumnData(employee, ModificationInfo{ kColumnMap[column], value });
+        ModifyColumnData(employee, ModificationInfo{ kColumnMap[column], value });
     }
 }
 
-void AmigoDatabase::__ModifyColumnData(Employee& employee, const ModificationInfo& mod_info)
+void AmigoDatabase::ModifyColumnData(Employee& employee, const ModificationInfo& mod_info)
 {
     switch (mod_info.column)
     {
@@ -141,7 +141,7 @@ static string GenerateRecord(const std::string& cmd, Employee& employee)
     return (cmd + "," + employee.ToString(','));
 }
 
-string AmigoDatabase::__GenerateCommandRecord(const std::string& command, const bool& is_print_list, const vector<unsigned int>& targets)
+string AmigoDatabase::GenerateCommandRecord(const std::string& command, const bool& is_print_list, const vector<unsigned int>& targets)
 {
     if (targets.size() < 1)
     {
@@ -153,10 +153,10 @@ string AmigoDatabase::__GenerateCommandRecord(const std::string& command, const 
         return command + "," + to_string(targets.size());
     }
 
-    return __GenerateDetailRecord(command, targets);
+    return GenerateDetailRecord(command, targets);
 }
 
-string AmigoDatabase::__GenerateDetailRecord(const std::string& command, const vector<unsigned int>& targets)
+string AmigoDatabase::GenerateDetailRecord(const std::string& command, const vector<unsigned int>& targets)
 {
     string result = "";
     map<unsigned int, Employee> sorted_results;
