@@ -48,6 +48,20 @@ public:
     {
         return data[field];
     }
+    unsigned int GetEmployeeNum()
+    {
+        return employee_num;
+    }
+
+    string ToString(const char& delimiter)
+    {
+        stringstream sstream;
+
+        sstream << data[EMPLOYEE_NUM] << delimiter << data[NAME] << delimiter << data[CL] << delimiter
+            << data[PHONE_NUMBER] << delimiter << data[BIRTHDAY] << delimiter << data[CERTI];
+
+        return sstream.str();
+    }
 
     void SetEmployeeNumber(const string & employee_num_)
     {
@@ -110,16 +124,6 @@ public:
     void SetCerti(const string & certi_)
     {
         data[CERTI] = certi_;
-    }
-
-    string ToString(const char& delimiter)
-    {
-        stringstream sstream;
-
-        sstream << data[EMPLOYEE_NUM] << delimiter << data[NAME] << delimiter << data[CL] << delimiter
-            << data[PHONE_NUMBER] << delimiter << data[BIRTHDAY] << delimiter << data[CERTI];
-
-        return sstream.str();
     }
 
     unsigned int employee_num;
