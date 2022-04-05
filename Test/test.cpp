@@ -6,22 +6,11 @@
 #include "../AmigoPJT/amigoDatabase.cpp"
 #include "../AmigoPJT/util.h"
 
-#include "../AmigoPJT/command.cpp"
-#include "../AmigoPJT/txt_parser.cpp"
-#include "../AmigoPJT/command/mod.cpp"
-#include "../AmigoPJT/searchByBirthday.cpp"
-#include "../AmigoPJT/searchByName.cpp"
-#include "../AmigoPJT/searchByPhoneNumber.cpp"
-#include "../AmigoPJT/searchByCl.cpp"
-#include "../AmigoPJT/searchByCerti.cpp"
-#include "../AmigoPJT/searchByEmployeeNum.cpp"
-
 #include <unordered_map>
 #include <iostream>
 #include <utility>
 
 vector<Employee> employees;
-unordered_map<unsigned int, Employee2> map_employees;
 
 void Init()
 {
@@ -704,53 +693,190 @@ namespace ModTest
 
 namespace SeachTest
 {
-    TEST(AmigoSCH1Test, TestByFullBirth)
+    class AmigoSchTest : public ::testing::Test
     {
-        makeDataforSearch();
-        vector<unsigned int> answer = { map_employees[2015123099].employee_num };
-        vector<unsigned int> ret = SearchByBirthday(" ", "19771211", map_employees);
-        EXPECT_EQ(answer.size(), ret.size());
-        for (size_t i = 0; i < ret.size(); i++)
+    protected:
+        void SetUp()
         {
-            EXPECT_EQ(answer[i], ret[i]);
-        }
-    }
-    TEST(AmigoSCH1Test, TestByYear)
-    {
-        makeDataforSearch();
-        vector<unsigned int> answer = { map_employees[2015123099].employee_num };
-        vector<unsigned int> ret = SearchByBirthday("-y","1977", map_employees);
-        EXPECT_EQ(answer.size(), ret.size());
-        for (size_t i = 0; i < ret.size(); i++)
-        {
-            EXPECT_EQ(answer[i], ret[i]);
-        }
-    }
-    TEST(AmigoSCH1Test, TestByMonth)
-    {
-        makeDataforSearch();
-        vector<unsigned int> answer = { map_employees[2018117906].employee_num };
-        vector<unsigned int> ret = SearchByBirthday("-m", "04", map_employees);
-        EXPECT_EQ(answer.size(), ret.size());
-        for (size_t i = 0; i < ret.size(); i++)
-        {
-            EXPECT_EQ(answer[i], ret[i]);
-        }
-    }
-    TEST(AmigoSCH1Test, TestByDate)
-    {
-        makeDataforSearch();
-        vector<unsigned int> answer = { map_employees[2018115040].employee_num, map_employees[2017111236].employee_num ,map_employees[2003113260].employee_num };
-        vector<unsigned int> ret = SearchByBirthday("-d", "18", map_employees);
-        EXPECT_EQ(answer.size(), ret.size());
-        for (size_t i = 0; i < ret.size(); i++)
-        {
-            EXPECT_EQ(answer[i], ret[i]);
-        }
-    }
+            vector<vector<string>> raw_commands
+            {
+                { "ADD", " ", " ", " ", "17112609", "FB NTAWR",       "CL4", "010-5645-6122", "19861203", "PRO" },
+                { "ADD", " ", " ", " ", "02117175", "SBILHUT LDEXRI", "CL4", "010-2814-1699", "19950704", "ADV" },
+                { "ADD", " ", " ", " ", "08123556", "WN XV",          "CL1", "010-7986-5047", "20100614", "PRO" },
+                { "ADD", " ", " ", " ", "85125741", "FBAH RTIJ",      "CL1", "010-8900-1478", "19780228", "ADV" },
+                { "ADD", " ", " ", " ", "11109136", "QKAHCEX LTODDO", "CL4", "010-2627-8566", "19640130", "PRO" },
+                { "ADD", " ", " ", " ", "08108827", "RTAH VNUP",      "CL4", "010-9031-2726", "19780417", "ADV" },
+                { "ADD", " ", " ", " ", "05101762", "VCUHLE HMU",     "CL4", "010-3988-9289", "20030819", "PRO" }
+            };
 
-    
-    
+            for (const auto& raw_command : raw_commands)
+            {
+                amigo_db.Query(GenerateCommand(raw_command));
+            }
+        }
+
+        Command GenerateCommand(const vector<string>& raw_command)
+        {
+            int i = 0;
+            Command command;
+            for (const string param : raw_command)
+            {
+                command.param[i++] = param;
+            }
+            command.is_valid = true;
+            return command;
+        }
+
+        AmigoDatabase amigo_db;
+    };
+
+    TEST_F(AmigoSchTest, TestByFullBirth_Pass)
+    {
+        Command command = GenerateCommand({ "SCH", "-p", " ", " ", "birthday", "19780228", " ", " " });
+
+        // 1st try and then updated
+        amigo_db.Query(command);
+
+        const string expect_result
+        {
+            "SCH,85125741,FBAH RTIJ,CL1,010-8900-1478,19780228,ADV"
+        };
+
+        const string actual_result = amigo_db.Query(command);
+
+        EXPECT_STREQ(expect_result.c_str(), actual_result.c_str());
+    }
+    TEST_F(AmigoSchTest, TestByFullBirth_Fail)
+    {
+        Command command = GenerateCommand({ "SCH", "-p", " ", " ", "birthday", "19780227", " ", " " });
+
+        // 1st try and then updated
+        amigo_db.Query(command);
+
+        const string expect_result
+        {
+            "SCH,85125741,FBAH RTIJ,CL1,010-8900-1478,19780228,ADV"
+        };
+
+        const string actual_result = amigo_db.Query(command);
+
+        EXPECT_STRNE(expect_result.c_str(), actual_result.c_str());
+    }
+    TEST_F(AmigoSchTest, TestByFullBirthYear_Pass)
+    {
+        Command command = GenerateCommand({ "SCH", "-p", "-y", " ", "birthday", "1978", " ", " " });
+
+        // 1st try and then updated
+        amigo_db.Query(command);
+
+        const string expect_result
+        {
+            "SCH,85125741,FBAH RTIJ,CL1,010-8900-1478,19780228,ADV\n"\
+            "SCH,08108827,RTAH VNUP,CL4,010-9031-2726,19780417,ADV"
+        };
+
+        const string actual_result = amigo_db.Query(command);
+
+        EXPECT_STREQ(expect_result.c_str(), actual_result.c_str());
+    }
+    TEST_F(AmigoSchTest, TestByFullBirthYear_Fail)
+    {
+        Command command = GenerateCommand({ "SCH", "-p", "-y", " ", "birthday", "2003", " ", " " });
+
+        // 1st try and then updated
+        amigo_db.Query(command);
+
+        const string expect_result
+        {
+            "SCH,85125741,FBAH RTIJ,CL1,010-8900-1478,19780228,ADV\n"\
+            "SCH,08108827,RTAH VNUP,CL4,010-9031-2726,19780417,ADV"
+        };
+
+        const string actual_result = amigo_db.Query(command);
+
+        EXPECT_STRNE(expect_result.c_str(), actual_result.c_str());
+    }
+    TEST_F(AmigoSchTest, TestByFullBirthYear_NONE)
+    {
+        Command command = GenerateCommand({ "SCH", " ", "-y", " ", "birthday", "2000", " ", " " });
+
+        // 1st try and then updated
+        amigo_db.Query(command);
+
+        const string expect_result
+        {
+            "SCH,NONE"
+        };
+
+        const string actual_result = amigo_db.Query(command);
+
+        EXPECT_STREQ(expect_result.c_str(), actual_result.c_str());
+    }
+    TEST_F(AmigoSchTest, TestByFullBirthMonth_Pass)
+    {
+        Command command = GenerateCommand({ "SCH", "-p", "-m", " ", "birthday", "12", " ", " " });
+
+        // 1st try and then updated
+        amigo_db.Query(command);
+
+        const string expect_result
+        {
+            "SCH,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO"
+        };
+
+        const string actual_result = amigo_db.Query(command);
+
+        EXPECT_STREQ(expect_result.c_str(), actual_result.c_str());
+    }
+    TEST_F(AmigoSchTest, TestByFullBirthMonth_Fail)
+    {
+        Command command = GenerateCommand({ "SCH", "-p", "-m", " ", "birthday", "06", " ", " " });
+
+        // 1st try and then updated
+        amigo_db.Query(command);
+
+        const string expect_result
+        {
+            "SCH,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO"
+        };
+
+        const string actual_result = amigo_db.Query(command);
+
+        EXPECT_STRNE(expect_result.c_str(), actual_result.c_str());
+    }
+    TEST_F(AmigoSchTest, TestByFullBirthDate_Pass)
+    {
+        Command command = GenerateCommand({ "SCH", "-p", "-d", " ", "birthday", "03", " ", " " });
+
+        // 1st try and then updated
+        amigo_db.Query(command);
+
+        const string expect_result
+        {
+            "SCH,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO"
+        };
+
+        const string actual_result = amigo_db.Query(command);
+
+        EXPECT_STREQ(expect_result.c_str(), actual_result.c_str());
+    }
+    TEST_F(AmigoSchTest, TestByFullBirthDate_Fail)
+    {
+        Command command = GenerateCommand({ "SCH", "-p", "-d", " ", "birthday", "06", " ", " " });
+
+        // 1st try and then updated
+        amigo_db.Query(command);
+
+        const string expect_result
+        {
+            "SCH,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO"
+        };
+
+        const string actual_result = amigo_db.Query(command);
+
+        EXPECT_STRNE(expect_result.c_str(), actual_result.c_str());
+    }
+ 
     TEST(AmigoSearchTest, Name)
     {
         makeDataforSearch();
