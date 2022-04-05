@@ -12,7 +12,8 @@ bool AmigoSearchEngine::IsMatch(Employee employee, string target, SearchType typ
     return (target == employee.GetFieldValue(type));
 }
 
-vector<unsigned int> AmigoSearchEngine::SearchByType(string& target, SearchType type) {
+vector<unsigned int> AmigoSearchEngine::SearchByType(string& target, SearchType type) 
+{
     vector<unsigned int> result;
     for (auto an_employee : map_employees)
     {

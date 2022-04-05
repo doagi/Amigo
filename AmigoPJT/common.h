@@ -22,11 +22,13 @@ enum SearchType
     BIRTHDAY_MONTH,
     BIRTHDAY_DAY,
     CERTI,
-    SearchType_end
+    SearchType_end,
+    UNKNOWN
 };
 
 static unordered_map<string, SearchType> kFieldName
 {
+    {"",             UNKNOWN},
     {"employeeNum ", EMPLOYEE_NUM},
     {"name ",        NAME},
     {"name-f",       FIRST_NAME},
