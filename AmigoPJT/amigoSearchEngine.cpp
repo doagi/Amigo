@@ -174,7 +174,7 @@ bool isAllCapitalLetter(string target)
 }
 void AmigoSearchEngine::checkIsValidName(string target)
 {
-    if (target.length() > 16)
+    if (target.length() > 13)
     {
         throw std::length_error("Too long name.\n");
     }
@@ -248,6 +248,10 @@ void AmigoSearchEngine::checkIsValidBirthday(string target)
     {
         throw std::length_error("Invalid Birthday length.\n");
     }
+    if (stoi(target.substr(0, 2)) != 19 && stoi(target.substr(0, 2)) != 20)
+    {
+        throw std::length_error("Invalid Birthday year.\n");
+    }
 }
 void AmigoSearchEngine::checkIsValidBirthdayYear(string target)
 {
@@ -255,7 +259,11 @@ void AmigoSearchEngine::checkIsValidBirthdayYear(string target)
     {
         throw std::length_error("Invalid Birthday length.\n");
     }
- }
+    if (stoi(target.substr(0, 2)) != 19 && stoi(target.substr(0, 2)) != 20)
+    {
+        throw std::length_error("Invalid Birthday year.\n");
+    }
+}
 void AmigoSearchEngine::checkIsValidBirthdayMonth(string target)
 {
     if (target.length() != 2)
