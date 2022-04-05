@@ -26,16 +26,22 @@ public:
         {
         case EMPLOYEE_NUM:
             SetEmployeeNumber(value);
+            break;
         case NAME:
             SetName(value);
+            break;
         case PHONE_NUMBER:
             SetPhoneNumber(value);
+            break;
         case BIRTHDAY:
             SetBirthDay(value);
+            break;
         case CL:
             SetCareerLevel(value);
+            break;
         case CERTI:
             SetCerti(value);
+            break;
         }
     }
     string GetFieldValue(SearchType field)
