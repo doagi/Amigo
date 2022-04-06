@@ -36,6 +36,12 @@ namespace CommandTest
         static const int MAX_COUNT = 500;
         char RAND_STR_LIST[MAX_COUNT][8] = { 0, };
         char RAND_NUM_LIST[MAX_COUNT][5] = { 0, };
+        set<string> used_emp_num;
+
+        void SetUp()
+        {
+            used_emp_num.clear();
+        }
 
         void make_string()
         {
@@ -76,14 +82,20 @@ namespace CommandTest
 
         string make_employee_num()
         {
-            char front[5] = { 0, };
-            unsigned int YY = rand() % 100;
-            if (YY > 21 && YY < 69)
+            string result;
+            do
             {
-                YY = 21;
-            }
-            sprintf(front, "%02d%02d", YY, rand() % 100);
-            return string(front) + RAND_NUM_LIST[rand() % MAX_COUNT];
+                char front[5] = { 0, };
+                unsigned int YY = rand() % 100;
+                if (YY > 21 && YY < 69)
+                {
+                    YY = YY % 22;
+                }
+                sprintf(front, "%02d%02d", YY, rand() % 100);
+                result = string(front) + RAND_NUM_LIST[rand() % MAX_COUNT];
+            } while (used_emp_num.find(result) != used_emp_num.end());
+            used_emp_num.insert(result);
+            return result;
         }
 
         void QueryCommand(const vector<Command>& commands)
@@ -287,12 +299,26 @@ namespace AddTest
         };
     };
 
-    TEST_F(AmigoADDTest, ADD_Test)
+    TEST_F(AmigoADDTest, ADD_Unique_Key_Data)
     {
         for (const auto& raw_command : raw_commands)
         {
             EXPECT_NO_THROW(amigo_db.Query(GenerateCommand(raw_command)));
         }
+    }
+
+    TEST_F(AmigoADDTest, ADD_Duplicate_Key_Data)
+    {
+        for (const auto& raw_command : raw_commands)
+        {
+            EXPECT_NO_THROW(amigo_db.Query(GenerateCommand(raw_command)));
+        }
+
+        vector<string> duplicate
+        {
+            "ADD", " ", " ", " ", "02117175", "SBILHUT HMU", "CL4", "010-2814-2627", "19750904", "ADV"
+        };
+        EXPECT_THROW(amigo_db.Query(GenerateCommand(duplicate)), invalid_argument);
     }
 }
 
@@ -763,7 +789,44 @@ namespace SeachTest
 
         EXPECT_STRNE(expect_result.c_str(), actual_result.c_str());
     }
- 
+    TEST_F(AmigoSchTest, SearchBirthdayException) {
+        Command command = GenerateCommand({ "SCH", "-p", " ", " ", "birthday", "19871320", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "birthday", "19871232", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "birthday", "871112", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", "-y", " ", "birthday", "89", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", "-y", " ", "birthday", "19302", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", "-m", " ", "birthday", "2", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", "-m", " ", "birthday", "14", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", "-m", " ", "birthday", "234", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", "-d", " ", "birthday", "2", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", "-d", " ", "birthday", "32", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", "-d", " ", "birthday", "245", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", "-m", " ", "birthday", "11", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "birthday", "19991231", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", "-y", " ", "birthday", "1999", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", "-m", " ", "birthday", "11", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", "-d", " ", "birthday", "11", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "birthday", "YYYYMMDD", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+
+    }
+
     TEST_F(AmigoSchTest, SearchFullName)
     {
         Command command = GenerateCommand({ "SCH", "-p", " ", " ", "name", "SRERLALH HMEF", " ", " "});
@@ -836,6 +899,17 @@ namespace SeachTest
         EXPECT_ANY_THROW(amigo_db.Query(command));
         command = GenerateCommand({ "SCH", "-p", " ", " ", "name", "fsjlfj WFWFAWF", " ", " " });
         EXPECT_ANY_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "name", "FWBB EFWD", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "name", "FWBBB EFWEF", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "name", "FWBBBB EFWEFW", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "name", "FWBBBBB EFWEFWN", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "name", "FWBBBBBD EFWEFWNGD", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+
     }
 
     TEST_F(AmigoSchTest, SearchFullPhoneNumber)
@@ -900,6 +974,29 @@ namespace SeachTest
         EXPECT_ANY_THROW(amigo_db.Query(command));
         command = GenerateCommand({ "SCH", "-p", " ", " ", "phoneNum", "PHO-NENU-MBER", " ", " " });
         EXPECT_ANY_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "phoneNum", "010-0000-0000", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "phoneNum", "010-1111-1111", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "phoneNum", "010-2222-2222", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "phoneNum", "010-3333-3333", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "phoneNum", "010-4444-4444", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "phoneNum", "010-5555-5555", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "phoneNum", "010-6666-6666", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "phoneNum", "010-7777-7777", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "phoneNum", "010-8888-8888", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "phoneNum", "010-9999-9999", " ", " " });
+        EXPECT_NO_THROW(amigo_db.Query(command));
+        command = GenerateCommand({ "SCH", "-p", " ", " ", "phoneNum", "010----------", " ", " " });
+        EXPECT_ANY_THROW(amigo_db.Query(command));
+
     }
     
     TEST_F(AmigoSchTest, SearchCerti) {

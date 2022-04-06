@@ -37,9 +37,11 @@ private:
 
     string GenerateCommandRecord(const std::string& command, const bool& detail_print, const vector<unsigned int>& targets);
     string GenerateDetailRecord(const std::string& command, const vector<unsigned int>& result);
-    
+
+    using AmigoDB = unordered_map<unsigned int, Employee>;
+
+    AmigoDB map_employees;
     unordered_map<string, function<string(AmigoDatabase&, Command&)>> supported_cmds_funcs;
-    unordered_map<unsigned int, Employee> map_employees;
     ISearchEngine* amigo_search_engine;
 };
 
