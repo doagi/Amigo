@@ -12,13 +12,14 @@ bool AmigoSearchEngine::IsMatch(Employee employee, string target, SearchType typ
     return (target == employee.GetFieldValue(type));
 }
 
-vector<unsigned int> AmigoSearchEngine::SearchByType(string& target, SearchType type) {
+vector<unsigned int> AmigoSearchEngine::SearchByType(string& target, SearchType type) 
+{
     vector<unsigned int> result;
-    for (const auto& an_employee : map_employees)
+    for (auto an_employee : map_employees)
     {
         if (IsMatch(an_employee.second, target, type))
         {
-            result.push_back(an_employee.second.employee_num);
+            result.push_back(an_employee.second.GetEmployeeNum());
         }
     }
     return result;
@@ -26,6 +27,8 @@ vector<unsigned int> AmigoSearchEngine::SearchByType(string& target, SearchType 
 
 SearchType AmigoSearchEngine::GetSearchType(string option, string column)
 {
+    return kFieldName[column.append(option)];
+/*
     if (column == "employeeNum")
     {
         return EMPLOYEE_NUM;
@@ -103,6 +106,7 @@ SearchType AmigoSearchEngine::GetSearchType(string option, string column)
     {
         throw invalid_argument("Invalid Column");
     }
+    */
 }
 
 void AmigoSearchEngine::isValidSearch(string target, SearchType type) {
@@ -147,6 +151,9 @@ void AmigoSearchEngine::isValidSearch(string target, SearchType type) {
     case CERTI:
         checkIsValidCerti(target);
         break;
+
+    default:
+        throw invalid_argument("Invalid Column");
     }
 }
 void AmigoSearchEngine::checkIsValidEmployeeNumber(string target)
@@ -218,6 +225,16 @@ void AmigoSearchEngine::checkIsValidPhoneNumber(string target)
     {
         throw std::out_of_range("Invalid Phone Number. Phone Number must start with 010-.\n");
     }
+    for (size_t i = 0; i < target.size(); i++) {
+        if (i == 3 || i == 8) 
+        {
+            continue;
+        }
+        if (target.substr(i, 1) == "-")
+        {
+            throw std::out_of_range("Invalid Phone Number. Phone Number format must be 010-****-****.\n");
+        }
+    }
     if (target.substr(3, 1) != "-")
     {
         throw std::out_of_range("Invalid Phone Number. Phone Number format must be 010-XXXX-****.\n");
@@ -245,36 +262,72 @@ void AmigoSearchEngine::checkIsValidBirthday(string target)
 {
     if (target.length() != 8)
     {
-        throw std::length_error("Invalid Birthday length.\n");
+        throw std::invalid_argument("Invalid Birthday length.\n");
+    }
+    if (stoi(target.substr(4, 2)) == 0 || stoi(target.substr(4, 2)) > 12)
+    {
+        throw std::invalid_argument("Invalid Birthday month.\n");
+    }
+    if (stoi(target.substr(6, 2)) == 0 || stoi(target.substr(6, 2)) > 31)
+    {
+        throw std::invalid_argument("Invalid Birthday date.\n");
+    }
+    for (size_t i = 0; i < target.size(); i++)
+    {
+        if (!isdigit(target[i]))
+        {
+            throw std::invalid_argument("Birthday is not number.\n");
+        }
     }
 }
 void AmigoSearchEngine::checkIsValidBirthdayYear(string target)
 {
     if (target.length() != 4)
     {
-        throw std::length_error("Invalid Birthday length.\n");
+        throw std::invalid_argument("Invalid Birthday length.\n");
+    }
+    for (size_t i = 0; i < target.size(); i++) 
+    {
+        if (!isdigit(target[i]))
+        {
+            throw std::invalid_argument("Birthday is not number.\n");
+        }
     }
  }
 void AmigoSearchEngine::checkIsValidBirthdayMonth(string target)
 {
     if (target.length() != 2)
     {
-        throw std::length_error("Invalid Birthday Month length.\n");
+        throw std::invalid_argument("Invalid Birthday Month length.\n");
     }
     if (stoi(target.substr(0, 2)) == 0 || stoi(target.substr(0, 2)) > 13)
     {
-        throw std::length_error("Invalid Birthday month.\n");
+        throw std::invalid_argument("Invalid Birthday month.\n");
+    }
+    for (size_t i = 0; i < target.size(); i++)
+    {
+        if (!isdigit(target[i]))
+        {
+            throw std::invalid_argument("Birthday is not number.\n");
+        }
     }
 }
 void AmigoSearchEngine::checkIsValidBirthdayDay(string target)
 {
     if (target.length() != 2)
     {
-        throw std::length_error("Invalid Birthday Day length.\n");
+        throw std::invalid_argument("Invalid Birthday Day length.\n");
     }
     if (stoi(target.substr(0, 2)) == 0 || stoi(target.substr(0, 2)) > 31)
     {
-        throw std::length_error("Invalid Birthday date.\n");
+        throw std::invalid_argument("Invalid Birthday date.\n");
+    }
+    for (size_t i = 0; i < target.size(); i++)
+    {
+        if (!isdigit(target[i]))
+        {
+            throw std::invalid_argument("Birthday is not number.\n");
+        }
     }
 }
 void AmigoSearchEngine::checkIsValidCerti(string target)

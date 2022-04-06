@@ -44,4 +44,4 @@
   |SCH,-p,-d, ,birthday,04<br>MOD,-p, , ,name,FB NTAWR,birthday,20050520<br>SCH, , , ,employeeNum,79110836<br>DEL, , , ,employeeNum,18115040<br>...|SCH,02117175,SBILHUT LDEXRI,CL4,010-2814-1699,19950704,ADV<br>MOD,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO<br>SCH,NONE<br>DEL,1<br>...|
 
 ## 3. 구조 설계
-- (ToDo)
+- https://github.com/doagi/Amigo/wiki

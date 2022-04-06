@@ -22,7 +22,26 @@ enum SearchType
     BIRTHDAY_MONTH,
     BIRTHDAY_DAY,
     CERTI,
-    SearchType_end
+    SearchType_end,
+    UNKNOWN
+};
+
+static unordered_map<string, SearchType> kFieldName
+{
+    {"",             UNKNOWN},
+    {"employeeNum ", EMPLOYEE_NUM},
+    {"name ",        NAME},
+    {"name-f",       FIRST_NAME},
+    {"name-l",       LAST_NAME},
+    {"cl ",          CL},
+    {"phoneNum ",    PHONE_NUMBER},
+    {"phoneNum-m",   MIDDLE_PHONE_NUMBER},
+    {"phoneNum-l",   LAST_PHONE_NUMBER},
+    {"birthday ",    BIRTHDAY},
+    {"birthday-y",   BIRTHDAY_YEAR},
+    {"birthday-m",   BIRTHDAY_MONTH},
+    {"birthday-d",   BIRTHDAY_DAY},
+    {"certi ",       CERTI}
 };
 
 enum class Column : unsigned int
