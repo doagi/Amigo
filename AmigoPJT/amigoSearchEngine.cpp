@@ -12,13 +12,14 @@ bool AmigoSearchEngine::IsMatch(Employee employee, string target, SearchType typ
     return (target == employee.GetFieldValue(type));
 }
 
-vector<unsigned int> AmigoSearchEngine::SearchByType(string& target, SearchType type) {
+vector<unsigned int> AmigoSearchEngine::SearchByType(string& target, SearchType type) 
+{
     vector<unsigned int> result;
-    for (const auto& an_employee : map_employees)
+    for (auto an_employee : map_employees)
     {
         if (IsMatch(an_employee.second, target, type))
         {
-            result.push_back(an_employee.second.employee_num);
+            result.push_back(an_employee.second.GetEmployeeNum());
         }
     }
     return result;
@@ -26,6 +27,8 @@ vector<unsigned int> AmigoSearchEngine::SearchByType(string& target, SearchType 
 
 SearchType AmigoSearchEngine::GetSearchType(string option, string column)
 {
+    return kFieldName[column.append(option)];
+/*
     if (column == "employeeNum")
     {
         return EMPLOYEE_NUM;
@@ -103,6 +106,7 @@ SearchType AmigoSearchEngine::GetSearchType(string option, string column)
     {
         throw invalid_argument("Invalid Column");
     }
+    */
 }
 
 void AmigoSearchEngine::isValidSearch(string target, SearchType type) {
@@ -147,6 +151,9 @@ void AmigoSearchEngine::isValidSearch(string target, SearchType type) {
     case CERTI:
         checkIsValidCerti(target);
         break;
+
+    default:
+        throw invalid_argument("Invalid Column");
     }
 }
 void AmigoSearchEngine::checkIsValidEmployeeNumber(string target)
