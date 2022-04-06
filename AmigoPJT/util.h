@@ -10,7 +10,7 @@ using namespace std;
 class Util
 {
 public:
-    static vector<string> split(const string& input, char delimiter)
+    static vector<string> Split(const string& input, char delimiter)
     {
         vector<string> result;
         result.reserve(3);
@@ -23,7 +23,7 @@ public:
         return result;
     }
 
-    static vector<string> split_date(const string& input)
+    static vector<string> SplitDate(const string& input)
     {
         vector<string> result;
         if (input.size() == 8)

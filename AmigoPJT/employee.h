@@ -83,7 +83,7 @@ public:
     {
         data[NAME] = name;
 
-        auto split_name = Util::split(data[NAME], ' ');
+        auto split_name = Util::Split(data[NAME], ' ');
         if (split_name.size() == 2)
         {
             data[FIRST_NAME] = split_name[0];
@@ -100,7 +100,7 @@ public:
     {
         data[PHONE_NUMBER] = phone_num;
 
-        auto split_phone_number = Util::split(data[PHONE_NUMBER], '-');
+        auto split_phone_number = Util::Split(data[PHONE_NUMBER], '-');
         if (split_phone_number.size() == 3)
         {
             data[MIDDLE_PHONE_NUMBER] = split_phone_number[1];
@@ -112,7 +112,7 @@ public:
     {
         data[BIRTHDAY] = birthday;
 
-        auto split_birthday = Util::split_date(data[BIRTHDAY]);
+        auto split_birthday = Util::SplitDate(data[BIRTHDAY]);
         if (split_birthday.size() == 3)
         {
             data[BIRTHDAY_YEAR] = split_birthday[0];

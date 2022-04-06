@@ -3,7 +3,7 @@
 
 vector<unsigned int> AmigoSearchEngine::Search(string option, string column, string value)
 {
-    isValidSearch(value, GetSearchType(option, column));
+    IsValidSearch(value, GetSearchType(option, column));
     return SearchByType(value, GetSearchType(option, column));
 }
 
@@ -28,135 +28,56 @@ vector<unsigned int> AmigoSearchEngine::SearchByType(string& target, SearchType 
 SearchType AmigoSearchEngine::GetSearchType(string option, string column)
 {
     return kFieldName[column.append(option)];
-/*
-    if (column == "employeeNum")
-    {
-        return EMPLOYEE_NUM;
-    }
-    else if (column == "birthday")
-    {
-        if (option == " ")
-        {
-            return BIRTHDAY;
-        }
-        else if (option == "-y")
-        {
-            return BIRTHDAY_YEAR;
-        }
-        else if (option == "-m")
-        {
-            return BIRTHDAY_MONTH;
-        }
-        else if (option == "-d")
-        {
-            return BIRTHDAY_DAY;
-        }
-        else
-        {
-            throw invalid_argument("Invalid Column");
-        }
-    }
-    else if (column == "name")
-    {
-        if (option == " ")
-        {
-            return NAME;
-        }
-        else if (option == "-f")
-        {
-            return FIRST_NAME;
-        }
-        else if (option == "-l")
-        {
-            return LAST_NAME;
-        }
-        else
-        {
-            throw invalid_argument("Invalid Column");
-        }
-    }
-    else if (column == "phoneNum")
-    {
-        if (option == " ")
-        {
-            return PHONE_NUMBER;
-        }
-        else if (option == "-m")
-        {
-            return MIDDLE_PHONE_NUMBER;
-        }
-        else if (option == "-l")
-        {
-            return LAST_PHONE_NUMBER;
-        }
-        else
-        {
-            throw invalid_argument("Invalid Column");
-        }
-    }
-    else if (column == "certi")
-    {
-        return CERTI;
-    }
-    else if (column == "cl")
-    {
-        return CL;
-    }
-    else
-    {
-        throw invalid_argument("Invalid Column");
-    }
-    */
 }
 
-void AmigoSearchEngine::isValidSearch(string target, SearchType type) {
+void AmigoSearchEngine::IsValidSearch(string target, SearchType type) {
     switch (type)
     {
     case EMPLOYEE_NUM:
-        checkIsValidEmployeeNumber(target);
+        CheckIsValidEmployeeNumber(target);
         break;
     case NAME:
-        checkIsValidName(target);
+        CheckIsValidName(target);
         break;
     case FIRST_NAME:
-        checkIsValidFirstName(target);
+        CheckIsValidFirstName(target);
         break;
     case LAST_NAME:
-        checkIsValidLastName(target);
+        CheckIsValidLastName(target);
         break;
     case CL:
-        checkIsValidCL(target);
+        CheckIsValidCL(target);
         break;
     case PHONE_NUMBER:
-        checkIsValidPhoneNumber(target);
+        CheckIsValidPhoneNumber(target);
         break;
     case MIDDLE_PHONE_NUMBER:
-        checkIsValidMiddlePhoneNumber(target);
+        CheckIsValidMiddlePhoneNumber(target);
         break;
     case LAST_PHONE_NUMBER:
-        checkIsValidLastPhoneNumber(target);
+        CheckIsValidLastPhoneNumber(target);
         break;
     case BIRTHDAY:
-        checkIsValidBirthday(target);
+        CheckIsValidBirthday(target);
         break;
     case BIRTHDAY_YEAR:
-        checkIsValidBirthdayYear(target);
+        CheckIsValidBirthdayYear(target);
         break;
     case BIRTHDAY_MONTH:
-        checkIsValidBirthdayMonth(target);
+        CheckIsValidBirthdayMonth(target);
         break;
     case BIRTHDAY_DAY:
-        checkIsValidBirthdayDay(target);
+        CheckIsValidBirthdayDay(target);
         break;
     case CERTI:
-        checkIsValidCerti(target);
+        CheckIsValidCerti(target);
         break;
 
     default:
         throw invalid_argument("Invalid Column");
     }
 }
-void AmigoSearchEngine::checkIsValidEmployeeNumber(string target)
+void AmigoSearchEngine::CheckIsValidEmployeeNumber(string target)
 {
     if (target.length() != 8)
     {
@@ -178,7 +99,7 @@ bool isAllCapitalLetter(string target)
     }
     return true;
 }
-void AmigoSearchEngine::checkIsValidName(string target)
+void AmigoSearchEngine::CheckIsValidName(string target)
 {
     if (target.length() > 16)
     {
@@ -193,28 +114,28 @@ void AmigoSearchEngine::checkIsValidName(string target)
         throw std::out_of_range("Name should be capital letter.\n");
     }
 }
-void AmigoSearchEngine::checkIsValidFirstName(string target)
+void AmigoSearchEngine::CheckIsValidFirstName(string target)
 {
     if (!isAllCapitalLetter(target))
     {
         throw std::out_of_range("Name should be capital letter.\n");
     }
 }
-void AmigoSearchEngine::checkIsValidLastName(string target)
+void AmigoSearchEngine::CheckIsValidLastName(string target)
 {
     if (!isAllCapitalLetter(target))
     {
         throw std::out_of_range("Name should be capital letter.\n");
     }
 }
-void AmigoSearchEngine::checkIsValidCL(string target)
+void AmigoSearchEngine::CheckIsValidCL(string target)
 {
     if (target != "CL1" && target != "CL2" && target != "CL3" && target != "CL4")
     {
         throw std::out_of_range("Invalid CL.\n");
     }
 }
-void AmigoSearchEngine::checkIsValidPhoneNumber(string target)
+void AmigoSearchEngine::CheckIsValidPhoneNumber(string target)
 {
     if (target.length() != 13)
     {
@@ -244,21 +165,21 @@ void AmigoSearchEngine::checkIsValidPhoneNumber(string target)
         throw std::out_of_range("Invalid Phone Number. Phone Number format must be 010-****-XXXX.\n");
     }
 }
-void AmigoSearchEngine::checkIsValidMiddlePhoneNumber(string target)
+void AmigoSearchEngine::CheckIsValidMiddlePhoneNumber(string target)
 {
     if (target.length() != 4)
     {
         throw std::length_error("Invalid Phone Number length.\n");
     }
 }
-void AmigoSearchEngine::checkIsValidLastPhoneNumber(string target)
+void AmigoSearchEngine::CheckIsValidLastPhoneNumber(string target)
 {
     if (target.length() != 4)
     {
         throw std::length_error("Invalid Phone Number length.\n");
     }
 }
-void AmigoSearchEngine::checkIsValidBirthday(string target)
+void AmigoSearchEngine::CheckIsValidBirthday(string target)
 {
     if (target.length() != 8)
     {
@@ -280,7 +201,7 @@ void AmigoSearchEngine::checkIsValidBirthday(string target)
         }
     }
 }
-void AmigoSearchEngine::checkIsValidBirthdayYear(string target)
+void AmigoSearchEngine::CheckIsValidBirthdayYear(string target)
 {
     if (target.length() != 4)
     {
@@ -294,7 +215,7 @@ void AmigoSearchEngine::checkIsValidBirthdayYear(string target)
         }
     }
  }
-void AmigoSearchEngine::checkIsValidBirthdayMonth(string target)
+void AmigoSearchEngine::CheckIsValidBirthdayMonth(string target)
 {
     if (target.length() != 2)
     {
@@ -312,7 +233,7 @@ void AmigoSearchEngine::checkIsValidBirthdayMonth(string target)
         }
     }
 }
-void AmigoSearchEngine::checkIsValidBirthdayDay(string target)
+void AmigoSearchEngine::CheckIsValidBirthdayDay(string target)
 {
     if (target.length() != 2)
     {
@@ -330,7 +251,7 @@ void AmigoSearchEngine::checkIsValidBirthdayDay(string target)
         }
     }
 }
-void AmigoSearchEngine::checkIsValidCerti(string target)
+void AmigoSearchEngine::CheckIsValidCerti(string target)
 {
     if (target != "ADV" && target != "PRO" && target != "EX")
     {

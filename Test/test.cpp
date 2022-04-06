@@ -178,8 +178,8 @@ namespace CommandTest
         make_number();
 
         const string certi[] = { "ADV", "PRO", "EX" };
-        //const string cmd_list[] = { "SCH","DEL","MOD" };  // DEL로 자료가 너무 금방 지워져서
-        const string cmd_list[] = { "SCH","SCH","MOD" };    // SCH로 대체
+        // DEL 자료가 너무 금방 지워져서 SCH로 대체
+        const string cmd_list[] = { "SCH","SCH","MOD" };
         const string col_list[] = { "employeeNum", "name", "cl", "phoneNum", "birthday", "certi" };
         const string op2_list[][4]
         {
@@ -500,7 +500,6 @@ namespace ModTest
     {
         Command command = GenerateCommand({ "MOD", "-p", " ", " ", "name", "FB NTAWR", "birthday", "20050520" });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result = "MOD,17112609,FB NTAWR,CL4,010-5645-6122,20050520,PRO";
@@ -514,7 +513,6 @@ namespace ModTest
     {
         Command command = GenerateCommand({ "MOD", "-p", " ", " ", "cl", "CL4", "name", "Anonymous" });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -535,7 +533,6 @@ namespace ModTest
     {
         Command command = GenerateCommand({ "MOD", "-p", " ", " ", "cl", "CL4", "cl", "CL3" });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string actual_result = amigo_db.Query(command);
@@ -547,7 +544,6 @@ namespace ModTest
     {
         Command command = GenerateCommand({ "MOD", "-p", " ", " ", "cl", "CL4", "phoneNum", "010-1234-0000" });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -568,7 +564,6 @@ namespace ModTest
     {
         Command command = GenerateCommand({ "MOD", "-p", " ", " ", "cl", "CL4", "birthday", "20050520" });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -589,7 +584,6 @@ namespace ModTest
     {
         Command command = GenerateCommand({ "MOD", "-p", " ", " ", "cl", "CL4", "certi", "EX" });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -645,7 +639,6 @@ namespace SeachTest
     {
         Command command = GenerateCommand({ "SCH", "-p", " ", " ", "birthday", "19780228", " ", " " });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -661,7 +654,6 @@ namespace SeachTest
     {
         Command command = GenerateCommand({ "SCH", "-p", " ", " ", "birthday", "19780227", " ", " " });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -677,7 +669,6 @@ namespace SeachTest
     {
         Command command = GenerateCommand({ "SCH", "-p", "-y", " ", "birthday", "1978", " ", " " });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -695,7 +686,6 @@ namespace SeachTest
     {
         Command command = GenerateCommand({ "SCH", "-p", "-y", " ", "birthday", "2003", " ", " " });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -712,7 +702,6 @@ namespace SeachTest
     {
         Command command = GenerateCommand({ "SCH", " ", "-y", " ", "birthday", "2000", " ", " " });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -728,7 +717,6 @@ namespace SeachTest
     {
         Command command = GenerateCommand({ "SCH", "-p", "-m", " ", "birthday", "12", " ", " " });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -745,7 +733,6 @@ namespace SeachTest
     {
         Command command = GenerateCommand({ "SCH", "-p", "-m", " ", "birthday", "06", " ", " " });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -761,7 +748,6 @@ namespace SeachTest
     {
         Command command = GenerateCommand({ "SCH", "-p", "-d", " ", "birthday", "03", " ", " " });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -777,7 +763,6 @@ namespace SeachTest
     {
         Command command = GenerateCommand({ "SCH", "-p", "-d", " ", "birthday", "06", " ", " " });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -831,7 +816,6 @@ namespace SeachTest
     {
         Command command = GenerateCommand({ "SCH", "-p", " ", " ", "name", "SRERLALH HMEF", " ", " "});
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -847,7 +831,6 @@ namespace SeachTest
     TEST_F(AmigoSchTest, SearchFirstName) {
         Command command = GenerateCommand({ "SCH", "-p", "-f", " ", "name", "RPO", " ", " " });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -863,7 +846,6 @@ namespace SeachTest
     TEST_F(AmigoSchTest, SearchLastName) {
         Command command = GenerateCommand({ "SCH", "-p", "-l", " ", "name", "WD", " ", " " });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result
@@ -879,7 +861,6 @@ namespace SeachTest
     TEST_F(AmigoSchTest, SearchNameNone) {
         Command command = GenerateCommand({ "SCH", "-p", "-l", " ", "name", "WNGD", " ", " " });
 
-        // 1st try and then updated
         amigo_db.Query(command);
 
         const string expect_result

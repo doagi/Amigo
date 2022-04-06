@@ -164,7 +164,6 @@
     <ClInclude Include="inputStream.h" />
     <ClInclude Include="iSearchEngine.h" />
     <ClInclude Include="outputStream.h" />
-    <ClInclude Include="search.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
