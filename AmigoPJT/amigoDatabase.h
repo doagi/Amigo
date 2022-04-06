@@ -50,8 +50,6 @@ class AmigoDatabase2 : public AmigoDatabase
 public:
     virtual string Query(Command cmd) override
     {
-        // 기존 cmd는 AmigoDatabase::add() 요런식으로 처리.
-
         return Swap();
     }
 
