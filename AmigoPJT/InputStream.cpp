@@ -32,7 +32,7 @@ Command InputStream::Input()
     int index = 0;
     Command result;
 
-    auto tokens = Util::split(str_line, ',');
+    auto tokens = Util::Split(str_line, ',');
     for (const string& token : tokens)
     {
         result.param[index++] = token;
